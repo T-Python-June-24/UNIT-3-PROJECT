@@ -1,0 +1,39 @@
+{%extends "pages_base/base_home.html"%}
+
+
+
+{% block body%}
+<div class="row mh-100 bg-dark" style="height: 90vh;">
+    <div class="col text-white d-flex justify-content-center align-items-center flex-column">
+        <h1>naif</h1>
+        <p>ndsfnslnsosln</p>
+    </div>
+    <div class="col ">
+        
+    </div>
+</div>
+
+<div class="d-flex">
+    {% if views_product%}
+    <div class='row'>
+        {% for plants in views_product%}
+        <div class='col'>
+            <div class="card" style="width: 18rem;">
+                <img src="{{plants.Images_Product.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="" class="btn">
+                        <h5 class="card-title">{{plants.Name_Product}}</h5>
+                    </a>
+                    <p class="card-text">{{plants.Description_product}}</p>
+                    <b class="card-text">{{plants.Created_at}}</b>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {%else%}
+    <h1>There are no plants</h1>
+    {%endif%}
+</div>
+{% endblock %}
