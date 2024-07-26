@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} home{% endblock %}
+
+{% block content %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+<style>
+    .overlay-background {
+        background: url("{% static 'images/home.jpg' %}") no-repeat center center;
+        background-size: cover; 
+        height: 100vh; 
+        
+    }
+
+</style>
+
+<section class="hero-section">
+    <div class="overlay-background d-flex align-items-center justify-content-center flex-column">
+        <!-- Using inline styles for large but slightly reduced font sizes -->
+        <h1 class="text-center img-font-main" style="font-size: 6vw; font-weight: 500;">FreshMarket</h1>
+        <h2 class="text-center img-font" style="font-size: 4vw; font-weight: 400;">Freshness at Great Prices, Every Day.</h2>
+        <div class="w-100 d-flex justify-content-center">
+            <!-- Potential additional content -->
+        </div>
+    </div>
+</section>
+<section>
+
+    <h1>hellooo</h1>
+</section>
+
+{% endblock %}

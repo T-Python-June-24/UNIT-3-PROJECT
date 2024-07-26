@@ -1,0 +1,81 @@
+.navbar-custom {
+    background-color: #004B8D; /* Deep Blue */
+    color: #FFFFFF;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .navbar-toggler-icon {
+    color: #FFFFFF; /* White text color */
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
+}
+
+.navbar-custom .nav-link.active {
+    background-color: rgb(255, 179, 0); /* Vibrant Orange for active state */
+    border-radius: 10px;
+    padding: 1px 18px !important;
+    margin-top: .34rem;
+}
+
+
+.navbar-custom .dropdown-menu {
+    background-color: #F0F0F0; /* Light Gray Background */
+}
+.navbar-custom .dropdown-item {
+    color: #333333; /* Dark Gray text for dropdown items */
+}
+.navbar-custom .dropdown-item:hover {
+    background-color: #388E3C; /* Fresh Green for hover */
+    color: #FFFFFF;
+}
+.btn-outline-success {
+    color: #388E3C; /* Fresh Green */
+    border-color: #388E3C;
+}
+.btn-outline-success:hover {
+    background-color: #388E3C;
+    color: #FFFFFF;
+}
+
+h1{
+    color: #004B8D;
+    font-family: "Rubik", sans-serif;
+     
+}
+h2{
+    color: #388E3C;
+    font-family: "Rubik", sans-serif;
+
+}
+p{
+    color:orange ;
+    font-family: "Rubik", sans-serif;
+
+}
+.img-font{
+    font-family: "Rubik", sans-serif;
+    color: #ffffff ;
+}
+.img-font-main{
+    font-family: "Rubik", sans-serif;
+    color: orange ;
+}
+.label{
+    color:#388E3C ;
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
+
+}
+.form-container {
+    background-color: white;
+    padding: 20px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    border-radius: 5px; 
+    margin-top: 20px; 
+    
+}
+.required-asterisk {
+    color: red; 
+}
+

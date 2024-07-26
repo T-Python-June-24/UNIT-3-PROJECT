@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Category Added Successfully {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Success!</h1>
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <a href="{% url 'main:home_view' %}" class="btn btn-primary">Back to Home</a>
+    <a href="{% url 'Category:add_category' %}" class="btn btn-primary ">Add more categories</a>
+</div>
+
+{% endblock %}

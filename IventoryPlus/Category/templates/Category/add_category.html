@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} add Categories{% endblock %}
+{% block content %}
+<style>
+    .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.category-card {
+    position: relative;
+    overflow: hidden;
+}
+.category-card img {
+    transition: transform 0.5s ease;
+    height: 200px; 
+}
+.category-card h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    text-align: center;
+    width: 100%;
+}
+.category-card:hover img {
+    transform: scale(1.1);
+    filter: brightness(50%);
+}
+.category-card:hover h3 {
+    opacity: 1;
+}
+.category-card .explore-more {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+}
+.category-card:hover .explore-more {
+    opacity: 1;
+}
+</style>
+<div class="container mt-4">
+    <h1>Add Category</h1>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container">
+        <div class="form-container">
+            <h1 class="align-self-center mt-4">Add New Category</h1>
+            <form action="{%url 'Category:add_category'%}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="nameInput" class="form-label label">Name <span class="required-asterisk">*</span></label>
+                    <input type="text" class="form-control" id="nameInput" placeholder="Fill in name" name="name" required minlength="3">
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <label for="descriptionArea" class="form-label label">Description <span class="required-asterisk">*</span></label>
+                    <textarea class="form-control" id="descriptionArea" placeholder="Fill in description" name="info" required minlength="3" maxlength="2000"></textarea>            </div>
+                <hr>
+                <div class="mb-3">
+                    <label for="fileInput" class="form-label label">Choose Image <span class="required-asterisk">*</span></label>
+                    <input type="file" name="image" class="form-control" id="fileInput" required/>
+                </div>
+                <hr/>
+                <div class="mb-3">
+                    <input type="submit" value="Add Category" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+
+<section>
+    <div class="container">
+        <hr>
+        <h1>Existing Categories</h1>
+        {% include 'Category/all_categories.html' %}
+</div>
+</section>
+{% endblock %}
