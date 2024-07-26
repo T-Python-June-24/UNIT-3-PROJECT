@@ -2,10 +2,14 @@
     <div class="row mt-2 row-cols-1 row-cols-md-3 g-4">
         {% for category in categories %}
         <div class="col">
+            
             <div class="category-card d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+                <h4 class="mt-4 align-self-center " style="color: black;">{{ category.name }}</h4>
+
                     <a href="{% url 'Category:category_detail' category.id %}"><img src="{{ category.image.url }}" class="w-100 poster-thumb object-fit-cover"/></a>
                      <h3>{{ category.name }}</h3> 
                 <a href="{% url 'Category:category_detail' category.id %}"><div class="explore-more ">+ (number of Proudcts )Proudcts !! <br/>Explore More</div></a>
+
             </div>
         </div>
         {% endfor %}

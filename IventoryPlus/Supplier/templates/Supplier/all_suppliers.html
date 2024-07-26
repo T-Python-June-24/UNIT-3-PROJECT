@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row mt-2 row-cols-1 row-cols-md-3 g-4">
+        {% for supplier in suppliers %}
+        <div class="col">
+            <div class="category-card d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+                    <a href="{% url 'Supplier:supplier_detail' supplier.id %}"><img src="{{ supplier.logo.url }}" class="w-100 poster-thumb object-fit-cover"/></a>
+                     <h4 style="color: black;">{{ supplier.name }}</h4> 
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
