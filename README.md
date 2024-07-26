@@ -5,7 +5,7 @@ The project name is `Inventory Plus` . A comprehensive system to manage inventor
 
 ## Unified Modeling Language (UML)
 
-![alt text](<InventoryPlus/Inventory ERD.png>)
+![alt text](<InventoryPlus/media/Inventory ERD.png>)
 
 ##  Wireframe
 ## Technologies 💻
