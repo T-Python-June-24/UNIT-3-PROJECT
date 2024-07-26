@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Supplier Added Successfully {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Success!</h1>
+    <hr>
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <a href="{% url 'main:home_view' %}" class="btn btn-primary">Back to Home</a>
+    <a href="{% url 'Supplier:add_supplier' %}" class="btn btn-primary ">Add more Suppliers</a>
+</div>
+
+{% endblock %}

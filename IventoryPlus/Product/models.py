@@ -6,8 +6,8 @@ from Category.models import Category
 class Product(models.Model):
     name = models.CharField(max_length=1024)
     description = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
-    supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    suppliers = models.ManyToManyField(Supplier)
     expiry_date = models.DateField()
     stock = models.IntegerField(default=0)  # Current inventory level
     minimum_stock = models.IntegerField(default=0)  # Minimum required stock level
