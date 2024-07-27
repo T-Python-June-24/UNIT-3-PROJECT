@@ -27,14 +27,25 @@ def add_product(request):
 def Product_added_success(request):
     return render(request, "Product/added_success.html")
 
-def product_page(request:HttpRequest):
-
+def product_page(request):
+    # Start with all products
     products = Product.objects.all()
-    categories=Category.objects.all()
-    suppliers=Supplier.objects.all()
+    categories = Category.objects.all()
+    suppliers = Supplier.objects.all()
 
-    return render(request, "Product/products.html", {"categories" : categories , "suppliers":suppliers,"products":products })
+    # Check if a search was made
+    if 'searched' in request.GET:
+        searched = request.GET['searched']
+        if searched:
 
+            products = products.filter(name__icontains=searched)
+
+    return render(request, "Product/products.html", {
+        "categories": categories,
+        "suppliers": suppliers,
+        "products": products,
+        "search_term": searched if 'searched' in request.GET else ""
+    })
 def product_detail(request,product_id:int):
 
     product = Product.objects.get(pk=product_id)
@@ -53,7 +64,7 @@ def product_update(request, product_id: int):
         productForm = ProductForm(request.POST, request.FILES, instance=product)
         if productForm.is_valid():
             productForm.save()
-            return redirect("Product:product_detail", product_id=product.id)
+            return redirect("Product:product_detail",product_id=product.id)
         else:
             print(productForm.errors)
 
@@ -62,3 +73,13 @@ def product_update(request, product_id: int):
         'categories': categories,
         'suppliers': suppliers
     })
+
+def delete_product(request:HttpRequest,product_id:int):
+    product = product.objects.get(pk=product_id)
+    product.delete()
+    return redirect('Product:product_page')
+
+
+def search_product(request:HttpRequest):
+    #if search was made from home header,do not work with other pges header need 
+    return redirect('Product:product_page')

@@ -22,7 +22,6 @@ def add_category(request):
 def category_page(request:HttpRequest):
 
     categories = Category.objects.all()
-
     return render(request, "Category/categories.html", {"categories" : categories})
 
 

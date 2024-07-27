@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Supplier
+from Product.models import Product
 from .forms import SupplierForm
 from django.contrib import messages  # Import messages
 
@@ -25,13 +26,14 @@ def added_success(request):
 def supplier_page(request:HttpRequest):
 
     suppliers = Supplier.objects.all()
-
+    
     return render(request, "Supplier/suppliers.html", {"suppliers" : suppliers})
 
 def supplier_detail(request,supplier_id:int):
 
     supplier = Supplier.objects.get(pk=supplier_id)
-    return render(request, "Supplier/supplier_detail.html",{"supplier":supplier})
+    products=supplier.product_set.all()
+    return render(request, "Supplier/supplier_detail.html",{"supplier":supplier , "products":products})
 
 def supplier_update(request, supplier_id: int):
     supplier = Supplier.objects.get(pk=supplier_id)
