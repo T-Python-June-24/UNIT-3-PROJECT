@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+
+{% block title %}Products Page{% endblock %}
+
+{% block content %}
+<main class="py-8 pl-8 pr-28 items-center">
+  <div class="flex flex-row justify-between">
+    <h1 class="pb-8">Products</h1>
+    <div class="flex items-center justify-center space-x-2">
+      <a href="{% url 'products:add_product' %}" class="flex items-center space-x-1 hover:text-blue-700">
+          <span class="material-symbols-outlined">add</span>
+          <span>Add Product</span>
+      </a>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for product in products %}
+    <div class="flex flex-col justify-center pt-4 pb-10 px-8 border w-full rounded-md bg-white shadow-md">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-[276px] h-[300px] border-0 rounded-md object-cover">
+        <h2 class="py-4 text-lg font-bold">{{ product.name }}</h2>
+        <p class="pb-4">{{ product.description }}</p>
+        <p class="pb-4 text-lg font-semibold">${{ product.price }}</p>
+        <p class="pb-4">Stock: {{ product.stock_quantity }}</p>
+        <a href="{% url 'products:edit_product_view' product.id %}" class="my-2 border py-2 bg-blue-500 text-white text-center rounded-md">Edit</a>
+        <form action="{% url 'products:delete_product_view' product.id %}" method="post" class="my-2">
+            {% csrf_token %}
+            <button type="submit" class="w-full border py-2 bg-red-500 text-white rounded-md">Delete</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+</main>
+{% endblock %}

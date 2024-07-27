@@ -1,13 +1,38 @@
 {% load static tailwind_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <title>{% block title %} {% endblock %}</title>
   {% tailwind_css %}
 </head>
 <body>
+  <nav class="flex flex-row justify-between py-8 px-7">
+    <div class="flex flex-row gap-8 items-center">
+      <a href="{% url 'main:home_view' %}" class="text-3xl font-medium">
+        InventoryPlus
+      </a>
+      <a href="{% url 'products:products_view' %}" class="pl-3">
+        Products
+      </a>
+      <a>
+        Suppliers
+      </a>
+      <a>
+        Category
+      </a>
+      <a>
+        Reports
+      </a>
+    </div>
+    <div>
+      <span class="material-symbols-outlined">notifications</span>
+    </div>
+  </nav>
 
   {% block content %}
 
