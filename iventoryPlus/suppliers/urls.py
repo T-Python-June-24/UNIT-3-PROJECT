@@ -4,5 +4,7 @@ app_name = "suppliers"
 urlpatterns = [
     path("all",views.all_suppliers,name="all_suppliers"),
     path("add",views.add_supplier,name="add_supplier"),
+    path("delete/<supplier_id>",views.delete_supplier,name="delete_supplier"),
+    path("update/<supplier_id>",views.update_supplier,name="update_supplier"),
     
 ]

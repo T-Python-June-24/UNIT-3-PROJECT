@@ -4,5 +4,6 @@ app_name = "categories"
 urlpatterns = [    
 path('all/',views.all_categories,name="all_categories"),
 path("add/",views.add_category,name="add_category"),
+path("delete/<category_id>",views.delete_category,name="delete_category")
 
 ]
