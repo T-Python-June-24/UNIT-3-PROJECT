@@ -23,5 +23,5 @@ def update_category(request:HttpRequest,category_id):
         category.name=request.POST["name"]
         category.save()
         return redirect("categories:all_categories")
-    return render(request,"categories/update_category.html")
+    return render(request,"categories/update_category.html",{"category":category})
     

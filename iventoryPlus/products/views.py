@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpRequest
 from .models import Product
 from suppliers.models import Supplier
@@ -28,3 +28,27 @@ def add_product_view(request:HttpRequest)->render:
         new_product.supplier.set(request.POST.getlist("supplier"))
 
     return render(request,"products/add_product.html",{"suppliers":suppliers,"categories":categories,"product":product})
+
+def update_product(request,product_id):
+    product=Product.objects.get(pk=product_id)
+    if request.method=="POST":
+        product.name=request.POST['name']
+        product.description=request.POST["description"]
+        product.stock_level=request.POST['stock_level']
+        if request.POST["expirment_date"]=="":
+            product.expirment=None
+        else:
+            product.expirment=request.POST["expirment_date"]
+        
+        product.price=request.POST["price"]
+        product.category=Category.objects.get(pk=request.POST["category"])
+        product.save()
+        product.supplier.set(request.POST.getlist("supplier"))
+        return redirect("products:products_view")
+    return render(request,"products/update_product.html",{"product":product})
+    
+def delete_product(requesr:HttpRequest,product_id):
+    product=Product.objects.get(pk=product_id)
+    product.delete()
+    return redirect("products:products_view")
+        
