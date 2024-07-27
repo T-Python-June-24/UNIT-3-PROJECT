@@ -8,6 +8,8 @@ The project name is `Inventory Plus` . A comprehensive system to manage inventor
 ![alt text](<InventoryPlus/media/Inventory ERD.png>)
 
 ##  Wireframe
+blueprint of project: https://www.figma.com/design/40QBM6suNYA48PaPZ3PPdf/Inventory-Management-system?node-id=0-1&t=rl76guga7VaTpt40-1
+
 ## Technologies 💻
  ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 <br> ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) 
