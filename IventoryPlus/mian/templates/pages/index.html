@@ -3,27 +3,12 @@
 
 
 {% block body%}
+
 {% if Notifications %}
-        
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Awesome, the purchase was successful!</strong>We were delighted to have you visit. Please come again.
+
+  </div>
     {% endif %}
 <div class="row mh-100 bg-banner" style="height: 90vh;">
     <div class="col text-white d-flex justify-content-center align-items-center flex-column text-center">
@@ -43,20 +28,20 @@
         <div class="item mt-5" style="background-image: url('{% static 'img/Canned.jpg'%}');">
             <div class="item-desc">
                 <h3>Canned</h3>
-                <a href="#" class="btn text-white">Visit</a>
+                <a href="{% url 'mian:views_product_category' 1 %}" class="btn text-white">Visit</a>
             </div>
         </div>
 
         <div class="item mt-5" style="background-image: url('{% static 'img/Clothing.jpg'%}');">
             <div class="item-desc">
                 <h3>Clothing</h3>
-                <a href="#" class="btn text-white">Visit</a>
+                <a href="{% url 'mian:views_product_category' 2 %}" class="btn text-white">Visit</a>
             </div>
         </div>
         <div class="item mt-5" style="background-image: url('{% static 'img/phone.jpg'%}');">
             <div class="item-desc">
                 <h3>Phone</h3>
-                <a href="#" class="btn text-white">Visit</a>
+                <a href="{% url 'mian:views_product_category' 3 %}" class="btn text-white">Visit</a>
             </div>
         </div>
 
@@ -79,7 +64,7 @@
                     <p>
                         <p>{{plants.Price_Product}}SR</p>
                         {% if plants.Status_Product == 0 %}
-                        <a href="{% url 'mian:pay_product' plants.id %}" class="btn btn-danger mt-1 ps-5 pe-5">no</a>
+                        <p href="{% url 'mian:pay_product' plants.id %}" class="btn btn-danger mt-1 ps-5 pe-5">no</p>
                         {% else %}
                         <a href="{% url 'mian:pay_product' plants.id %}" class="btn btn-dark mt-1 mt-1 ps-5 pe-5">Bay</a>
                         {% endif %}
@@ -95,11 +80,5 @@
     <h1>There are no plants</h1>
     {%endif%}
 </div>
-<script>
-     document.addEventListener('DOMContentLoaded', function() {
-            {% if naid %}
-                $('#exampleModalCenter').modal('show');
-            {% endif %}
-        });
-</script>
+
 {% endblock %}

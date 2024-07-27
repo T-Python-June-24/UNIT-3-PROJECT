@@ -1,6 +1,7 @@
 from django.shortcuts import render 
 from django.http import HttpRequest
 from product.models import Product
+from Category.models import Category
 # Create your views here.
 
 def home(request:HttpRequest):
@@ -20,3 +21,7 @@ def pay_product(request:HttpRequest , product_id):
             prodect.save() 
     Notifications = True
     return render(request , 'pages/index.html' , {'Notifications':Notifications ,'views_product':views_product})
+def views_product_category(request:HttpRequest , id_Category):
+    get_category = Category.objects.get(pk = id_Category)
+    get_product = Product.objects.filter(Category_product_id = id_Category)
+    return render(request , 'pages/all_product.html' , {'product':get_product , 'category':get_category})

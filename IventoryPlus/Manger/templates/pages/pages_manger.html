@@ -1,0 +1,24 @@
+{% extends "base/manger.html" %}
+
+{%block body%}
+<div class="row mb-5 mt-5">
+    <div class="col">
+        <form class="mt-3" action="" method="get">
+            {% csrf_token%}
+            <div class="input-group gap-3">
+                <input type="text" class="form-control" name='search' placeholder="Search For product...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="ccontent">
+    <div class="row">
+        <div class="col">
+            
+        </div>
+    </div>
+</div>
+{%endblock%}
