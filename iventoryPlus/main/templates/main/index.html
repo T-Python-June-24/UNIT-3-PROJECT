@@ -1,0 +1,145 @@
+{% extends 'main/base.html'%}
+{% block content %}  
+        <div id="content" class="bg-white/10 col-span-9 rounded-lg p-6">
+            {% include 'main/searchComponent.html' %}
+            <div id="24h">
+                <h1 class="font-bold py-4 uppercase">Overview</h1>
+                <div id="stats" class="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-black/60 to-white/5 p-6 rounded-lg">
+                        <div class="flex flex-row space-x-4 items-center">
+                            <div id="stats-1">
+                                <span class="material-symbols-outlined text-4xl text-white">
+                                    inventory_2
+                                    </span>
+                            </div>
+                            <div>
+                                <p class="text-indigo-300 text-sm font-medium uppercase leading-4">Products</p>
+                                <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
+                                    <span>501</span>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/60 p-6 rounded-lg">
+                        <div class="flex flex-row space-x-4 items-center">
+                            <div id="stats-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  
+                            </div>
+                            <div>
+                                <p class="text-teal-300 text-sm font-medium uppercase leading-4">products value</p>
+                                <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
+                                    <span>$2,873.88</span>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/60 p-6 rounded-lg">
+                        <div class="flex flex-row space-x-4 items-center">
+                            <div id="stats-1">
+                                <span class="material-symbols-outlined text-5xl text-white">
+                                    local_shipping
+                                    </span>
+                                  
+                            </div>
+                            <div>
+                                <p class="text-blue-300 text-sm font-medium uppercase leading-4">Suppliers</p>
+                                <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
+                                    <span>+79</span>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="last-incomes">
+                <h1 class="font-bold py-4 uppercase">Newly Onboarded Suppliers</h1>
+                <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <div class="bg-black/60 to-white/5 rounded-lg">
+                            <div class="flex flex-col items-center justify-center ">
+                                <img class="w-36 pt-6" src="https://download.logo.wine/logo/Amazon_Web_Services/Amazon_Web_Services-Logo.wine.png" alt="">
+                                <div class="pb-6 flex flex-col justify-center items-center">
+                                    <p class="text-xl font-bold">Amazon</p>
+                                    <a href=""><p class=" text-sm text-blue-700 ">Amazon.com</p></a>
+                                    <p class=" text-xs text-green-300">52% of our products</p>
+                                    
+                                </div>
+                            </div>
+                            <div class="border-t border-white/5 p-2 flex flex-row justify-between items-center ">
+                                <a href="#" class=" bg-white/20 p-1 inline-flex space-x-2 items-center text-center  rounded-md  hover:scale-105 hover:ease duration-200 ">
+                                    <span class="material-symbols-outlined">
+                                        info
+                                        </span>
+                                      <span class="text-white  text-sm">View detailes</span>                                      
+                                </a>
+                                <div class="flex flex-row gap-1 ">
+                                   <a href=""> <span class="material-symbols-outlined hover:scale-105 hover:ease-linear hover:text-red-500 duration-200">
+                                    delete
+                                    </span></a>
+                                        <a href=""><span class="material-symbols-outlined  hover:scale-105 hover:ease-linear hover:text-indigo-500 duration-200">
+                                            edit
+                                            </span></a>
+                                </div>
+                            </div>
+                    </div>
+                    
+                   
+                </div>
+                
+            </div>
+            <div id="last-users">
+                <h1 class="font-bold py-4 uppercase">Recently added Products</h1>
+                <div class="overflow-x-scroll">
+                    <table class="w-full whitespace-nowrap">
+                        <thead class="bg-black/60">
+                            <th class="text-left py-3 px-2 rounded-l-lg">Product Name</th>
+                            <th class="text-left py-3 px-2">Category</th>
+                            <th class="text-left py-3 px-2">Supplier</th>
+                            <th class="text-left py-3 px-2">Expirment</th>
+                            <th class="text-left py-3 px-2">Added At</th>
+                            <th class="text-left py-3 px-2">Stock Level</th>
+                            <th class="text-left py-3 px-2 rounded-r-lg">Actions</th>
+                        </thead>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-3 px-2 font-bold">
+                                <div class="inline-flex space-x-3 items-center">
+                                    <span><img class="rounded-full w-8 h-8" src="https://images.generated.photos/f_xU7q780YXiKG7IwKVV05eU6Sj2nIodEkN1S8GyM2M/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NDk2MTc4LmpwZw.jpg" alt=""></span>
+                                    <span>Mark Spike</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-2">mark.spike@abc.com</td>
+                            <td class="py-3 px-2">Administrator</td>
+                            <td class="py-3 px-2">Approved</td>
+                            <td class="py-3 px-2">2021/65/5</td>
+                            <td class="py-3 px-2 text-red-700">2 items</td>
+                            <td class="py-3 px-2">
+                                <div class="flex flex-row items-center space-x-3 justify-center">
+                                    <a href="" title="Edit" class="hover:text-white">
+                                        <span class="material-symbols-outlined">
+                                            edit
+                                            </span>
+                                      </a>
+                                   
+                                    <a href="" title="Delete product" class="hover:text-white">
+                                        <span class="material-symbols-outlined">
+                                            delete
+                                            </span>
+                                      </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+   
+{% endblock %}
