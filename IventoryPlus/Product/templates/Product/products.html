@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Products {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Product Catalog</h2>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Suppliers</th>
+                <th>Expiry Date</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><a href="{% url 'Product:product_detail' product.id %}">{{ product.name }} </a></td>
+                <td><a href="{% url 'Category:category_detail' product.category.id %}">{{ product.category.name }}</a></td>               
+                    {% for supplier in product.suppliers.all %}
+                    <td><a href="{% url 'Supplier:supplier_detail' supplier.id %}">{{ supplier.name }}</a>
+                    {% endfor %}
+                </td>
+                <td>{{ product.expiry_date|date:"Y-m-d" }}</td>
+                <td>{{ product.stock }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

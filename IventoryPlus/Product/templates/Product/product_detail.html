@@ -1,0 +1,105 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-5 mb-3">
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <div>
+            <h5 style="color: black;">Details</h5>
+            <p style="color: black;">Category: {{ product.category.name }}</p>
+            <p style="color: black;">Supplier: {{ product.suppliers.name  }}</p>
+            <p style="color: black;">Expiry Date: {{ product.expiry_date }}</p>
+            <p style="color: black;">Stock: {{ product.stock }}</p>
+            <p style="color: black;">Minimum Stock Required: {{ product.minimum_stock }}</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal">Update Product</button>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Product</button>
+        </div>
+    </div>
+
+    <!-- Modal for Update Form -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url 'Product:product_update' product.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="category-select" class="form-label">Category</label>
+                            <select id="category-select" name="category" class="form-select" required>
+                                <option disabled>Choose Category</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}" {% if category == product.category %} selected {% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="supplier-select" class="form-label">Supplier</label>
+                            <select id="supplier-select" class="form-select" name="suppliers" >
+                                <option disabled>Choose Supplier</option>
+                                {% for supplier in suppliers %}
+                                    <option value="{{ supplier.id }}" {% if supplier == product.supplier %} selected {% endif %}>
+                                        {{ supplier.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="product-name" name="name" value="{{ product.name }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-description" class="form-label">Description</label>
+                            <textarea class="form-control" id="product-description" name="description" rows="3">{{ product.description }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-expiry-date" class="form-label">Expiry Date</label>
+                            <input type="date" class="form-control" id="product-expiry-date" name="expiry_date" value="{{ product.expiry_date|date:'Y-m-d' }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-stock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="product-stock" name="stock" value="{{ product.stock }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-minimum-stock" class="form-label">Minimum Stock Required</label>
+                            <input type="number" class="form-control" id="product-minimum-stock" name="minimum_stock" value="{{ product.minimum_stock }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for deletion confirmation -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete {{ product.name }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
