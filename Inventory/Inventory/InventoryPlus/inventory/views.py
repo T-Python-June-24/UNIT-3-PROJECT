@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.db.models import Sum
-from .models import Product, Stock, Category, Supplier
+from .models import Product, Category, Supplier, Stock
 from .forms import ProductForm, CategoryForm, SupplierForm, StockForm
 
 # Product Views
@@ -15,7 +14,7 @@ def product_detail(request, pk):
 
 def product_create(request):
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)  # Handle files
         if form.is_valid():
             form.save()
             return redirect('product_list')
@@ -26,7 +25,7 @@ def product_create(request):
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
+        form = ProductForm(request.POST, request.FILES, instance=product)  # Handle files
         if form.is_valid():
             form.save()
             return redirect('product_detail', pk=product.pk)
@@ -42,11 +41,19 @@ def product_delete(request, pk):
     return render(request, 'inventory/product_confirm_delete.html', {'product': product})
 
 def product_search(request):
-    query = request.GET.get('q')
+    query = request.GET.get('q', '')
     if query:
-        products = Product.objects.filter(name__icontains=query)
+        # Search for products by name, category, or supplier
+        products = Product.objects.filter(
+            name__icontains=query
+        ) | Product.objects.filter(
+            category__name__icontains=query
+        ) | Product.objects.filter(
+            suppliers__name__icontains=query
+        )
     else:
         products = Product.objects.all()
+
     return render(request, 'inventory/product_list.html', {'products': products})
 
 # Category Views
@@ -89,7 +96,7 @@ def supplier_list(request):
 
 def supplier_create(request):
     if request.method == 'POST':
-        form = SupplierForm(request.POST)
+        form = SupplierForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('supplier_list')
@@ -100,7 +107,7 @@ def supplier_create(request):
 def supplier_edit(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
-        form = SupplierForm(request.POST, instance=supplier)
+        form = SupplierForm(request.POST, request.FILES, instance=supplier)
         if form.is_valid():
             form.save()
             return redirect('supplier_list')
@@ -115,6 +122,10 @@ def supplier_delete(request, pk):
         return redirect('supplier_list')
     return render(request, 'inventory/supplier_confirm_delete.html', {'supplier': supplier})
 
+def supplier_detail(request, pk):
+    supplier = get_object_or_404(Supplier, pk=pk)
+    products = supplier.products.all()
+    return render(request, 'inventory/supplier_detail.html', {'supplier': supplier, 'products': products})
 # Stock Views
 def stock_update(request, pk):
     product = get_object_or_404(Product, pk=pk)

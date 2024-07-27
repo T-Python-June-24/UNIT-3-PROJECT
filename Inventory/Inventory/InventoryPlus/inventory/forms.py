@@ -4,7 +4,7 @@ from .models import Product, Category, Supplier, Stock
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'category', 'suppliers']
+        fields = ['name', 'description', 'price', 'category', 'suppliers','image']
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -14,7 +14,7 @@ class CategoryForm(forms.ModelForm):
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['name', 'contact_information']
+        fields = ['name', 'contact_information', 'logo', 'email', 'website', 'phone_number']
 
 class StockForm(forms.ModelForm):
     class Meta:
