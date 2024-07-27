@@ -45,9 +45,25 @@
     opacity: 1;
 }
 </style>
-<div class="container">
+<div class="container mt-4">
+    <h2>Suppliers Catalog</h2>
     <hr>
-    <h1>All Suppliers</h1>
+
+        <!-- Search Form -->
+        <form class="d-flex" role="search" method="get" action="{% url 'Supplier:supplier_page' %}">
+            <input class="form-control me-2" type="search" placeholder="Search for a Supplier" aria-label="Search" name="searched" value="{{ search_term }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    
+        <!-- Search Results Message -->
+        {% if search_term %}
+            <h3>Search Results for "{{ search_term }}"</h3>
+            {% if suppliers %}
+                <p>Found {{ suppliers.count }} matching suppliers.</p>
+            {% else %}
+                <p>No Suppliers found.</p>
+            {% endif %}
+        {% endif %}
     {% include 'Supplier/all_suppliers.html' %}
 </div>
 {% endblock %}

@@ -18,16 +18,24 @@ def add_supplier(request):
             for field, errors in supplierForm.errors.items():
                 for error in errors:
                     messages.error(request, f"{field}: {error}")
-    return render(request, "Supplier/add_supplier.html",{"suppliers" : suppliers})
+    return render(request, "Supplier/add_supplier.html",{"suppliers" : suppliers })
 
 def added_success(request):
     return render(request, "Supplier/added_success.html")
 
+
 def supplier_page(request:HttpRequest):
 
     suppliers = Supplier.objects.all()
-    
-    return render(request, "Supplier/suppliers.html", {"suppliers" : suppliers})
+    if 'searched' in request.GET:
+        searched = request.GET['searched']
+        if searched:
+
+            suppliers = suppliers.filter(name__icontains=searched)
+
+    return render(request, "Supplier/suppliers.html", {"suppliers" : suppliers,
+ "search_term": searched if 'searched' in request.GET else ""
+})
 
 def supplier_detail(request,supplier_id:int):
 

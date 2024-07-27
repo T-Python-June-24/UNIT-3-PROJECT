@@ -45,9 +45,24 @@
     opacity: 1;
 }
 </style>
-<div class="container">
+<div class="container mt-4">
+    <h2>All Categories</h2>
     <hr>
-    <h1>All Categories</h1>
+        <!-- Search Form -->
+        <form class="d-flex" role="search" method="get" action="{% url 'Category:category_page' %}">
+            <input class="form-control me-2" type="search" placeholder="Search for a Category" aria-label="Search" name="searched" value="{{ search_term }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    
+        <!-- Search Results Message -->
+        {% if search_term %}
+            <h3>Search Results for "{{ search_term }}"</h3>
+            {% if categories %}
+                <p>Found {{ categories.count }} matching categories.</p>
+            {% else %}
+                <p>No Categories found.</p>
+            {% endif %}
+        {% endif %}
     {% include 'Category/all_categories.html' %}
 </div>
 {% endblock %}

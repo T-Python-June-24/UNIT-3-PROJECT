@@ -5,8 +5,7 @@ from .forms import ProductForm
 from Category.models import Category
 from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
-print( f"outside the methode{Category.objects.count()}")
-print(f"outside the methode {Supplier.objects.count()}")
+
 
 def add_product(request):
     products = Product.objects.all()

@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Product Catalog</h2>
-
+      <hr>
     <!-- Search Form -->
     <form class="d-flex" role="search" method="get" action="{% url 'Product:product_page' %}">
         <input class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search" name="searched" value="{{ search_term }}">

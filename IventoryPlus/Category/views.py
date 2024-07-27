@@ -19,11 +19,18 @@ def add_category(request):
                 for error in errors:
                     messages.error(request, f"{field}: {error}")
     return render(request, "Category/add_category.html",{"categories" : categories})
+
+
 def category_page(request:HttpRequest):
 
     categories = Category.objects.all()
-    return render(request, "Category/categories.html", {"categories" : categories})
+    if 'searched' in request.GET:
+        searched=request.GET['searched']
+        if searched:
+            categories=categories.filter(name__icontains=searched)
 
+    return render(request, "Category/categories.html", {"categories" : categories
+    , "search_term": searched if 'searched' in request.GET else ""                                                    })
 
 def category_added_success(request):
     return render(request, "Category/category_added_success.html")
