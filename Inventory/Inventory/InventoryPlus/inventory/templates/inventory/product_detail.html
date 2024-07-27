@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<p>{{ product.description }}</p>
+<p>Price: {{ product.price }}</p>
+<p>Category: {{ product.category.name }}</p>
+<p>Suppliers: {% for supplier in product.suppliers.all %}{{ supplier.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+
+<h2>Stock Entries</h2>
+<ul>
+    {% for stock in stock_entries %}
+    <li>{{ stock.quantity }} units (Last updated: {{ stock.date_updated }})</li>
+    {% empty %}
+    <li>No stock entries available.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'stock_update' pk=product.pk %}">Update Stock</a>
+<a href="{% url 'product_edit' pk=product.pk %}">Edit Product</a>
+<form method="POST" action="{% url 'product_delete' pk=product.pk %}">
+    {% csrf_token %}
+    <button type="submit">Delete Product</button>
+</form>
+<a href="{% url 'product_list' %}">Back to Product List</a>
+{% endblock %}

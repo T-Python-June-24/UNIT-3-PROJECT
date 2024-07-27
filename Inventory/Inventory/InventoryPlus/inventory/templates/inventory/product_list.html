@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Product List</h1>
+<a href="{% url 'product_create' %}">Add New Product</a>
+<form method="GET" action="{% url 'product_search' %}">
+    <input type="text" name="q" placeholder="Search products" value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+</form>
+<ul>
+    {% for product in products %}
+    <li>
+        <a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a>
+        <a href="{% url 'product_edit' pk=product.pk %}">Edit</a>
+        <a href="{% url 'product_delete' pk=product.pk %}">Delete</a>
+    </li>
+    {% empty %}
+    <li>No products found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
