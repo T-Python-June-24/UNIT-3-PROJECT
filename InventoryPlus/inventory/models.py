@@ -1,3 +1,12 @@
 from django.db import models
+from product.models import Product
 
-# Create your models here.
+class Inventory(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='inventory')
+    quantity = models.IntegerField()
+    status = models.BooleanField()
+    create_date = models.DateField(auto_now_add=True)
+
+
+def __str__(self):
+        return self.product
