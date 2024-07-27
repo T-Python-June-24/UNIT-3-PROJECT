@@ -5,8 +5,8 @@ from suppliers.models import Supplier
 from categories.models import Category
 # Create your views here.
 def products_view(request:HttpRequest):
-    my_range=range(50)
-    return render(request,"products/product.html",{"range":my_range})
+    products=Product.objects.all()
+    return render(request,"products/product.html",{"products":products})
 def add_product_view(request:HttpRequest)->render:
     product=Product.objects.all()
     suppliers=Supplier.objects.all()
@@ -15,13 +15,16 @@ def add_product_view(request:HttpRequest)->render:
         name=request.POST['name']
         description=request.POST["description"]
         stock_level=request.POST['stock_level']
-        expirment=None        
+        if request.POST["expirment_date"]=="":
+            expirment=None
+        else:
+            expirment=request.POST["expirment_date"]
+        
         price=request.POST["price"]
-        category_id=request.POST["category"]
-        category=Category.objects.get(id=category_id)
+        category=Category.objects.get(pk=request.POST["category"])
         
         new_product=Product(name=name,description=description,stock_level=stock_level,expirment=expirment,price=price,category=category)
         new_product.save()
-        # new_product.supplier.set(request.POST.getlist("supplier"))
+        new_product.supplier.set(request.POST.getlist("supplier"))
 
     return render(request,"products/add_product.html",{"suppliers":suppliers,"categories":categories,"product":product})
