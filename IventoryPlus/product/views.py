@@ -17,7 +17,7 @@ def Add_product(request: HttpRequest):
 
     return render(request, 'index.html', {'form': product_form})
 def views_product(request:HttpRequest):
-    view_product = Product.objects.all()
+    view_product = Product.objects.all().select_related('Category_product')
     return render(request , 'index.html' , {'product':view_product})
 def update_product(request:HttpRequest , product_id):
     up_product = Product.objects.get(pk=product_id)

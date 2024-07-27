@@ -14,5 +14,5 @@ class Product(models.Model):
     Created_at = models.DateField(auto_now_add=True)
     Images_Product = models.ImageField(default='images_product/default.png' , upload_to='images_Product/')
     Description_product = models.TextField(null=True)
-    Category_product = models.ForeignKey(Category , on_delete=models.CASCADE)
+    Category_product = models.ForeignKey(Category , on_delete=models.CASCADE , related_name='products')
     Supplier_product = models.ManyToManyField(Supplier)

@@ -25,4 +25,4 @@ urlpatterns = [
     path('product/' , include('product.urls')),
     path('Category/' , include('Category.urls')),
     path('Supplier/' , include('Supplier.urls')),
-] +  static(settings,document_root=settings.MEDIA_ROOT)
+] +  static(settings.MEDIA_URL ,document_root=settings.MEDIA_ROOT)
