@@ -1,0 +1,120 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Home - Inventory
+Management System{% endblock %} {% block content %}
+<div class="container mx-auto px-2 py-4 bg-base-100 text-base-content">
+  <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-center">
+    Inventory Dashboard
+  </h1>
+
+  <!-- Top Stats -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+    <div
+      class="stat bg-primary/20 text-primary-content rounded-box shadow-sm p-2"
+    >
+      <div class="stat-title text-sm sm:text-md text-base-content font-bold">
+        Total Products
+      </div>
+      <div
+        class="stat-value text-xl sm:text-2xl text-primary"
+        id="totalProducts"
+      >
+        Loading...
+      </div>
+    </div>
+    <div
+      class="stat bg-secondary/20 text-secondary-content rounded-box shadow-sm p-2"
+    >
+      <div class="stat-title text-sm sm:text-md text-base-content font-bold">
+        Total Quantity
+      </div>
+      <div
+        class="stat-value text-xl sm:text-2xl text-secondary"
+        id="totalQuantity"
+      >
+        Loading...
+      </div>
+    </div>
+    <div
+      class="stat bg-accent/20 text-accent-content rounded-box shadow-sm p-2"
+    >
+      <div class="stat-title text-sm sm:text-md text-base-content font-bold">
+        Low Stock Products
+      </div>
+      <div
+        class="stat-value text-xl sm:text-2xl text-accent"
+        id="lowStockProducts"
+      >
+        Loading...
+      </div>
+    </div>
+    <div
+      class="stat bg-neutral/20 text-neutral-content rounded-box shadow-sm p-2"
+    >
+      <div class="stat-title text-sm sm:text-md text-base-content font-bold">
+        Total Spending
+      </div>
+      <div
+        class="stat-value text-xl sm:text-2xl text-neutral-content"
+        id="totalValue"
+      >
+        Loading...
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="space-y-4">
+    <!-- First chart (full width) -->
+    <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
+      <h2 class="text-lg sm:text-xl font-bold mb-2">Category Distribution</h2>
+      <div style="height: 200px">
+        <canvas id="categoryDistribution"></canvas>
+      </div>
+      <p id="categoryDistributionDescription" class="mt-2 text-xs sm:text-sm">
+        This chart shows the distribution of products across different
+        categories. It helps identify which categories have the most products.
+      </p>
+    </div>
+
+    <!-- Two charts side by side -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
+        <h2 class="text-lg sm:text-xl font-bold mb-2">
+          Top 10 Products by Quantity
+        </h2>
+        <div style="height: 200px">
+          <canvas id="topProducts"></canvas>
+        </div>
+        <p id="topProductsDescription" class="mt-2 text-xs sm:text-sm">
+          This chart displays the top 10 products by quantity. It helps identify
+          the most stocked items in the inventory.
+        </p>
+      </div>
+      <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
+        <h2 class="text-lg sm:text-xl font-bold mb-2">Supplier Distribution</h2>
+        <div style="height: 200px">
+          <canvas id="supplierDistribution"></canvas>
+        </div>
+        <p id="supplierDistributionDescription" class="mt-2 text-xs sm:text-sm">
+          This chart illustrates the distribution of products among different
+          suppliers. It helps understand the diversity of your supply chain.
+        </p>
+      </div>
+    </div>
+
+    <!-- Last chart (full width) -->
+    <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
+      <h2 class="text-lg sm:text-xl font-bold mb-2">Monthly Sales Trend</h2>
+      <div style="height: 200px">
+        <canvas id="monthlySalesTrend"></canvas>
+      </div>
+      <p id="monthlySalesTrendDescription" class="mt-2 text-xs sm:text-sm">
+        This chart shows the monthly sales trend over time. It helps visualize
+        sales performance and identify patterns or seasonality.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/charts.js' %}"></script>
+{% endblock %}

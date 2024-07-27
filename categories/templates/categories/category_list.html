@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mx-auto p-6 bg-base-100 text-base-content rounded-lg">
+  <h1 class="text-3xl font-bold mb-6">Categories</h1>
+
+
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full transition-opacity duration-500">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for category in categories %}
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>{{ category.description }}</td>
+          <td>
+            <div class="dropdown dropdown-left">
+              <div tabindex="0" role="button" class="btn m-1 btn-primary">Edit/Delete</div>
+              <ul
+                tabindex="0"
+                class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              >
+                <li>
+                  <button
+                    onclick="openModal('updateModal{{ category.id }}')"
+                  >
+                    Edit
+                  </button>
+                  </li>
+                </li>
+                <li>
+                  <button
+                    onclick="openModal('deleteCategoryModal{{ category.id }}')"
+                  >
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+    {%include 'categories/controllers.html'%}
+  </div>
+  {%include 'categories/modals.html'%}
+
+<script>
+  function openModal(modalId) {
+    document.getElementById(modalId).classList.add("modal-open");
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove("modal-open");
+  }
+</script>
+{% endblock %}
