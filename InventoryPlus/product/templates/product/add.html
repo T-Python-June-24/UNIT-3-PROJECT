@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% block title %}
+	Add Product
+{% endblock %}
+{% block content %}
+	Add Product
+    <div class="row">
+
+    <div class="col-6">
+
+        <form class="d-flex flex-column gap-2" action="{% url 'product:add' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" placeholder="Name" name="name" class="form-control" required minlength="5" maxlength="512"/>
+            <textarea placeholder="Description" name="description" class="form-control" required></textarea>
+
+            <input type="number" placeholder="Price" name="price">
+            <input type="number" placeholder="Quantity" name="quantity">
+            <input type="number" placeholder="Reorder Level" name="reorder_level">
+        
+            <select name="category" class="form-select" required>
+                <option>Choose Category</option>
+                {% for publisher in publishers %}
+                    <option value="{{ publisher.id }}">{{ publisher.name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="date" name="expiry_date" class="form-control" required/>
+
+            <input type="file" name="image" class="form-control" required accept="image/*"/>
+
+
+            <h3>Categories</h3>
+            <div class="d-flex align-items-center gap-2">
+                {% for category in categories %}
+                    <input type="checkbox" class="form-check-input" name="categories" id="check-{{category.id}}" value="{{category.id}}" />
+                    <label for="check-{{category.id}}">{{category.name}}</label>
+                {% endfor %}
+            </div>
+            <input type="submit" value="Create Game" class="btn btn-primary mt-4" />
+
+        </form>
+
+
+    </div>
+
+</div>
+{% endblock %}
