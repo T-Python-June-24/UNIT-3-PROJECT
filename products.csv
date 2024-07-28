@@ -1,26 +1,30 @@
 name,description,category,price,supplier,quantity,expiry_date,created_at
-Smartphone X,Latest model with advanced features,Electronics,799.99,TechGadgets Inc.,100,2025-12-31,2023-07-28
-Designer Jeans,Premium denim jeans,Clothing,129.99,FashionForward Ltd.,50,2026-06-30,2023-07-27
-Garden Toolkit,Complete set of gardening tools,Home & Garden,59.99,GreenThumb Gardens,30,2027-03-15,2023-07-26
-Bestseller Novel,Award-winning fiction book,Books,24.99,BookWorm Publishers,200,2028-01-01,2023-07-25
-Remote Control Car,High-speed RC car for kids,Toys & Games,39.99,ToyLand Emporium,75,2024-12-31,2023-07-24
-Tennis Racket Pro,Professional-grade tennis racket,Sports & Outdoors,189.99,SportsPro Gear,25,2026-09-30,2023-07-23
-Luxury Face Cream,Anti-aging moisturizer,Beauty & Personal Care,79.99,BeautyBliss Cosmetics,40,2023-11-30,2023-07-22
-Car Battery,Long-lasting automotive battery,Automotive,129.99,AutoParts Plus,60,2025-06-30,2023-07-21
-Gourmet Coffee Beans,Premium roasted coffee beans,Food & Beverages,19.99,GourmetDelights Inc.,150,2023-09-30,2023-07-20
-Ergonomic Office Chair,Comfortable chair for long work hours,Office Supplies,249.99,OfficeSupply Co.,20,2028-12-31,2023-07-19
-Leather Sofa,High-quality leather 3-seater sofa,Furniture,999.99,FurniturePlus,10,2030-01-01,2023-07-18
-Yoga Mat,Non-slip exercise mat,Health & Wellness,29.99,WellnessWorld,100,2026-03-31,2023-07-17
-Dog Food Premium,High-quality dry dog food,Pet Supplies,54.99,PetParadise,80,2024-05-31,2023-07-16
-Diamond Necklace,18K gold necklace with diamond pendant,Jewelry & Watches,1999.99,GlitzGlamour Jewelry,5,2035-12-31,2023-07-15
-Electric Guitar,Professional electric guitar,Music & Instruments,599.99,MusicMasters,15,2030-06-30,2023-07-14
-Watercolor Paint Set,High-quality artist watercolors,Art & Crafts,49.99,ArtisanCrafts Co.,40,2026-12-31,2023-07-13
-Baby Stroller,Lightweight and foldable stroller,Baby & Toddler,199.99,BabyBliss Essentials,25,2027-06-30,2023-07-12
-Travel Backpack,Durable multi-compartment backpack,Travel & Luggage,89.99,TravelGear Pro,60,2028-03-15,2023-07-11
-Pruning Shears,Sharp and ergonomic garden scissors,Gardening,34.99,GreenGarden Supplies,50,2029-01-01,2023-07-10
-Chef's Knife Set,Professional-grade kitchen knives,Kitchen & Dining,149.99,CuisineQueen Kitchenware,30,2032-12-31,2023-07-09
-All-Purpose Cleaner,Eco-friendly cleaning solution,Cleaning Supplies,9.99,GreenThumb Gardens,200,2024-09-30,2023-07-08
-Fountain Pen,Elegant writing instrument,Stationery,79.99,OfficeSupply Co.,35,2030-06-30,2023-07-07
-Wireless Earbuds,Noise-cancelling Bluetooth earphones,Electronics Accessories,129.99,TechGadgets Inc.,80,2025-12-31,2023-07-06
-Patio Furniture Set,Weather-resistant outdoor dining set,Outdoor Living,599.99,FurniturePlus,15,2028-05-31,2023-07-05
-Treadmill,Foldable home exercise machine,Fitness Equipment,799.99,SportsPro Gear,10,2029-12-31,2023-07-04
+Smartphone X,Latest model with advanced features,Electronics,799.99,TechGadgets Inc.,100,2025-12-31,2023-09-15 14:30:22
+Designer Jeans,Premium denim jeans,Clothing,129.99,FashionForward Ltd.,50,2026-06-30,2024-02-07 09:45:11
+Garden Toolkit,Complete set of gardening tools,Home & Garden,59.99,GreenThumb Gardens,30,2027-03-15,2023-11-30 16:20:05
+Bestseller Novel,Award-winning fiction book,Books,24.99,BookWorm Publishers,200,2028-01-01,2024-05-18 11:55:39
+Remote Control Car,High-speed RC car for kids,Toys & Games,39.99,ToyLand Emporium,75,2024-12-31,2023-08-22 13:10:47
+Tennis Racket Pro,Professional-grade tennis racket,Sports & Outdoors,189.99,SportsPro Gear,25,2026-09-30,2024-01-03 08:40:15
+Luxury Face Cream,Anti-aging moisturizer,Beauty & Personal Care,79.99,BeautyBliss Cosmetics,40,2023-11-30,2023-12-19 17:05:33
+Car Battery,Long-lasting automotive battery,Automotive,129.99,AutoParts Plus,60,2025-06-30,2024-04-11 10:25:58
+Gourmet Coffee Beans,Premium roasted coffee beans,Food & Beverages,19.99,GourmetDelights Inc.,150,2023-09-30,2023-10-05 15:50:26
+Ergonomic Office Chair,Comfortable chair for long work hours,Office Supplies,249.99,OfficeSupply Co.,20,2028-12-31,2024-06-29 12:35:41
+Leather Sofa,High-quality leather 3-seater sofa,Furniture,999.99,FurniturePlus,10,2030-01-01,2023-07-14 18:15:09
+Yoga Mat,Non-slip exercise mat,Health & Wellness,29.99,WellnessWorld,100,2026-03-31,2024-03-26 07:30:52
+Dog Food Premium,High-quality dry dog food,Pet Supplies,54.99,PetParadise,80,2024-05-31,2023-11-09 14:00:37
+Diamond Necklace,18K gold necklace with diamond pendant,Jewelry & Watches,1999.99,GlitzGlamour Jewelry,5,2035-12-31,2024-02-17 16:45:20
+Electric Guitar,Professional electric guitar,Music & Instruments,599.99,MusicMasters,15,2030-06-30,2023-08-01 09:20:44
+Watercolor Paint Set,High-quality artist watercolors,Art & Crafts,49.99,ArtisanCrafts Co.,40,2026-12-31,2024-05-23 11:40:18
+Baby Stroller,Lightweight and foldable stroller,Baby & Toddler,199.99,BabyBliss Essentials,25,2027-06-30,2023-12-07 13:55:31
+Travel Backpack,Durable multi-compartment backpack,Travel & Luggage,89.99,TravelGear Pro,60,2028-03-15,2024-01-29 15:10:56
+Pruning Shears,Sharp and ergonomic garden scissors,Gardening,34.99,GreenGarden Supplies,50,2029-01-01,2023-10-12 08:25:43
+Chef's Knife Set,Professional-grade kitchen knives,Kitchen & Dining,149.99,CuisineQueen Kitchenware,30,2032-12-31,2024-04-03 17:35:07
+All-Purpose Cleaner,Eco-friendly cleaning solution,Cleaning Supplies,9.99,GreenThumb Gardens,200,2024-09-30,2023-09-28 10:50:29
+Fountain Pen,Elegant writing instrument,Stationery,79.99,OfficeSupply Co.,35,2030-06-30,2024-06-15 12:15:52
+Wireless Earbuds,Noise-cancelling Bluetooth earphones,Electronics,129.99,TechGadgets Inc.,80,2025-12-31,2023-11-20 14:40:16
+Patio Furniture Set,Weather-resistant outdoor dining set,Outdoor Living,599.99,FurniturePlus,15,2028-05-31,2024-03-09 16:05:38
+Treadmill,Foldable home exercise machine,Fitness Equipment,799.99,SportsPro Gear,10,2029-12-31,2023-07-25 09:30:01
+Laptop Pro,High-performance laptop for professionals,Electronics,1299.99,TechGadgets Inc.,50,2026-06-30,2024-02-28 11:20:24
+Smart TV,4K Ultra HD Smart LED TV,Electronics,699.99,TechGadgets Inc.,30,2027-12-31,2023-10-17 13:45:47
+Digital Camera,Mirrorless camera with 4K video,Electronics,899.99,TechGadgets Inc.,20,2026-09-30,2024-05-06 15:55:12
+Board Game Set,Family-friendly strategy game collection,Toys & Games,49.99,ToyLand Emporium,40,2028-12-31,2023-08-11 18:10:35
