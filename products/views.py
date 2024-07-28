@@ -240,6 +240,7 @@ def product_delete(request, pk):
     except Exception as e:
         messages.error(request, f'Error deleting product: {str(e)}')
     return render(request, 'products/product_confirm_delete.html', {'product': product})
+
 def import_products_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -266,9 +267,9 @@ def import_products_csv(request):
                     defaults={
                         'description': row['description'],
                         'category': category,
-                        'price': row['price'],
+                        'price': float(row['price']),
                         'supplier': supplier,
-                        'quantity': row['quantity'],
+                        'quantity': int(row['quantity']),
                         'expiry_date': row['expiry_date'],
                         'created_at': row['created_at']
                     }
