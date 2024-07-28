@@ -6,6 +6,19 @@ Management System{% endblock %} {% block content %}
   </h1>
 
   <!-- Top Stats -->
+  <div
+    class="stat bg-transparent text-neutral-content rounded-box shadow-sm p-2"
+  >
+    <div class="stat-title text-lg sm:text-xl text-base-content font-bold">
+      Total Spending
+    </div>
+    <div
+      class="stat-value text-3xl sm:text-4xl text-neutral-content"
+      id="totalValue"
+    >
+      Loading...
+    </div>
+  </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
     <div
       class="stat bg-primary/20 text-primary-content rounded-box shadow-sm p-2"
@@ -33,6 +46,17 @@ Management System{% endblock %} {% block content %}
         Loading...
       </div>
     </div>
+    <div class="stat bg-info/20 text-info-content rounded-box shadow-sm p-2">
+      <div class="stat-title text-sm sm:text-md text-base-content font-bold">
+        Total Suppliers
+      </div>
+      <div
+        class="stat-value text-xl sm:text-2xl text-info"
+        id="total_suppliers"
+      >
+        Loading...
+      </div>
+    </div>
     <div
       class="stat bg-accent/20 text-accent-content rounded-box shadow-sm p-2"
     >
@@ -46,27 +70,37 @@ Management System{% endblock %} {% block content %}
         Loading...
       </div>
     </div>
-    <div
-      class="stat bg-neutral/20 text-neutral-content rounded-box shadow-sm p-2"
-    >
-      <div class="stat-title text-sm sm:text-md text-base-content font-bold">
-        Total Spending
-      </div>
-      <div
-        class="stat-value text-xl sm:text-2xl text-neutral-content"
-        id="totalValue"
-      >
-        Loading...
+  </div>
+  <!-- Latest Products Table -->
+  <div class="space-y-4 mb-4">
+    <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
+      <h2 class="text-lg sm:text-xl font-bold mb-2">Latest Products Added</h2>
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Supplier</th>
+              <th>Added On</th>
+            </tr>
+          </thead>
+          <tbody id="latest-products-tbody">
+            <!-- Dynamically generated rows will be inserted here by charts.js -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
   <!-- Charts -->
-  <div class="space-y-4">
+  <div class="space-y-4 mb-4">
     <!-- First chart (full width) -->
     <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
       <h2 class="text-lg sm:text-xl font-bold mb-2">Category Distribution</h2>
-      <div style="height: 200px">
+      <div style="height: 400px">
         <canvas id="categoryDistribution"></canvas>
       </div>
       <p id="categoryDistributionDescription" class="mt-2 text-xs sm:text-sm">
@@ -76,7 +110,7 @@ Management System{% endblock %} {% block content %}
     </div>
 
     <!-- Two charts side by side -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
       <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
         <h2 class="text-lg sm:text-xl font-bold mb-2">
           Top 10 Products by Quantity

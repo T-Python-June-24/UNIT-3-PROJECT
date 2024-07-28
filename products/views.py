@@ -14,10 +14,11 @@ from django.utils import timezone
 
 def chart_data(request):
     products = Product.objects.all()
-    
+    suppliers = Supplier.objects.all()
     # The stats that will appear on the top of the page
     total_products = products.count()
     total_quantity = products.aggregate(Sum('quantity'))['quantity__sum'] or 0
+    total_suppliers = suppliers.count()
     low_stock_products = products.filter(quantity__lte=F('low_stock_threshold')).count()
     total_value = products.aggregate(total=Sum(F('price') * F('quantity')))['total'] or 0
 
@@ -62,6 +63,16 @@ def chart_data(request):
         }
         for item in supplier_distribution
     }
+    
+    # Latest products added to the inventory
+    latest_products = list(Product.objects.order_by('-created_at')[:5].values(
+        'name', 'quantity', 'created_at',
+        'category__name', 'supplier__name'
+    ))
+
+    for product in latest_products:
+        product['category'] = product.pop('category__name')
+        product['supplier'] = product.pop('supplier__name')
 
     data = {
         'top_stats': {
@@ -69,6 +80,7 @@ def chart_data(request):
             'total_quantity': total_quantity,
             'low_stock_products': low_stock_products,
             'total_value': float(total_value),
+            'total_suppliers': total_suppliers,
         },
         'category_distribution': {
             'data': category_distribution,
@@ -85,6 +97,9 @@ def chart_data(request):
         'supplier_distribution': {
             'data': supplier_distribution,
             'description': "This chart illustrates the distribution of products among different suppliers. It helps understand the diversity of your supply chain."
+        },
+        'latest_products': {
+            'data': latest_products,
         },
     }
 

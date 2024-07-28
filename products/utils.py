@@ -160,7 +160,7 @@ def get_expired_email_content(product):
     <p><span class="highlight">{product.name}</span></p>
     <p><strong>Expiry Date:</strong> {product.expiry_date}</p>
     <p>Please take immediate action to remove this product from inventory.</p>
-    <a href="#" class="action">View Product</a>
+    <a href="https://ims.ahmed-haz.com/products/{product.id}/" class="action">View Product</a>
     """
 
 def get_expiring_soon_email_content(product):
@@ -170,7 +170,7 @@ def get_expiring_soon_email_content(product):
     <p><span class="highlight">{product.name}</span></p>
     <p><strong>Expiry Date:</strong> {product.expiry_date}</p>
     <p>Please take action to manage this product before it expires.</p>
-    <a href="#" class="action">View Product</a>
+    <a href="https://ims.ahmed-haz.com/products/{product.id}/" class="action">View Product</a>
     """
 
 def get_out_of_stock_email_content(product):
@@ -180,7 +180,7 @@ def get_out_of_stock_email_content(product):
     <p><span class="highlight">{product.name}</span></p>
     <p><strong>Current Quantity:</strong> 0</p>
     <p>Please reorder this product as soon as possible.</p>
-    <a href="#" class="action">Reorder Product</a>
+    <a href="https://ims.ahmed-haz.com/products/{product.id}/" class="action">Reorder Product</a>
     """
 
 def get_low_stock_email_content(product):
@@ -191,5 +191,5 @@ def get_low_stock_email_content(product):
     <p><strong>Current Quantity:</strong> {product.quantity}</p>
     <p><strong>Low Stock Threshold:</strong> {product.low_stock_threshold}</p>
     <p>Consider reordering this product soon.</p>
-    <a href="#" class="action">View Product</a>
+    <a href="https://ims.ahmed-haz.com/products/{product.id}/" class="action">View Product</a>
     """
