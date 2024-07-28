@@ -16,9 +16,94 @@
 </div>
 <div class="ccontent">
     <div class="row">
-        <div class="col">
+        <div class=" dash col-xs-12 col-md-6">
+            <div class="stats main-stats">
+                <div class="stats-title">
+                    <h6>Preparation summary</h6>
+                </div>
+
+                <div class="stats-body">
+                    <div class="stats-item active">
+                        <div class="stats-icon stats-visitors"><span class="material-symbols-outlined">
+                                inventory_2
+                            </span></div>
+                        <div class="stats-text media-left">
+                            <div class="stats-number">{{number_product}}</div>
+                            <div class="stats-subtext text-muted text-size-small">Product</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-item">
+                        <div class="stats-icon stats-orders"><span class="material-symbols-outlined">
+                                category
+                            </span></div>
+                        <div class="stats-text media-left">
+                            <div class="stats-number"> {{number_category}} </div>
+                            <div class="stats-subtext text-muted text-size-small">Category</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-item Supplier">
+                        <div class="stats-icon stats-sales"><span class="material-symbols-outlined">
+                                account_box
+                            </span></div>
+                        <div class="stats-text media-left">
+                            <div class="stats-number"> {{number_supplier}} </div>
+                            <div class="stats-subtext text-muted text-size-small">Supplier</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="views_product">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">Latest products</div>
+                        <div class="panel-body">
+                            <div class="header-product">
+                                <p>images</p>
+                                <p>name</p>
+                                <p>Quantity</p>
+                            </div>
+                            {% for product in update_product %}
+                            <div class="product">
+                                <img src="{{product.Images_Product.url}}" alt="">
+                                <h1>{{product.Name_Product}}</h1>
+                                <p>{{product.Quantity_Product}}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div class="col-md-12 col-lg-5">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Products are running out</div>
+                    <div class="panel-body">
+                        {% for product in Quantity_product %}
+                        <div class="product">
+                            <img src="{{product.Images_Product.url}}" alt="">
+                            <h1>{{product.Name_Product}}</h1>
+                            <p>{{product.Quantity_Product}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Products are out of stock</div>
+                    <div class="panel-body">
+                        {% for product in out_product %}
+                        <div class="product">
+                            <img src="{{product.Images_Product.url}}" alt="">
+                            <h1 style="color:red">{{product.Name_Product}}</h1>
+                            <p>{{product.Quantity_Product}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
             
         </div>
     </div>
 </div>
+
 {%endblock%}
