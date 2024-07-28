@@ -24,3 +24,7 @@ def Manger(request:HttpRequest):
                    "number_supplier":number_Supplier,
                    "number_category":number_Category
                    })
+    
+def manger_product(request:HttpRequest):
+    views_product = Product.objects.all()
+    return render(request , "pages/views_product.html" , {"views_product":views_product})

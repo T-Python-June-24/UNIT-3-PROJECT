@@ -5,4 +5,5 @@ app_name = "Manger"
 
 urlpatterns = [
     path("", views.Manger, name="Manger"),
+    path("views/product" , views.manger_product , name="manger_product"),
 ]

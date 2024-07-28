@@ -1,0 +1,70 @@
+{% extends "base/manger.html" %}
+
+{%block body%}
+<div class="row mb-5 mt-5">
+    <div class="col">
+        <form class="mt-3" action="" method="get">
+            {% csrf_token%}
+            <div class="input-group gap-3">
+                <input type="text" class="form-control" name='search' placeholder="Search For product...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    {% for product in views_product %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ product.Images_Product.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.Name_Product }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Launch demo modal
+                  </button>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url ':update' plant.id %}" class="d-flex flex-column gap-3" method="post" enctype="multipart/form-data">
+                                {% csrf_token%}
+                                <input type="text" placeholder="Plant name" name="name" value='{{plant.name}}' class="form-control" required/>
+                                <textarea name="about" placeholder="About the plant" class="form-control" required>{{plant.about}}</textarea>
+                                <textarea name="used_for" placeholder="used for .." class="form-control" required>{{plant.used_for}}</textarea>
+                                <select name="category" class="form-select" required>
+                                    <option  value="">Choose</option>
+                                    <option value="Angiosperms" {% if plant.category == 'Angiosperms' %} selected{% endif %}>Angiosperms</option>
+                                    <option value="Pteridophytes" {% if plant.category == 'Pteridophytes' %} selected{% endif %}>Pteridophytes</option>
+                                    <option value="Gymnosperms" {% if plant.category == 'Gymnosperms' %} selected{% endif %}>Gymnosperms</option>
+                                </select>
+                                <select name="is_edible" class="form-select" required>
+                                    <option  value="">Edible</option>
+                                    <option value="True" {% if plant.is_edible == True %} selected{% endif %}>Yes</option>
+                                    <option value="False" {% if plant.is_edible == False %} selected {% endif %}>No</option>
+                                </select>
+                                <input type="date" name="created_at" value='{{plant.created_at.isoformat}}' class="form-control" required/>
+                                <input type="file" accept="image/*" name="image" class="form-control" value="{{plant.image.url}}" />
+                                <img src="{{plant.image.url}}" alt="">
+                                <input type="submit" value="ubdate" class="btn btn-primary">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}

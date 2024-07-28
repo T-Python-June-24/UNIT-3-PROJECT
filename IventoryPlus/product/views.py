@@ -32,7 +32,7 @@ def update_product(request:HttpRequest , product_id):
         up_product.Supplier_product = request.POST['supplier']
         if ['image'] in request.FILES: up_product.Images_Product = request.FILES['image']
         up_product.save()
-        return redirect('product:views_product')
+        return redirect('Manger:manger_product')
     return render(request , 'product/update_product.html' )
 def delete(request:HttpRequest , product_id):
     del_product = Product.objects.get(pk=product_id)
