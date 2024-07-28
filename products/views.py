@@ -266,6 +266,18 @@ def import_products_csv(request):
     return redirect('product_list')
 
 
+def product_delete(request, pk):
+    try:
+        product = get_object_or_404(Product, pk=pk)
+        if request.method == 'POST':
+            product_name = product.name
+            product.delete()
+            messages.success(request, f'Product "{product_name}" has been successfully deleted.')
+            return redirect('product_list')
+    except Exception as e:
+        messages.error(request, f'Error deleting product: {str(e)}')
+    return render(request, 'products/product_list.html', {'product': product})
+
 
 def export_products_csv(request):
     response = HttpResponse(content_type='text/csv')
