@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.utils import timezone
 from .models import Supplier
 import csv
-from .forms import SupplierForm, SupplierSearchForm
+from .forms import SupplierForm
 from products.models import Product
 
 def supplier_list(request):

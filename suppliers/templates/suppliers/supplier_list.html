@@ -52,7 +52,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for supplier in suppliers %}
+                {% for supplier in page_obj %}
                 <tr>
                     <td>
                         <a href="{% url 'supplier_detail' supplier.id %}" class="hover:text-primary dark:hover:text-primary-dark hover:font-bold hover:scale-105 transition-all duration-300 ease-in-out">

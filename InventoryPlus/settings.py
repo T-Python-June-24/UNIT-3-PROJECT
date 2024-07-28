@@ -98,6 +98,8 @@ DATABASES = {
     'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
 }
 
+# Error processing CSV file: null value in column "website" of relation "suppliers_supplier" violates not-null constraint DETAIL: Failing row contains (2, TechGadgets Inc., , info@techgadgets.com, +1-555-123-4567, 123 Tech Lane, Silicon Valley, CA 94024, null, , 2024-07-28 16:29:11.650079+00).
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
