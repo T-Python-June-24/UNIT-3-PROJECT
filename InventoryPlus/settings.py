@@ -27,11 +27,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['inventoryplus.up.railway.app']
+ALLOWED_HOSTS = ['ims.ahmed-haz.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://inventoryplus.up.railway.app',
-    'https://www.inventoryplus.up.railway.app',
+    'https://ims.ahmed-haz.com'
 ]
 # Application definition
 
