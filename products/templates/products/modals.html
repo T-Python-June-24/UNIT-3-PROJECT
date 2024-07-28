@@ -110,6 +110,7 @@
                 </div>
                 <div class="modal-action">
                     <button type="submit" class="btn btn-primary" id="createProductBtn">
+                        <span class="hidden loading loading-spinner loading-md"></span>
                         Create
                     </button>
                     <button type="button" class="btn" onclick="closeModal('createModal')">Cancel</button>
@@ -190,6 +191,7 @@
                 </div>
                 <div class="modal-action">
                     <button type="submit" class="btn btn-primary" id="updateProductBtn{{ product.id }}">
+                        <span class="hidden loading loading-spinner loading-md"></span>
                         Update
                     </button>
                     <button type="button" class="btn" onclick="closeModal('updateModal{{ product.id }}')">Cancel</button>
@@ -210,6 +212,7 @@
                 {% csrf_token %}
                 <div class="modal-action">
                     <button type="submit" class="btn btn-error" id="deleteProductBtn{{ product.id }}">
+                        <span class="hidden loading loading-spinner loading-md"></span>
                         Delete
                     </button>
                     <button type="button" class="btn" onclick="closeModal('deleteModal{{ product.id }}')">Cancel</button>
