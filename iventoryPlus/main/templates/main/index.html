@@ -15,7 +15,7 @@
                             <div>
                                 <p class="text-indigo-300 text-sm font-medium uppercase leading-4">Products</p>
                                 <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
-                                    <span>501</span>
+                                    <span>{{products_count}}</span>
                                     
                                 </p>
                             </div>
@@ -32,7 +32,7 @@
                             <div>
                                 <p class="text-teal-300 text-sm font-medium uppercase leading-4">products value</p>
                                 <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
-                                    <span>$2,873.88</span>
+                                    <span>${{total_value}}</span>
                                     
                                 </p>
                             </div>
@@ -49,7 +49,7 @@
                             <div>
                                 <p class="text-blue-300 text-sm font-medium uppercase leading-4">Suppliers</p>
                                 <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
-                                    <span>+79</span>
+                                    <span>+{{suppliers_count}}</span>
                                     
                                 </p>
                             </div>
@@ -60,37 +60,7 @@
             </div>
             <div id="last-incomes">
                 <h1 class="font-bold py-4 uppercase">Newly Onboarded Suppliers</h1>
-                <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    <div class="bg-black/60 to-white/5 rounded-lg">
-                            <div class="flex flex-col items-center justify-center ">
-                                <img class="w-36 pt-6" src="https://download.logo.wine/logo/Amazon_Web_Services/Amazon_Web_Services-Logo.wine.png" alt="">
-                                <div class="pb-6 flex flex-col justify-center items-center">
-                                    <p class="text-xl font-bold">Amazon</p>
-                                    <a href=""><p class=" text-sm text-blue-700 ">Amazon.com</p></a>
-                                    <p class=" text-xs text-green-300">52% of our products</p>
-                                    
-                                </div>
-                            </div>
-                            <div class="border-t border-white/5 p-2 flex flex-row justify-between items-center ">
-                                <a href="#" class=" bg-white/20 p-1 inline-flex space-x-2 items-center text-center  rounded-md  hover:scale-105 hover:ease duration-200 ">
-                                    <span class="material-symbols-outlined">
-                                        info
-                                        </span>
-                                      <span class="text-white  text-sm">View detailes</span>                                      
-                                </a>
-                                <div class="flex flex-row gap-1 ">
-                                   <a href=""> <span class="material-symbols-outlined hover:scale-105 hover:ease-linear hover:text-red-500 duration-200">
-                                    delete
-                                    </span></a>
-                                        <a href=""><span class="material-symbols-outlined  hover:scale-105 hover:ease-linear hover:text-indigo-500 duration-200">
-                                            edit
-                                            </span></a>
-                                </div>
-                            </div>
-                    </div>
-                    
-                   
-                </div>
+                {% include 'suppliers/supplier_list.html' with suppliers=suppliers %}
                 
             </div>
             <div id="last-users">
