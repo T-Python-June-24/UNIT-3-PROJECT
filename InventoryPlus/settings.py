@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['inventoryplus.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://inventoryplus.up.railway.app',
+    'https://www.inventoryplus.up.railway.app',
 ]
 # Application definition
 
