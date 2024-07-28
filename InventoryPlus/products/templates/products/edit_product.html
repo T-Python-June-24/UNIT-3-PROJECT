@@ -3,36 +3,40 @@
 {% block title %}Edit Product Page{% endblock %}
 
 {% block content %}
-<main>
-  <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-md">
-    <h1 class="text-2xl font-bold mb-6 text-center">Edit Product</h1>
-    <form method="post" enctype="multipart/form-data" class="space-y-4">
+<main class="px-20">
+  <div class="w-full max-w-md p-8 bg-white rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6">Edit Product</h1>
+    <form action="{% url 'products:edit_product_view' product.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% load form_tags %}
-        <div>
-            {{ form.name.label_tag }}
-            {{ form.name|add_class:"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" }}
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Product Name:</label>
+            <input type="text" id="name" name="name" value="{{ product.name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
         </div>
-        <div>
-            {{ form.image.label_tag }}
-            {{ form.image|add_class:"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" }}
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mt-2 h-32 w-32 object-cover rounded-md">
-            {% endif %}
+
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Product Image:</label>
+            <input type="file" id="image" name="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mt-2">
         </div>
-        <div>
-            {{ form.description.label_tag }}
-            {{ form.description|add_class:"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" }}
+
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+            <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>{{ product.description }}</textarea>
         </div>
-        <div>
-            {{ form.price.label_tag }}
-            {{ form.price|add_class:"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" }}
+
+        <div class="mb-4">
+            <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" value="{{ product.price }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
         </div>
-        <div>
-            {{ form.stock_quantity.label_tag }}
-            {{ form.stock_quantity|add_class:"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" }}
+
+        <div class="mb-4">
+            <label for="stock_quantity" class="block text-gray-700 text-sm font-bold mb-2">Stock Quantity:</label>
+            <input type="number" id="stock_quantity" name="stock_quantity" value="{{ product.stock_quantity }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
         </div>
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600">Save Changes</button>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Product</button>
+        </div>
     </form>
   </div>
 </main>
