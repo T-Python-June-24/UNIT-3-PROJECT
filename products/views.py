@@ -240,7 +240,6 @@ def product_delete(request, pk):
     except Exception as e:
         messages.error(request, f'Error deleting product: {str(e)}')
     return render(request, 'products/product_confirm_delete.html', {'product': product})
-
 def import_products_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -251,9 +250,9 @@ def import_products_csv(request):
         decoded_file = csv_file.read().decode('utf-8').splitlines()
         reader = csv.DictReader(decoded_file)
 
-        required_columns = {'name', 'description', 'category', 'price', 'supplier', 'quantity', 'expiry_date'}
+        required_columns = {'name', 'description', 'category', 'price', 'supplier', 'quantity', 'expiry_date', 'created_at'}
         if not required_columns.issubset(map(str.lower, reader.fieldnames)):
-            messages.error(request, 'CSV file must contain Name, Description, Category, Price, Supplier, Quantity, and Expiry Date columns matching the Product model.')
+            messages.error(request, 'CSV file must contain Name, Description, Category, Price, Supplier, Quantity, Expiry Date, and Created At columns matching the Product model.')
             return redirect('product_list')
 
         try:
@@ -270,7 +269,8 @@ def import_products_csv(request):
                         'price': row['price'],
                         'supplier': supplier,
                         'quantity': row['quantity'],
-                        'expiry_date': row['expiry_date']
+                        'expiry_date': row['expiry_date'],
+                        'created_at': row['created_at']
                     }
                 )
                 if created:
