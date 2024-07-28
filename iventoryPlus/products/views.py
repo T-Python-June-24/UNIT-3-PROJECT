@@ -30,7 +30,10 @@ def add_product_view(request:HttpRequest)->render:
     return render(request,"products/add_product.html",{"suppliers":suppliers,"categories":categories,"product":product})
 
 def update_product(request,product_id):
+
     product=Product.objects.get(pk=product_id)
+    suppliers=Supplier.objects.all()
+    categories=Category.objects.all()
     if request.method=="POST":
         product.name=request.POST['name']
         product.description=request.POST["description"]
@@ -45,7 +48,7 @@ def update_product(request,product_id):
         product.save()
         product.supplier.set(request.POST.getlist("supplier"))
         return redirect("products:products_view")
-    return render(request,"products/update_product.html",{"product":product})
+    return render(request,"products/update_product.html",{"product":product,"suppliers":suppliers,"categories":categories})
     
 def delete_product(requesr:HttpRequest,product_id):
     product=Product.objects.get(pk=product_id)

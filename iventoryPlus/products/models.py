@@ -10,5 +10,5 @@ class Product(models.Model):
     supplier=models.ManyToManyField(Supplier,null=True)
     added=models.DateTimeField(auto_now_add=True)
     stock_level=models.IntegerField()
-    expirment=models.DateField(null=True,blank=True)
+    expirment=models.DateField(null=True)
     price=models.IntegerField()

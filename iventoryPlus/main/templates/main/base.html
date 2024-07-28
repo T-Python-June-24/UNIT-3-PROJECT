@@ -64,6 +64,24 @@
 
                         </div>
                     </a>
+                    <a href="#"
+                    class="hover:bg-white/10 transition duration-150 ease-linear rounded-lg py-3 px-2 group">
+                    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 space-x-2 items-center">
+                        <div>
+                            <span class="material-symbols-outlined">
+                                search
+                                </span>
+
+                        </div>
+                        <div>
+                            <p
+                                class="font-bold text-base lg:text-lg text-slate-200 leading-4 group-hover:text-indigo-400">
+                                Search</p>
+                            <p class="text-slate-400 text-sm hidden md:block">Find Your Inventory Effortlessly</p>
+                        </div>
+
+                    </div>
+                </a>
                     <a href="{{products_url}}"
                     {% if request.path == products_url %} class="bg-white/10 transition duration-150 ease-linear rounded-lg py-3 px-2 group"  {% else %}class="hover:bg-white/10 transition duration-150 ease-linear rounded-lg py-3 px-2 group"{% endif %}    
                     >
@@ -137,6 +155,7 @@
 
                         </div>
                     </a>
+                   
                 </div>
                 <p class="text-sm text-center text-gray-600"> &copy; 2024 saeed alghamdi</p>
             </div>

@@ -2,7 +2,7 @@
 {% block content %}
 <div id="content" class="bg-white/10 col-span-9 rounded-lg p-6">
     {% include 'main/searchComponent.html' %}
-    <div id="last-users " class="mt-5">
+    <div id="last-users " class="mt-2">
         <div class="flex flex-row justify-between items-center ">
             <h1 class="font-bold py-4 uppercase">All Products</h1>
             <a href="{% url 'products:add_product_view' %}"><Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500">Add product</Button></a>
@@ -37,13 +37,13 @@
                     <td class="py-3 px-2 text-red-700">{{product.stock_level}} items</td>
                     <td class="py-3 px-2">
                         <div class="flex flex-row items-center space-x-3 justify-center">
-                            <a href="" title="Edit" class="hover:text-white">
+                            <a href="{% url 'products:update_product' product.id %}" title="Edit" class="hover:text-white">
                                 <span class="material-symbols-outlined">
                                     edit
                                     </span>
                               </a>
                            
-                            <a href="" title="Delete product" class="hover:text-white">
+                            <a href="{% url 'products:delete_product' product.id %}" title="Delete product" class="hover:text-white">
                                 <span class="material-symbols-outlined">
                                     delete
                                     </span>
