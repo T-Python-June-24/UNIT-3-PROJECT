@@ -5,7 +5,8 @@
     <h1 class="text-3xl font-bold mb-6">Suppliers</h1>
 
     <!-- Search and Filter Form -->
-    <form method="get" class="mb-6">
+    <form method="post" class="mb-6">
+        {% csrf_token %}
         <div class="flex flex-wrap gap-4">
             <div class="form-control">
                 <div class="input-group join">
