@@ -1,193 +1,194 @@
 <!-- Import CSV Modal -->
 <div id="importModal" class="modal z-[1000]">
-    <div class="modal-box">
-      <button
-        onclick="closeModal('importModal')"
-        class="btn btn-sm btn-circle absolute right-2 top-2"
-      >
-        ✕
-      </button>
-      <h3 class="font-bold text-lg">Import Categories CSV</h3>
-      <form
-        method="POST"
-        action="{% url 'import_categories_csv' %}"
-        enctype="multipart/form-data"
-      >
-        {% csrf_token %}
-        <div class="form-control">
-          <label class="label" for="csv_file">
-            <span class="label-text">Select CSV File</span>
-          </label>
-          <input
-            type="file"
-            name="csv_file"
-            id="csv_file"
-            accept=".csv"
-            required
-            class="tooltip"
-            data-tip="CSV format: Name, Description"
-          />
-        </div>
-        <div class="modal-action">
-          <button type="submit" class="btn btn-primary">Import</button>
-          <button type="button" class="btn" onclick="closeModal('importModal')">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+  <div class="modal-box">
+    <button
+      onclick="closeModal('importModal')"
+      class="btn btn-sm btn-circle absolute right-2 top-2"
+    >
+      ✕
+    </button>
+    <h3 class="font-bold text-lg">Import Categories CSV</h3>
+    <form
+      method="POST"
+      action="{% url 'import_categories_csv' %}"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <div class="form-control">
+        <label class="label" for="csv_file">
+          <span class="label-text">Select CSV File</span>
+        </label>
+        <input
+          type="file"
+          name="csv_file"
+          id="csv_file"
+          accept=".csv"
+          required
+          class="tooltip"
+          data-tip="CSV format: Name, Description"
+        />
+      </div>
+      <div class="modal-action">
+        <button type="submit" class="btn btn-primary">Import</button>
+        <button type="button" class="btn" onclick="closeModal('importModal')">
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-  <!-- Create Category Modal -->
-  <div id="createModal" class="modal z-[1000]">
-    <div class="modal-box">
-      <button
-        onclick="closeModal('createModal')"
-        class="btn btn-sm btn-circle absolute right-2 top-2"
-      >
-        ✕
-      </button>
-      <h3 class="font-bold text-lg">Create Category</h3>
-      <form method="POST" action="{% url 'category_create' %}">
-        {% csrf_token %}
-        <div class="form-control">
-          <label class="label" for="id_name">
-            <span class="label-text">Category Name</span>
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="id_name"
-            class="input input-bordered"
-            required
-          />
-        </div>
-        <div class="form-control">
-          <label class="label" for="id_description">
-            <span class="label-text">Description</span>
-          </label>
-          <textarea
-            name="description"
-            id="id_description"
-            class="textarea textarea-bordered"
-            rows="3"
-          ></textarea>
-        </div>
-        <div class="modal-action">
-          <button type="submit" class="btn btn-primary">Create</button>
-          <button type="button" class="btn" onclick="closeModal('createModal')">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+</div>
+<!-- Create Category Modal -->
+<div id="createModal" class="modal z-[1000]">
+  <div class="modal-box">
+    <button
+      onclick="closeModal('createModal')"
+      class="btn btn-sm btn-circle absolute right-2 top-2"
+    >
+      ✕
+    </button>
+    <h3 class="font-bold text-lg">Create Category</h3>
+    <form method="POST" action="{% url 'category_create' %}">
+      {% csrf_token %}
+      <div class="form-control">
+        <label class="label" for="id_name">
+          <span class="label-text">Category Name</span>
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="id_name"
+          class="input input-bordered"
+          required
+        />
+      </div>
+      <div class="form-control">
+        <label class="label" for="id_description">
+          <span class="label-text">Description</span>
+        </label>
+        <textarea
+          name="description"
+          id="id_description"
+          class="textarea textarea-bordered"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="modal-action">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="button" class="btn" onclick="closeModal('createModal')">
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-  
-  <!-- Update Category Modals -->
-  {% for category in object_list %}
-  <div id="updateModal{{ category.id }}" class="modal z-[1000]">
-    <div class="modal-box">
-      <button
-        onclick="closeModal('updateModal{{ category.id }}')"
-        class="btn btn-sm btn-circle absolute right-2 top-2"
-      >
-        ✕
-      </button>
-      <h3 class="font-bold text-lg">Update Category</h3>
-      <form method="POST" action="{% url 'category_update' category.id %}">
-        {% csrf_token %}
-        <div class="form-control">
-          <label class="label" for="id_name_{{ category.id }}">
-            <span class="label-text">Category Name</span>
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="id_name_{{ category.id }}"
-            class="input input-bordered"
-            value="{{ category.name }}"
-            required
-          />
-        </div>
-        <div class="form-control">
-          <label class="label" for="id_description_{{ category.id }}">
-            <span class="label-text">Description</span>
-          </label>
-          <textarea
-            name="description"
-            id="id_description_{{ category.id }}"
-            class="textarea textarea-bordered"
-            rows="3"
-          >{{ category.description }}</textarea>
-        </div>
-        <div class="modal-action">
-          <button type="submit" class="btn btn-primary">Update</button>
-          <button
-            type="button"
-            class="btn"
-            onclick="closeModal('updateModal{{ category.id }}')"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+</div>
+
+<!-- Update Category Modals -->
+{% for category in object_list %}
+<div id="updateModal{{ category.id }}" class="modal z-[1000]">
+  <div class="modal-box">
+    <button
+      onclick="closeModal('updateModal{{ category.id }}')"
+      class="btn btn-sm btn-circle absolute right-2 top-2"
+    >
+      ✕
+    </button>
+    <h3 class="font-bold text-lg">Update Category</h3>
+    <form method="POST" action="{% url 'category_update' category.id %}">
+      {% csrf_token %}
+      <div class="form-control">
+        <label class="label" for="id_name_{{ category.id }}">
+          <span class="label-text">Category Name</span>
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="id_name_{{ category.id }}"
+          class="input input-bordered"
+          value="{{ category.name }}"
+          required
+        />
+      </div>
+      <div class="form-control">
+        <label class="label" for="id_description_{{ category.id }}">
+          <span class="label-text">Description</span>
+        </label>
+        <textarea
+          name="description"
+          id="id_description_{{ category.id }}"
+          class="textarea textarea-bordered"
+          rows="3"
+        >
+{{ category.description }}</textarea
+        >
+      </div>
+      <div class="modal-action">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button
+          type="button"
+          class="btn"
+          onclick="closeModal('updateModal{{ category.id }}')"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-  {% endfor %}
-  <!-- Delete Category Modals -->
-  {% for category in object_list %}
-  <div id="deleteModal{{ category.id }}" class="modal z-[1000]">
-    <div class="modal-box">
-      <button
-        onclick="closeModal('deleteModal{{ category.id }}')"
-        class="btn btn-sm btn-circle absolute right-2 top-2"
-      >
-        ✕
-      </button>
-      <h3 class="font-bold text-lg">Delete Category</h3>
-      <p>Are you sure you want to delete {{ category.name }}?</p>
-      <form method="POST" action="{% url 'category_delete' category.id %}">
-        {% csrf_token %}
-        <div class="modal-action">
-          <button type="submit" class="btn btn-error">Delete</button>
-          <button
-            type="button"
-            class="btn"
-            onclick="closeModal('deleteModal{{ category.id }}')"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+</div>
+{% endfor %}
+<!-- Delete Category Modals -->
+{% for category in object_list %}
+<div id="deleteModal{{ category.id }}" class="modal z-[1000]">
+  <div class="modal-box">
+    <button
+      onclick="closeModal('deleteModal{{ category.id }}')"
+      class="btn btn-sm btn-circle absolute right-2 top-2"
+    >
+      ✕
+    </button>
+    <h3 class="font-bold text-lg">Delete Category</h3>
+    <p>Are you sure you want to delete {{ category.name }}?</p>
+    <form method="POST" action="{% url 'category_delete' category.id %}">
+      {% csrf_token %}
+      <div class="modal-action">
+        <button type="submit" class="btn btn-error">Delete</button>
+        <button
+          type="button"
+          class="btn"
+          onclick="closeModal('deleteModal{{ category.id }}')"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-  {% endfor %}
-  
-  <!-- Delete Category Modals -->
-  {% for category in object_list %}
-  <div id="deleteCategoryModal{{ category.id }}" class="modal z-[1000]">
-    <div class="modal-box">
-      <button
-        onclick="closeModal('deleteCategoryModal{{ category.id }}')"
-        class="btn btn-sm btn-circle absolute right-2 top-2"
-      >
-        ✕
-      </button>
-      <h3 class="font-bold text-lg">Delete Category</h3>
-      <p>Are you sure you want to delete {{ category.name }}?</p>
-      <form method="POST" action="{% url 'category_delete' category.id %}">
-        {% csrf_token %}
-        <div class="modal-action">
-          <button type="submit" class="btn btn-error">Delete</button>
-          <button
-            type="button"
-            class="btn"
-            onclick="closeModal('deleteCategoryModal{{ category.id }}')"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+</div>
+{% endfor %}
+
+<!-- Delete Category Modals -->
+{% for category in object_list %}
+<div id="deleteCategoryModal{{ category.id }}" class="modal z-[1000]">
+  <div class="modal-box">
+    <button
+      onclick="closeModal('deleteCategoryModal{{ category.id }}')"
+      class="btn btn-sm btn-circle absolute right-2 top-2"
+    >
+      ✕
+    </button>
+    <h3 class="font-bold text-lg">Delete Category</h3>
+    <p>Are you sure you want to delete {{ category.name }}?</p>
+    <form method="POST" action="{% url 'category_delete' category.id %}">
+      {% csrf_token %}
+      <div class="modal-action">
+        <button type="submit" class="btn btn-error">Delete</button>
+        <button
+          type="button"
+          class="btn"
+          onclick="closeModal('deleteCategoryModal{{ category.id }}')"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-  {% endfor %}
-  
+</div>
+{% endfor %}

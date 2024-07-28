@@ -110,7 +110,6 @@
                 </div>
                 <div class="modal-action">
                     <button type="submit" class="btn btn-primary" id="createProductBtn">
-                        <span class="loading loading-spinner hidden"></span>
                         Create
                     </button>
                     <button type="button" class="btn" onclick="closeModal('createModal')">Cancel</button>
@@ -221,22 +220,6 @@
     {% endfor %}
 
 <script>
-function handleFormSubmit(formId, buttonId) {
-    const form = document.getElementById(formId);
-    const button = document.getElementById(buttonId);
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (button.disabled) return;
-        
-        button.disabled = true;
-        button.innerHTML = '<span class="loading loading-spinner"></span> Processing...';
-        
-        this.submit();
-    });
-}
-
 // Create Product Form
 handleFormSubmit('createProductForm', 'createProductBtn');
 
