@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+
+{% block title %}Supplier Detail{% endblock %}
+
+{% block content %}
+<main class="py-8 px-8 items-center">
+  <h1 class="pb-8">{{ supplier.name }}</h1>
+  <div class="w-1/2">
+      <p><strong>Email:</strong> {{ supplier.email }}</p>
+      <p><strong>Website:</strong> <a href="{{ supplier.website }}" target="_blank" class="text-indigo-600 hover:text-indigo-900">{{ supplier.website }}</a></p>
+      <p><strong>Phone Number:</strong> {{ supplier.phone_number }}</p>
+      {% if supplier.logo %}
+          <div class="mt-4">
+              <img src="{{ supplier.logo.url }}" alt="{{ supplier.name }} Logo" class="w-32 h-32">
+          </div>
+      {% endif %}
+  </div>
+  <div class="mt-8">
+      <a href="{% url 'suppliers:edit_supplier' supplier.id %}" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit Supplier</a>
+      <form action="{% url 'suppliers:delete_supplier' supplier.id %}" method="post" class="inline ml-4">
+          {% csrf_token %}
+          <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete Supplier</button>
+      </form>
+  </div>
+</main>
+{% endblock %}

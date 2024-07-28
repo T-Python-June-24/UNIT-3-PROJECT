@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+
+{% block title %}Suppliers List{% endblock %}
+
+{% block content %}
+<main class="py-8 px-8 items-center">
+  <h1 class="pb-8">Suppliers</h1>
+  <div class="w-1/2">
+      <a href="{% url 'suppliers:add_supplier' %}" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add Supplier</a>
+  </div>
+  <div class="w-1/2 mt-8">
+      <ul>
+          {% for supplier in suppliers %}
+              <li class="flex justify-between items-center py-2">
+                  <span>{{ supplier.name }}</span>
+                  <a href="{% url 'suppliers:supplier_detail' supplier.id %}" class="text-indigo-600 hover:text-indigo-900">Details</a>
+                  <a href="{% url 'suppliers:edit_supplier' supplier.id %}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                  <form action="{% url 'suppliers:delete_supplier' supplier.id %}" method="post" class="inline">
+                      {% csrf_token %}
+                      <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                  </form>
+              </li>
+          {% endfor %}
+      </ul>
+  </div>
+</main>
+{% endblock %}
