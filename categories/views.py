@@ -1,12 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 import csv
-from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .models import Category
-from django import forms
 import csv
 from .forms import CategoryForm
 from django.db.models import Count, Q, Sum
@@ -17,6 +14,7 @@ class CategoryListView(ListView):
     context_object_name = 'categories'
     paginate_by = 10  # Number of categories per page
 
+# this function is used to get the product count, and total quantity related to the category
     def get_queryset(self):
         queryset = Category.objects.annotate(
             product_count=Count('product'),
@@ -46,54 +44,9 @@ class CategoryListView(ListView):
         context['current_sort'] = self.request.GET.get('sort', 'name')
         return context
 
-def category_create(request):
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, 'Category created successfully.')
-            except forms.ValidationError as e:
-                messages.error(request, str(e))
-                return render(request, 'categories/category_list.html', {'form': form})
-    else:
-        form = CategoryForm()
-    return redirect('category_list')
 
-def export_categories_csv(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="categories_export.csv"'
 
-    writer = csv.writer(response)
-    writer.writerow(['Name', 'Description'])
-
-    categories = Category.objects.all()
-    for category in categories:
-        writer.writerow([category.name, category.description])
-
-    return response
-
-def category_update(request, pk):
-    category = get_object_or_404(Category, pk=pk)
-    if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, 'Category updated successfully.')
-            except forms.ValidationError as e:
-                messages.error(request, str(e))
-                return render(request, 'categories/category_form.html', {'form': form})
-    else:
-        form = CategoryForm(instance=category)
-    return render(request, 'categories/category_form.html', {'form': form})
-
-def category_delete(request, pk):
-    category = get_object_or_404(Category, pk=pk)
-    if request.method == 'POST':
-        category.delete()
-        return redirect('category_list')
-    return render(request, 'categories/category_confirm_delete.html', {'category': category})
+# CRUD FUNCTIONS
 
 def category_create(request):
     if request.method == 'POST':
@@ -115,6 +68,11 @@ def category_delete(request, pk):
     if request.method == 'POST':
         category.delete()
     return redirect('category_list')
+
+
+
+# CSV RELATED FUNCTIONS
+
 def import_categories_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -142,3 +100,17 @@ def import_categories_csv(request):
 
         messages.success(request, 'Categories imported successfully.')
     return redirect('category_list')
+
+
+def export_categories_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="categories_export.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Description'])
+
+    categories = Category.objects.all()
+    for category in categories:
+        writer.writerow([category.name, category.description])
+
+    return response
