@@ -1,1 +1,1 @@
-web: gunicorn InventoryPlus.wsgi --log-file - 
+web: python manage.py migrate && gunicorn InventoryPlus.wsgi
