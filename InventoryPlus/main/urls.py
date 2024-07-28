@@ -3,4 +3,6 @@ from . import views
 
 app_name = "main"
 
-urlpatterns = []
+urlpatterns = [
+    path("dashboard/",views.dashboard_view, name="dashboard_view" ),
+]

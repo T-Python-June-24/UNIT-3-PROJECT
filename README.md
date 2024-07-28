@@ -13,7 +13,7 @@ blueprint of project: https://www.figma.com/design/40QBM6suNYA48PaPZ3PPdf/Invent
 ## Technologies 💻
  ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 <br> ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) 
-<br>![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+<br>![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 ## Tools  🛠️
 - <a href="https://www.lucidchart.com/pages/examples/uml_diagram_tool">Lucidchart</a> (UML diagram maker)

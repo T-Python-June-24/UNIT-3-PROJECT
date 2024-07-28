@@ -21,10 +21,11 @@ from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("main.urls")),
-    path('category/', include("category.urls")),
-    path('inventory/', include("inventory.urls")),
-    path('product', include("product.urls")),
-    path('supplier', include("supplier.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
+    path("", include("main.urls")),
+    path("category/", include("category.urls")),
+    path("inventory/", include("inventory.urls")),
+    path("product/", include("product.urls")),
+    path("supplier/", include("supplier.urls")),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
