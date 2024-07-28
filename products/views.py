@@ -11,6 +11,7 @@ import csv
 from .forms import ProductForm, ProductSearchForm
 from .utils import check_product_status, send_product_notification  # Add this import
 from django.utils import timezone
+from datetime import datetime
 
 def chart_data(request):
     products = Product.objects.all()
@@ -270,8 +271,8 @@ def import_products_csv(request):
                         'price': float(row['price']),
                         'supplier': supplier,
                         'quantity': int(row['quantity']),
-                        'expiry_date': row['expiry_date'],
-                        'created_at': row['created_at']
+                        'expiry_date': datetime.strptime(row['expiry_date'], '%Y-%m-%d').date(),
+                        'created_at': datetime.strptime(row['created_at'], '%Y-%m-%d %H:%M:%S')
                     }
                 )
                 if created:
