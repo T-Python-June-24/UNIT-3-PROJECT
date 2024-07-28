@@ -1,0 +1,5 @@
+{% for supplier in suppliers %}
+    <h2><a href="{% url 'supplier_detail' supplier.pk %}">{{ supplier.name }}</a></h2>
+    <p>Email: {{ supplier.email }}</p>
+    <p>Phone: {{ supplier.phone_number }}</p>
+{% endfor %}

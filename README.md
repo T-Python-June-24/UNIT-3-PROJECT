@@ -35,7 +35,7 @@ The project name is `Iventory Plus` . A comprehensive system to manage inventory
 - Generate inventory reports
 - Generate supplier reports
 
-### Notifications 
+### Notifications
 (using email to send to manager's email)
 - Low stock alerts
 - Expiry date alerts for perishable items

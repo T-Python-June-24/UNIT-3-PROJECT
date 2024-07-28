@@ -1,0 +1,5 @@
+{% for stock in stocks %}
+    <h2><a href="{% url 'stock_detail' stock.pk %}">{{ stock.product.name }}</a></h2>
+    <p>Quantity: {{ stock.quantity }}</p>
+    <p>Last Updated: {{ stock.last_updated }}</p>
+{% endfor %}
