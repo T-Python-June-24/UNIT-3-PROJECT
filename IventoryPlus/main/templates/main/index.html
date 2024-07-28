@@ -11,5 +11,12 @@
 
 {% endblock %}
 {% block chart %}
-    {{ chart|safe }}
+<hr>
+<div>{{ product_chart|safe }}</div>
+{% if low_stock_warning %}
+    <p style="color: red; font-size: 16px;">{{ low_stock_warning }}</p>
+{% endif %}
+<hr>
+<div>{{ supplier_chart|safe }}</div>
+
 {% endblock %}
