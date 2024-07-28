@@ -94,11 +94,11 @@ def export_suppliers_csv(request):
     response['Content-Disposition'] = 'attachment; filename="suppliers_export.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Name', 'Email', 'Phone', 'Address', 'Highest Quantity Supplied', 'Status'])
+    writer.writerow(['Name', 'Email', 'Phone', 'Address', 'Website'])
 
     suppliers = Supplier.objects.all()
     for supplier in suppliers:
-        writer.writerow([supplier.name, supplier.email, supplier.phone, supplier.address, supplier.highest_quantity_supplied, supplier.status])
+        writer.writerow([supplier.name, supplier.email, supplier.phone, supplier.address, supplier.website])
 
     return response
 
@@ -108,7 +108,7 @@ def supplier_update(request, pk):
         form = SupplierForm(request.POST, request.FILES, instance=supplier)
         if form.is_valid():
             supplier = form.save(commit=False)
-            supplier.last_active = form.cleaned_data['last_active']
+            supplier.last_active = timezone.now()
             supplier.save()
             return redirect('supplier_list')
     else:
@@ -132,9 +132,9 @@ def import_suppliers_csv(request):
         decoded_file = csv_file.read().decode('utf-8').splitlines()
         reader = csv.DictReader(decoded_file)
 
-        required_columns = {'name', 'email', 'phone', 'address', 'highest_quantity_supplied', 'status'}
+        required_columns = {'name', 'email', 'phone', 'address', 'website'}
         if not required_columns.issubset(map(str.lower, reader.fieldnames)):
-            messages.error(request, 'CSV file must contain Name, Email, Phone, Address, Highest Quantity Supplied, and Status columns matching the Supplier model.')
+            messages.error(request, 'CSV file must contain Name, Email, Phone, Address, and Website columns matching the Supplier model.')
             return redirect('supplier_list')
 
         try:
@@ -145,8 +145,7 @@ def import_suppliers_csv(request):
                         'email': row['email'],
                         'phone': row['phone'],
                         'address': row['address'],
-                        'highest_quantity_supplied': row['highest_quantity_supplied'],
-                        'status': row['status']
+                        'website': row['website']
                     }
                 )
         except Exception as e:
