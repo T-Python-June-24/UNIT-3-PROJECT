@@ -1,54 +1,14 @@
 {% extends 'main/base.html' %}
+
 {% load static %}
-{% block title %} all Suppliers{% endblock %}
+
+{% block title %}Suppliers{% endblock %}
 {% block content %}
-<style>
-    .category-card {
-    position: relative;
-    overflow: hidden;
-}
-.category-card img {
-    transition: transform 0.5s ease;
-    height: 200px; 
-}
-.category-card h3 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    transition: opacity 0.5s ease;
-    opacity: 0;
-    text-align: center;
-    width: 100%;
-}
-.category-card:hover img {
-    transform: scale(1.1);
-    filter: brightness(50%);
-}
-.category-card:hover h3 {
-    opacity: 1;
-}
-.category-card .explore-more {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    transition: opacity 0.5s ease;
-    opacity: 0;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-}
-.category-card:hover .explore-more {
-    opacity: 1;
-}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 <div class="container mt-4">
     <h2>Suppliers Catalog</h2>
     <hr>
-
         <!-- Search Form -->
         <form class="d-flex" role="search" method="get" action="{% url 'Supplier:supplier_page' %}">
             <input class="form-control me-2" type="search" placeholder="Search for a Supplier" aria-label="Search" name="searched" value="{{ search_term }}">
@@ -64,6 +24,58 @@
                 <p>No Suppliers found.</p>
             {% endif %}
         {% endif %}
-    {% include 'Supplier/all_suppliers.html' %}
+
+    <!-- Product Table -->
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>email</th>
+                <th>number of products</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if suppliers %}
+                {% for supplier in suppliers %}
+                    <tr>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ supplier.id }}" href="#">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a>
+                        </td>                       
+                        <td><a href="{% url 'Supplier:supplier_detail' supplier.id %}">{{ supplier.name }}</a></td>
+                        <td>{{ supplier.email }}</td>
+
+                        <td>{{supplier.product_set.count }}</td>
+                    </tr>
+                    <!-- Modal for deletion confirmation -->
+                    <div class="modal fade" id="deleteModal-{{ supplier.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ supplier.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-{{ supplier.id }}">Confirm Deletion</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete {{ supplier.name }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'Supplier:delete_supplier' supplier.id %}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">No products available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'Supplier:add_supplier' %}"><div class="circle"></div></a> 
+
 </div>
 {% endblock %}

@@ -53,7 +53,6 @@ def product_detail(request,product_id:int):
     return render(request, 'Product/product_detail.html', {"product" : product ,"suppliers":suppliers , 'categories':categories})
 
 
-
 def product_update(request, product_id: int):
     product = Product.objects.get(pk=product_id)
     categories = Category.objects.all()
@@ -74,11 +73,12 @@ def product_update(request, product_id: int):
     })
 
 def delete_product(request:HttpRequest,product_id:int):
-    product = product.objects.get(pk=product_id)
+    product = Product.objects.get(pk=product_id)
     product.delete()
     return redirect('Product:product_page')
 
 
 def search_product(request:HttpRequest):
-    #if search was made from home header,do not work with other pges header need 
     return redirect('Product:product_page')
+
+

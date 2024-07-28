@@ -100,8 +100,14 @@
             </div>
         </div>
     </div>
-    {% for product in products %}
-    {{product.name}}
-    {% endfor %}
+
+
 </div>
+<section>
+    <div class="container">
+ <hr>
+ <h1>{{ supplier.name }}'s Products</h1>
+ {% include 'Product/product_list.html' %}
+</div>
+</section>
 {% endblock %}

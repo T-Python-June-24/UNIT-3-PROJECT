@@ -3,11 +3,12 @@
 {% load static %}
 
 {% block title %}Products{% endblock %}
-
 {% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 <div class="container mt-4">
     <h2>Product Catalog</h2>
-      <hr>
+    <hr>
     <!-- Search Form -->
     <form class="d-flex" role="search" method="get" action="{% url 'Product:product_page' %}">
         <input class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search" name="searched" value="{{ search_term }}">
@@ -28,6 +29,7 @@
     <table class="table table-striped mt-3">
         <thead>
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Suppliers</th>
@@ -39,6 +41,11 @@
             {% if products %}
                 {% for product in products %}
                     <tr>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ product.id }}" href="#">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a>
+                        </td>                       
                         <td><a href="{% url 'Product:product_detail' product.id %}">{{ product.name }}</a></td>
                         <td><a href="{% url 'Category:category_detail' product.category.id %}">{{ product.category.name }}</a></td>
                         <td>
@@ -49,6 +56,24 @@
                         <td>{{ product.expiry_date|date:"Y-m-d" }}</td>
                         <td>{{ product.stock }}</td>
                     </tr>
+                    <!-- Modal for deletion confirmation -->
+                    <div class="modal fade" id="deleteModal-{{ product.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ product.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-{{ product.id }}">Confirm Deletion</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete {{ product.name }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'Product:delete_product' product.id %}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
             {% else %}
                 <tr>
@@ -57,5 +82,7 @@
             {% endif %}
         </tbody>
     </table>
+    <a href="{% url 'Product:add_product' %}"><div class="circle"></div></a> 
 
+</div>
 {% endblock %}

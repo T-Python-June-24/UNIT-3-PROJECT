@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row mt-2 row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+        <div class="col">
+            <div class="category-card d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+                <h4 class="align-self-center" style="color: black;">{{ product.name }}</h4> 
+                <a href="{% url 'Product:product_detail' product.id %}"><img src="{{ product.image.url }}" class="w-100 poster-thumb object-fit-cover"/></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

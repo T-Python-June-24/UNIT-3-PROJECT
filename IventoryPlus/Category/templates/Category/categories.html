@@ -1,68 +1,80 @@
 {% extends 'main/base.html' %}
+
 {% load static %}
-{% block title %} all Categories{% endblock %}
+
+{% block title %}Categories{% endblock %}
+
 {% block content %}
-<style>
-    .category-card {
-    position: relative;
-    overflow: hidden;
-}
-.category-card img {
-    transition: transform 0.5s ease;
-    height: 200px; 
-}
-.category-card h3 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    transition: opacity 0.5s ease;
-    opacity: 0;
-    text-align: center;
-    width: 100%;
-}
-.category-card:hover img {
-    transform: scale(1.1);
-    filter: brightness(50%);
-}
-.category-card:hover h3 {
-    opacity: 1;
-}
-.category-card .explore-more {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    transition: opacity 0.5s ease;
-    opacity: 0;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-}
-.category-card:hover .explore-more {
-    opacity: 1;
-}
-</style>
-<div class="container mt-4">
-    <h2>All Categories</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<div class="container mt-4 container-relative">
+    <h2>Categories Catalog</h2>
     <hr>
-        <!-- Search Form -->
-        <form class="d-flex" role="search" method="get" action="{% url 'Category:category_page' %}">
-            <input class="form-control me-2" type="search" placeholder="Search for a Category" aria-label="Search" name="searched" value="{{ search_term }}">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    
-        <!-- Search Results Message -->
-        {% if search_term %}
-            <h3>Search Results for "{{ search_term }}"</h3>
-            {% if categories %}
-                <p>Found {{ categories.count }} matching categories.</p>
-            {% else %}
-                <p>No Categories found.</p>
-            {% endif %}
+    <!-- Search Form -->
+    <form class="d-flex" role="search" method="get" action="{% url 'Category:category_page' %}">
+        <input class="form-control me-2" type="search" placeholder="Search for a Category" aria-label="Search" name="searched" value="{{ search_term }}">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+    <!-- Search Results Message -->
+    {% if search_term %}
+        <h3>Search Results for "{{ search_term }}"</h3>
+        {% if categories %}
+            <p>Found {{ categories.count }} matching categories.</p>
+        {% else %}
+            <p>No Categories found.</p>
         {% endif %}
-    {% include 'Category/all_categories.html' %}
+    {% endif %}
+
+    <!-- Categories Table -->
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Number of Products</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if categories %}
+                {% for category in categories %}
+                    <tr>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ category.id }}" href="#">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a>
+                        </td>                       
+                        <td><a href="{% url 'Category:category_detail' category.id %}">{{ category.name }}</a></td>
+                        <td>{{ category.product_set.count }}</td>
+                    </tr>
+                    <!-- Modal for deletion confirmation -->
+                    <div class="modal fade" id="deleteModal-{{ category.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ category.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-{{ category.id }}">Confirm Deletion</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete {{ category.name }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'Category:delete_category' category.id %}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">No categories available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+   <a href="{% url 'Category:add_category' %}"><div class="circle"></div></a> 
 </div>
+
 {% endblock %}
