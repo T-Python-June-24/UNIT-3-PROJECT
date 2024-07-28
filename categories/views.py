@@ -9,7 +9,7 @@ from .models import Category
 from django import forms
 import csv
 from .forms import CategoryForm
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 
 class CategoryListView(ListView):
     model = Category
@@ -18,7 +18,10 @@ class CategoryListView(ListView):
     paginate_by = 10  # Number of categories per page
 
     def get_queryset(self):
-        queryset = Category.objects.annotate(product_count=Count('product'))
+        queryset = Category.objects.annotate(
+            product_count=Count('product'),
+            total_quantity=Sum('product__quantity')
+        )
         
         # Search functionality
         search_query = self.request.GET.get('search', '')
