@@ -1,0 +1,37 @@
+
+{% extends 'main/base.html' %}
+
+{% block title %} Inventory Plus {% endblock %}
+
+{% block content %}
+
+
+
+<div class="row   row-cols-1 row-cols-md-2  video-row">
+    <div class="col order-2 order-md-1 ">
+        <div class="d-flex flex-column justify-content-center align-items-center h-100">
+            <h1 class="text-center">Inventory and more!</h1>
+            <h3 class="text-center">Explore products</h3>
+        </div>
+
+    </div>
+
+    <div class="col order-1 overflow-hidden top-video h-100 p-0">
+        <!-- <img class="w-100 h-100 object-fit-cover" src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/11/greatest-movies-of-all-time.jpg" /> -->
+        <div class="vid-container">
+          <video class="h-100" src="/static/videos/backvid.mp4" muted autoplay loop></video>
+        </div>
+    </div>
+</div>
+
+<hr />
+<a href="{% url 'products:all_products_view' 'all' %}">
+<div class="d-flex align-items-center justify-content-between ">
+  <h2 class="m-0 p-0">Sample of Products</h2>
+  <span class="material-symbols-outlined text-fxl">arrow_forward</span>
+</div>
+</a>
+
+{% include 'products/products_list.html' %}
+
+{% endblock %}
