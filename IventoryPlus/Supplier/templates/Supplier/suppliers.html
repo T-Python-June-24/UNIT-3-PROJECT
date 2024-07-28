@@ -26,13 +26,14 @@
         {% endif %}
 
     <!-- Product Table -->
-    <table class="table table-striped mt-3">
+    <div class="shadow-sm p-3 mt-5 mb-5 bg-white rounded"> 
+    <table class="table table-striped ">
         <thead>
             <tr>
-                <th></th>
-                <th>Name</th>
-                <th>email</th>
-                <th>number of products</th>
+                <th style="background-color: #E7EFF3; color: #495D69;"></th>
+                <th style="background-color: #E7EFF3; color: #495D69;">Name</th>
+                <th style="background-color: #E7EFF3; color: #495D69;">email</th>
+                <th style="background-color: #E7EFF3; color: #495D69;">number of products</th>
             </tr>
         </thead>
         <tbody>
@@ -77,5 +78,6 @@
     </table>
     <a href="{% url 'Supplier:add_supplier' %}"><div class="circle"></div></a> 
 
+</div>
 </div>
 {% endblock %}

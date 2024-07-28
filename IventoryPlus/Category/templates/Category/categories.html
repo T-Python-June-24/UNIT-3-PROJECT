@@ -27,12 +27,13 @@
     {% endif %}
 
     <!-- Categories Table -->
-    <table class="table table-striped mt-3">
+    <div class="shadow-sm p-3 mt-5 mb-5 bg-white rounded"> 
+    <table class="table table-striped mt-3 ">
         <thead>
             <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Number of Products</th>
+                <th style="background-color: #E7EFF3; color: #495D69;"></th>
+                <th style="background-color: #E7EFF3; color: #495D69;">Name</th>
+                <th style="background-color: #E7EFF3; color: #495D69;">Number of Products</th>
             </tr>
         </thead>
         <tbody>
@@ -75,6 +76,7 @@
     </table>
     
    <a href="{% url 'Category:add_category' %}"><div class="circle"></div></a> 
+</div>
 </div>
 
 {% endblock %}

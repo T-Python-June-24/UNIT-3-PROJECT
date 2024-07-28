@@ -1,18 +1,26 @@
 .navbar-custom {
-    background-color: #004B8D; /* Deep Blue */
+    background-color: #4796BD; 
     color: #FFFFFF;
 }
-
+body{
+    background-color: #F3F9FB;
+}
+.logo-img {
+    width: 100px;
+    height: auto; 
+    margin-right: 1rem;
+    position: static;
+}
 .navbar-custom .navbar-brand,
 .navbar-custom .nav-link,
 .navbar-custom .navbar-toggler-icon {
-    color: #FFFFFF; /* White text color */
+    color: #FFFFFF;
     font-family: "Rubik", sans-serif;
     font-weight: 500;
 }
 
 .navbar-custom .nav-link.active {
-    background-color: rgb(255, 179, 0); /* Vibrant Orange for active state */
+    background-color: #F4FAF8; 
     border-radius: 10px;
     padding: 1px 18px !important;
     margin-top: .34rem;
@@ -20,36 +28,36 @@
 
 
 .navbar-custom .dropdown-menu {
-    background-color: #F0F0F0; /* Light Gray Background */
+    background-color: #F0F0F0; 
 }
 .navbar-custom .dropdown-item {
-    color: #333333; /* Dark Gray text for dropdown items */
+    color: #333333; 
 }
 .navbar-custom .dropdown-item:hover {
-    background-color: #388E3C; /* Fresh Green for hover */
+    background-color: #122E40; 
     color: #FFFFFF;
 }
 .btn-outline-success {
-    color: #388E3C; /* Fresh Green */
-    border-color: #388E3C;
+    color: #122E40;
+    border-color: #122E40;
 }
 .btn-outline-success:hover {
-    background-color: #388E3C;
+    background-color: #122E40;
     color: #FFFFFF;
 }
 
 h1{
-    color: #004B8D;
+    color: #122E40;
     font-family: "Rubik", sans-serif;
      
 }
 h2{
-    color: #388E3C;
+    color: #122E40;
     font-family: "Rubik", sans-serif;
 
 }
 p{
-    color:orange ;
+    color:#2F7583 ;
     font-family: "Rubik", sans-serif;
 
 }
@@ -87,7 +95,7 @@ h4{
 .circle {
     width: 50px; 
     height: 50px; 
-    background-color: #007BFF; 
+    background-color: #4796BD; 
     border-radius: 50%; 
     display: flex;
     justify-content: center;

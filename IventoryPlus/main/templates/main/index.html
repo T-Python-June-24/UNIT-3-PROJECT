@@ -1,22 +1,36 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %} home{% endblock %}
+{% block title %} Home {% endblock %}
 
 {% block content %}
-<div class="container">
-<div class="col-md-12 ">
-    <canvas  id="myChart"></canvas>
-  </div>
+<div class="container-fluid">
+
+    <!-- Chart Containers -->
+    <div class="row">
+        <div class="col-12 chart-container">
+            <div>{{ product_chart|safe }}</div>
+            <p style="color: red; font-size: 16px;">{{ low_stock_warning }}</p>
+
+        </div>
+        <div class="col-12 chart-container">
+            <div>{{ supplier_chart|safe }}</div>
+        </div>
+    </div>
 </div>
 
-{% endblock %}
-{% block chart %}
-<hr>
-<div>{{ product_chart|safe }}</div>
-{% if low_stock_warning %}
-    <p style="color: red; font-size: 16px;">{{ low_stock_warning }}</p>
-{% endif %}
-<hr>
-<div>{{ supplier_chart|safe }}</div>
 
+
+<style>
+    .container-fluid {
+        padding: 20px;
+    }
+    .chart-container {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 10px;
+        height: auto;  
+    }
+</style>
 {% endblock %}

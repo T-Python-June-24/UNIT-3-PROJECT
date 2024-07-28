@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">   
-    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}?v=1.1" rel="stylesheet" />
 
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -24,8 +24,9 @@
 
   <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Supermarket</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="#">
+        <img class="logo-img" src="{% static 'images/logo.png' %}" alt="Logo">
+    </a>      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -33,18 +34,14 @@
           <li class="nav-item">
             <a class="nav-link {% if request.path == home_view_url %} active{% endif %}" aria-current="page" href="{{ home_view_url }}">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="#">Link</a>
-          </li>
+         
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle {% if request.path == add_product_url or  request.path == all_products_url %}  active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Products
             </a>
             <ul class="dropdown-menu" >
               <li><a class="dropdown-item" href="{{ add_product_url }}">Add a product</a></li>
               <li><a class="dropdown-item" href="{{ all_products_url }}">All products</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -54,29 +51,21 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ add_category_url }}">Add a Category</a></li>
               <li><a class="dropdown-item" href="{{ all_categories_url }}">All Categories</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle {% if request.path == add_supplier_url or  request.path == all_suppliers_url %}  active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Suppliers
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ add_supplier_url }}">Add a Supplier</a></li>
               <li><a class="dropdown-item" href="{{ all_suppliers_url }}">All Suppliers</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
+
         </ul>
-        <form class="d-flex" role="search"  method="get" action="{% url 'Product:search_product' %}">
-          <input class="form-control me-2" type="search" placeholder="Search for a product" aria-label="Search" name="searched">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+
       </div>
     </div>
   </nav>
