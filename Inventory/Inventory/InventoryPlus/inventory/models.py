@@ -8,7 +8,7 @@ class Category(models.Model):
 
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
-    contact_information = models.TextField()
+    address= models.CharField(max_length=255, null=True, blank=True)
     logo = models.ImageField(upload_to='supplier_logos/', null=True, blank=True)
     email = models.EmailField(max_length=100, null=True, blank=True)
     website = models.URLField(max_length=200, null=True, blank=True)

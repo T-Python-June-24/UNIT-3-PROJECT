@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Product, Category, Supplier, Stock
 from .forms import ProductForm, CategoryForm, SupplierForm, StockForm
 
-# Product Views
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'inventory/product_list.html', {'products': products})
@@ -14,7 +13,7 @@ def product_detail(request, pk):
 
 def product_create(request):
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)  # Handle files
+        form = ProductForm(request.POST, request.FILES)  
         if form.is_valid():
             form.save()
             return redirect('product_list')
@@ -56,7 +55,6 @@ def product_search(request):
 
     return render(request, 'inventory/product_list.html', {'products': products})
 
-# Category Views
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'inventory/category_list.html', {'categories': categories})
@@ -89,7 +87,6 @@ def category_delete(request, pk):
         return redirect('category_list')
     return render(request, 'inventory/category_confirm_delete.html', {'category': category})
 
-# Supplier Views
 def supplier_list(request):
     suppliers = Supplier.objects.all()
     return render(request, 'inventory/supplier_list.html', {'suppliers': suppliers})
@@ -126,7 +123,12 @@ def supplier_detail(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     products = supplier.products.all()
     return render(request, 'inventory/supplier_detail.html', {'supplier': supplier, 'products': products})
-# Stock Views
+
+def supplier_inventory(request, supplier_id):
+    supplier = get_object_or_404(Supplier, pk=supplier_id)
+    products = Product.objects.filter(suppliers=supplier)
+    return render(request, 'inventory/supplier_inventory.html', {'supplier': supplier, 'products': products})
+
 def stock_update(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':

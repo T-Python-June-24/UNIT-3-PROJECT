@@ -14,7 +14,7 @@ class CategoryForm(forms.ModelForm):
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['name', 'contact_information', 'logo', 'email', 'website', 'phone_number']
+        fields = ['name', 'address', 'logo', 'email', 'website', 'phone_number']
 
 class StockForm(forms.ModelForm):
     class Meta:
