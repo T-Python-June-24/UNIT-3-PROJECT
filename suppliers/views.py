@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 import csv
-from django.db.models import Q, Max, F, ExpressionWrapper, BooleanField
+from django.db.models import Q, Max, ExpressionWrapper, BooleanField
 from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.http import require_POST
 from django.utils import timezone
 from .models import Supplier
 import csv
@@ -89,19 +88,6 @@ def supplier_create(request):
         form = SupplierForm()
     return redirect('supplier_list')
 
-def export_suppliers_csv(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="suppliers_export.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Name', 'Email', 'Phone', 'Address', 'Website'])
-
-    suppliers = Supplier.objects.all()
-    for supplier in suppliers:
-        writer.writerow([supplier.name, supplier.email, supplier.phone, supplier.address, supplier.website])
-
-    return response
-
 def supplier_update(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
@@ -155,9 +141,23 @@ def import_suppliers_csv(request):
         messages.success(request, 'Suppliers imported successfully.')
     return redirect('supplier_list')
 
-@require_POST
+def export_suppliers_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="suppliers_export.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Email', 'Phone', 'Address', 'Website'])
+
+    suppliers = Supplier.objects.all()
+    for supplier in suppliers:
+        writer.writerow([supplier.name, supplier.email, supplier.phone, supplier.address, supplier.website])
+
+    return response
+
+
 def update_last_active(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     supplier.last_active = timezone.now()
     supplier.save()
     return JsonResponse({'success': True, 'last_active': supplier.last_active.isoformat()})
+
