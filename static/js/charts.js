@@ -27,7 +27,7 @@ function updateCharts() {
       );
       charts.monthlySalesTrend = createLineChart(
         "monthlySalesTrend",
-        "Monthly Sales Trend",
+        "Monthly Spending Trend",
         data.monthly_sales_trend.data,
         data.monthly_sales_trend.description,
         textColor

@@ -16,7 +16,7 @@ Management System{% endblock %} {% block content %}
       class="stat-value text-3xl sm:text-4xl text-neutral-content"
       id="totalValue"
     >
-      Loading...
+      <div class="skeleton h-10 w-32"></div>
     </div>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
@@ -30,7 +30,7 @@ Management System{% endblock %} {% block content %}
         class="stat-value text-xl sm:text-2xl text-primary"
         id="totalProducts"
       >
-        Loading...
+        <div class="skeleton h-8 w-20"></div>
       </div>
     </div>
     <div
@@ -43,7 +43,7 @@ Management System{% endblock %} {% block content %}
         class="stat-value text-xl sm:text-2xl text-secondary"
         id="totalQuantity"
       >
-        Loading...
+        <div class="skeleton h-8 w-20"></div>
       </div>
     </div>
     <div class="stat bg-info/20 text-info-content rounded-box shadow-sm p-2">
@@ -54,7 +54,7 @@ Management System{% endblock %} {% block content %}
         class="stat-value text-xl sm:text-2xl text-info"
         id="total_suppliers"
       >
-        Loading...
+        <div class="skeleton h-8 w-20"></div>
       </div>
     </div>
     <div
@@ -67,7 +67,7 @@ Management System{% endblock %} {% block content %}
         class="stat-value text-xl sm:text-2xl text-accent"
         id="lowStockProducts"
       >
-        Loading...
+        <div class="skeleton h-8 w-20"></div>
       </div>
     </div>
   </div>
@@ -88,7 +88,17 @@ Management System{% endblock %} {% block content %}
             </tr>
           </thead>
           <tbody id="latest-products-tbody">
-            <!-- Dynamically generated rows will be inserted here by charts.js -->
+            <!-- Skeleton loader for table rows -->
+            {% for i in '12345'|make_list %}
+            <tr>
+              <td><div class="skeleton h-4 w-4"></div></td>
+              <td><div class="skeleton h-4 w-32"></div></td>
+              <td><div class="skeleton h-4 w-24"></div></td>
+              <td><div class="skeleton h-4 w-16"></div></td>
+              <td><div class="skeleton h-4 w-24"></div></td>
+              <td><div class="skeleton h-4 w-24"></div></td>
+            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -137,13 +147,13 @@ Management System{% endblock %} {% block content %}
 
     <!-- Last chart (full width) -->
     <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
-      <h2 class="text-lg sm:text-xl font-bold mb-2">Monthly Sales Trend</h2>
+      <h2 class="text-lg sm:text-xl font-bold mb-2">Monthly Spending Trend</h2>
       <div style="height: 200px">
         <canvas id="monthlySalesTrend"></canvas>
       </div>
       <p id="monthlySalesTrendDescription" class="mt-2 text-xs sm:text-sm">
-        This chart shows the monthly sales trend over time. It helps visualize
-        sales performance and identify patterns or seasonality.
+        This chart shows the monthly spending trend over time. It helps visualize
+        spending performance and identify patterns or seasonality.
       </p>
     </div>
   </div>

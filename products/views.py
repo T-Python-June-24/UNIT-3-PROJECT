@@ -44,6 +44,7 @@ def chart_data(request):
         for product in top_products
     }
 
+    # monthly spending
     monthly_sales = products.annotate(
         month=TruncMonth('created_at')
     ).values('month').annotate(
@@ -185,27 +186,6 @@ def product_list(request):
         messages.error(request, 'No products found matching your criteria.')
     return render(request, 'products/product_list.html', context)
 
-def export_products_csv(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="products_export.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Name', 'Description', 'Category', 'Price', 'Supplier', 'Quantity', 'Expiry Date'])
-
-    products = Product.objects.all()
-    for product in products:
-        writer.writerow([
-            product.name,
-            product.description,
-            product.category.name,
-            product.price,
-            product.supplier.name if product.supplier else '',
-            product.quantity,
-            product.expiry_date
-        ])
-
-    return response
-
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     form = ProductForm(instance=product)
@@ -230,18 +210,14 @@ def product_detail(request, pk):
     }
     return render(request, 'products/product_detail.html', context)
 
-def product_delete(request, pk):
-    try:
-        product = get_object_or_404(Product, pk=pk)
-        if request.method == 'POST':
-            product_name = product.name
-            product.delete()
-            messages.success(request, f'Product "{product_name}" has been successfully deleted.')
-            return redirect('product_list')
-    except Exception as e:
-        messages.error(request, f'Error deleting product: {str(e)}')
-    return render(request, 'products/product_confirm_delete.html', {'product': product})
 
+def check_product_status_view(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    status = check_product_status(product)
+    return JsonResponse(status)
+
+
+# CSV RELATED FUNCTIONS
 def import_products_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -277,10 +253,10 @@ def import_products_csv(request):
                 )
                 if created:
                     products_created += 1
-                    send_product_notification(product)  # Add this line
+                    send_product_notification(product)  
                 else:
                     products_updated += 1
-                    send_product_notification(product)  # Add this line
+                    send_product_notification(product)  
             
             messages.success(request, f'CSV import successful. {products_created} products created, {products_updated} products updated.')
         except Exception as e:
@@ -289,7 +265,25 @@ def import_products_csv(request):
 
     return redirect('product_list')
 
-def check_product_status_view(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    status = check_product_status(product)
-    return JsonResponse(status)
+
+
+def export_products_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="products_export.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Description', 'Category', 'Price', 'Supplier', 'Quantity', 'Expiry Date'])
+
+    products = Product.objects.all()
+    for product in products:
+        writer.writerow([
+            product.name,
+            product.description,
+            product.category.name,
+            product.price,
+            product.supplier.name if product.supplier else '',
+            product.quantity,
+            product.expiry_date
+        ])
+
+    return response
