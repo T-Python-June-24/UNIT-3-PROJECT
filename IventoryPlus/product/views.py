@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import Product
 from .forms import ProductForms  
+from Category.models import Category
 import os
 
 def Add_product(request: HttpRequest):
@@ -28,7 +29,9 @@ def update_product(request:HttpRequest , product_id):
         up_product.Price_Product = request.POST['price']
         up_product.Expiration_date = request.POST['expiration']
         up_product.Description_product = request.POST['description']
-        up_product.Category_product = request.POST['category']
+        category_id = request.POST['category']
+        if category_id:
+            up_product.Category_product = Category.objects.get(pk = category_id)
         up_product.Supplier_product = request.POST['supplier']
         if ['image'] in request.FILES: up_product.Images_Product = request.FILES['image']
         up_product.save()

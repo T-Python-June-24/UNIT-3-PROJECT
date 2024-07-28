@@ -21,10 +21,11 @@
             <img src="{{ product.Images_Product.url }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ product.Name_Product }}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">{{product.Description_product}}</p>
+                <p class="card-text">{{product.Price_Product}} $</p>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Launch demo modal
-                  </button>
+                    Product update
+                </button>
                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -33,32 +34,52 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{% url ':update' plant.id %}" class="d-flex flex-column gap-3" method="post" enctype="multipart/form-data">
+                            <form action="{% url 'product:update_product' product.id %}" class="d-flex flex-column gap-3" method="post" enctype="multipart/form-data">
                                 {% csrf_token%}
-                                <input type="text" placeholder="Plant name" name="name" value='{{plant.name}}' class="form-control" required/>
-                                <textarea name="about" placeholder="About the plant" class="form-control" required>{{plant.about}}</textarea>
-                                <textarea name="used_for" placeholder="used for .." class="form-control" required>{{plant.used_for}}</textarea>
+                                <input type="text" placeholder="Plant name" name="Name" value='{{product.Name_Product}}' class="form-control" required/>
+                                <textarea name="description" placeholder="About the plant" class="form-control" required>{{product.Description_product}}</textarea>
                                 <select name="category" class="form-select" required>
-                                    <option  value="">Choose</option>
-                                    <option value="Angiosperms" {% if plant.category == 'Angiosperms' %} selected{% endif %}>Angiosperms</option>
-                                    <option value="Pteridophytes" {% if plant.category == 'Pteridophytes' %} selected{% endif %}>Pteridophytes</option>
-                                    <option value="Gymnosperms" {% if plant.category == 'Gymnosperms' %} selected{% endif %}>Gymnosperms</option>
+                                    <option  value="">Choose a category</option>
+                                    {% for views_category in category%}
+                                    <option value="{{views_category.id}}" {% if product.Category_product.name_Category == views_category.name_Category %} selected{% endif %}>{{views_category.name_Category}}</option>
+                                {%endfor%}
                                 </select>
-                                <select name="is_edible" class="form-select" required>
-                                    <option  value="">Edible</option>
-                                    <option value="True" {% if plant.is_edible == True %} selected{% endif %}>Yes</option>
-                                    <option value="False" {% if plant.is_edible == False %} selected {% endif %}>No</option>
+                                <select name="supplier" class="form-select" required>
+                                    <option value="">Choose the appropriate supplier</option>
+                                    {% for supplier in views_supplier %}
+                                    <option value="{{ supplier.id }}" {% if supplier in product.Supplier_product.all %} selected{% endif %}>{{ supplier.name_Supplier }}</option>
+                                    {% endfor %}
                                 </select>
-                                <input type="date" name="created_at" value='{{plant.created_at.isoformat}}' class="form-control" required/>
-                                <input type="file" accept="image/*" name="image" class="form-control" value="{{plant.image.url}}" />
-                                <img src="{{plant.image.url}}" alt="">
-                                <input type="submit" value="ubdate" class="btn btn-primary">
+                                <select name="Status" class="form-select" required>
+                                    <option  value="">Status</option>
+                                    <option value="True" {% if product.Status_Product == 1 %} selected{% endif %}>Yes</option>
+                                    <option value="False" {% if product.Status_Product == 0 %} selected {% endif %}>No</option>
+                                </select>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon3">quantity</span>
+                                    </div>
+                                    <input type="number" name="quantity" value="{{product.Quantity_Product}}" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                  </div>
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="text" name="price" value="{{product.Price_Product}}" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append">
+                                      <span class="input-group-text">.00</span>
+                                    </div>
+                                  </div>
+                                  <input type="date" name="expiration" value='{{product.Expiration_date.isoformat}}' class="form-control" required/>
+                                <input type="file" accept="image/*" name="image" class="form-control" value="{{product.Images_Product.url}}" />
+                                <img src="{{product.Images_Product.url}}" alt="">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <input type="submit" class="btn btn-primary" value="Save changes">
+                                  </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                     
                       </div>
                     </div>
                   </div>

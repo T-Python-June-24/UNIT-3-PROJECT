@@ -15,6 +15,7 @@ def Manger(request:HttpRequest):
     number_product = Product.objects.count()
     number_Supplier = Supplier.objects.count()
     number_Category = Category.objects.count()
+    category = Category.objects.all()
 
     return render(request , 'pages/pages_manger.html' ,
                   {"Quantity_product":Quantity_product ,
@@ -22,9 +23,12 @@ def Manger(request:HttpRequest):
                    "update_product":update_product,
                    "number_product":number_product,
                    "number_supplier":number_Supplier,
-                   "number_category":number_Category
+                   "number_category":number_Category,
+                   
                    })
     
 def manger_product(request:HttpRequest):
-    views_product = Product.objects.all()
-    return render(request , "pages/views_product.html" , {"views_product":views_product})
+    category = Category.objects.all()
+    views_supplier = Supplier.objects.all()
+    views_product = Product.objects.all().select_related('Category_product').prefetch_related('Supplier_product')
+    return render(request , "pages/views_product.html" , {"views_product":views_product,"category":category , "views_supplier":views_supplier})
