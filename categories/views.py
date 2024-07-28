@@ -9,6 +9,7 @@ from .models import Category
 from django import forms
 import csv
 from .forms import CategoryForm
+from django.db.models import Count, Q
 
 class CategoryListView(ListView):
     model = Category
@@ -16,9 +17,30 @@ class CategoryListView(ListView):
     context_object_name = 'categories'
     paginate_by = 10  # Number of categories per page
 
+    def get_queryset(self):
+        queryset = Category.objects.annotate(product_count=Count('product'))
+        
+        # Search functionality
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) | Q(description__icontains=search_query)
+            )
+        
+        # Sorting
+        sort = self.request.GET.get('sort', 'name')
+        if sort == 'name':
+            queryset = queryset.order_by('name')
+        elif sort == '-name':
+            queryset = queryset.order_by('-name')
+        
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CategoryForm()
+        context['search_query'] = self.request.GET.get('search', '')
+        context['current_sort'] = self.request.GET.get('sort', 'name')
         return context
 
 def category_create(request):
