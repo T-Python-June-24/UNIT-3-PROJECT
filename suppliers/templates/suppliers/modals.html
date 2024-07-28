@@ -325,6 +325,24 @@
 </div>
 {% endfor %} {% block scripts %}
 <script>
+
+
+        function handleFormSubmit(formId, buttonId) {
+          const form = document.getElementById(formId);
+          const button = document.getElementById(buttonId);
+          
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            
+            if (button.disabled) return;
+            
+            button.disabled = true;
+            button.classList.add('loading');
+            button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
+            
+            this.submit();
+          });
+        }
   // Import CSV Form
   handleFormSubmit('importCSVForm', 'importCSVBtn');
 

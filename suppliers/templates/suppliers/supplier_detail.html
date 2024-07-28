@@ -81,11 +81,11 @@
         <div class="modal-box">
             <button onclick="closeModal('updateModal')" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
             <h3 class="font-bold text-lg">Update Supplier</h3>
-            <form method="POST" action="{% url 'supplier_update' supplier.id %}" enctype="multipart/form-data">
+            <form id="updateForm" method="POST" action="{% url 'supplier_update' supplier.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% include "suppliers/supplier_form_fields.html" with form=form %}
                 <div class="modal-action">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button id="updateButton" type="submit" class="btn btn-primary">Update</button>
                     <button type="button" class="btn" onclick="closeModal('updateModal')">Cancel</button>
                 </div>
             </form>
@@ -98,10 +98,10 @@
             <button onclick="closeModal('deleteModal')" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
             <h3 class="font-bold text-lg">Delete Supplier</h3>
             <p class="py-4">Are you sure you want to delete {{ supplier.name }}? This action cannot be undone.</p>
-            <form method="POST" action="{% url 'supplier_delete' supplier.id %}">
+            <form id="deleteForm" method="POST" action="{% url 'supplier_delete' supplier.id %}">
                 {% csrf_token %}
                 <div class="modal-action">
-                    <button type="submit" class="btn btn-error">Delete</button>
+                    <button id="deleteButton" type="submit" class="btn btn-error">Delete</button>
                     <button type="button" class="btn" onclick="closeModal('deleteModal')">Cancel</button>
                 </div>
             </form>
@@ -110,6 +110,23 @@
 </div>
 
 <script>
+        function handleFormSubmit(formId, buttonId) {
+          const form = document.getElementById(formId);
+          const button = document.getElementById(buttonId);
+          
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            
+            if (button.disabled) return;
+            
+            button.disabled = true;
+            button.classList.add('loading');
+            button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
+            
+            this.submit();
+    });
+}
+
 function openModal(modalId) {
     document.getElementById(modalId).classList.add('modal-open');
 }
@@ -117,5 +134,9 @@ function openModal(modalId) {
 function closeModal(modalId) {
     document.getElementById(modalId).classList.remove('modal-open');
 }
+
+handleFormSubmit('updateForm', 'updateButton');
+handleFormSubmit('deleteForm', 'deleteButton');
 </script>
+
 {% endblock %}

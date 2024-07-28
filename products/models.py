@@ -11,7 +11,7 @@ class Product(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     expiry_date = models.DateField(null=True, blank=True)
-    created_at = models.DateTimeField() #auto_now_add=True
+    created_at = models.DateTimeField()#auto_now_add=True
     updated_at = models.DateTimeField(auto_now=True)
     low_stock_threshold = models.PositiveIntegerField(default=10)
 

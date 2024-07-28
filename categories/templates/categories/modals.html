@@ -12,6 +12,7 @@
       method="POST"
       action="{% url 'import_categories_csv' %}"
       enctype="multipart/form-data"
+      id="importCSVForm"
     >
       {% csrf_token %}
       <div class="form-control">
@@ -29,7 +30,7 @@
         />
       </div>
       <div class="modal-action">
-        <button type="submit" class="btn btn-primary">Import</button>
+        <button type="submit" class="btn btn-primary" id="importCSVBtn">Import</button>
         <button type="button" class="btn" onclick="closeModal('importModal')">
           Cancel
         </button>
@@ -47,7 +48,7 @@
       ✕
     </button>
     <h3 class="font-bold text-lg">Create Category</h3>
-    <form method="POST" action="{% url 'category_create' %}">
+    <form method="POST" action="{% url 'category_create' %}" id="createCategoryForm">
       {% csrf_token %}
       <div class="form-control">
         <label class="label" for="id_name">
@@ -74,7 +75,6 @@
       </div>
       <div class="modal-action">
         <button type="submit" class="btn btn-primary" id="createCategoryBtn">
-          <span class="hidden loading loading-spinner loading-md"></span>
           Create
         </button>
         <button type="button" class="btn" onclick="closeModal('createModal')">
@@ -96,7 +96,7 @@
       ✕
     </button>
     <h3 class="font-bold text-lg">Update Category</h3>
-    <form method="POST" action="{% url 'category_update' category.id %}">
+    <form method="POST" action="{% url 'category_update' category.id %}" id="updateCategoryForm{{ category.id }}">
       {% csrf_token %}
       <div class="form-control">
         <label class="label" for="id_name_{{ category.id }}">
@@ -126,7 +126,6 @@
       </div>
       <div class="modal-action">
         <button type="submit" class="btn btn-primary" id="updateCategoryBtn{{ category.id }}">
-          <span class="hidden loading loading-spinner loading-md"></span>
           Update
         </button>
         <button
@@ -153,10 +152,10 @@
     </button>
     <h3 class="font-bold text-lg">Delete Category</h3>
     <p>Are you sure you want to delete {{ category.name }}?</p>
-    <form method="POST" action="{% url 'category_delete' category.id %}">
+    <form method="POST" action="{% url 'category_delete' category.id %}" id="deleteCategoryForm{{ category.id }}">
       {% csrf_token %}
       <div class="modal-action">
-        <button type="submit" class="btn btn-error">Delete</button>
+        <button type="submit" class="btn btn-error" id="deleteCategoryBtn{{ category.id }}">Delete</button>
         <button
           type="button"
           class="btn"
@@ -182,11 +181,10 @@
     </button>
     <h3 class="font-bold text-lg">Delete Category</h3>
     <p>Are you sure you want to delete {{ category.name }}?</p>
-    <form method="POST" action="{% url 'category_delete' category.id %}">
+    <form method="POST" action="{% url 'category_delete' category.id %}" id="deleteCategoryForm{{ category.id }}">
       {% csrf_token %}
       <div class="modal-action">
         <button type="submit" class="btn btn-error" id="deleteCategoryBtn{{ category.id }}">
-          <span class="hidden loading loading-spinner loading-md"></span>
           Delete
         </button>
         <button
@@ -201,3 +199,31 @@
   </div>
 </div>
 {% endfor %}
+
+<script>
+function handleFormSubmit(formId, buttonId) {
+    const form = document.getElementById(formId);
+    const button = document.getElementById(buttonId);
+    
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        if (button.disabled) return;
+        
+        button.disabled = true;
+        button.classList.add('loading');
+        button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
+        
+        this.submit();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    handleFormSubmit('importCSVForm', 'importCSVBtn');
+    handleFormSubmit('createCategoryForm', 'createCategoryBtn');
+    {% for category in object_list %}
+        handleFormSubmit('updateCategoryForm{{ category.id }}', 'updateCategoryBtn{{ category.id }}');
+        handleFormSubmit('deleteCategoryForm{{ category.id }}', 'deleteCategoryBtn{{ category.id }}');
+    {% endfor %}
+});
+</script>

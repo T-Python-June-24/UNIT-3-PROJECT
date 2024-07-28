@@ -112,21 +112,22 @@ function closeModal(modalId) {
     document.getElementById(modalId).classList.remove('modal-open');
 }
 
-function handleFormSubmit(formId, buttonId) {
-    const form = document.getElementById(formId);
-    const button = document.getElementById(buttonId);
-    
-    form.addEventListener('submit', function(e) {
+    function handleFormSubmit(formId, buttonId) {
+      const form = document.getElementById(formId);
+      const button = document.getElementById(buttonId);
+      
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
         
         if (button.disabled) return;
         
         button.disabled = true;
-        button.innerHTML = '<span class="loading loading-spinner"></span> Processing...';
+        button.classList.add('loading');
+        button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
         
         this.submit();
-    });
-}
+      });
+    }
 
 document.addEventListener('DOMContentLoaded', function() {
     handleFormSubmit('updateProductForm', 'updateProductBtn');

@@ -223,19 +223,29 @@
     {% endfor %}
 
 <script>
-// Create Product Form
+function handleFormSubmit(formId, buttonId) {
+    const form = document.getElementById(formId);
+    const button = document.getElementById(buttonId);
+    
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        if (button.disabled) return;
+        
+        button.disabled = true;
+        button.classList.add('loading');
+        button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
+        
+        this.submit();
+    });
+}
+
+// Apply handleFormSubmit to all forms
+handleFormSubmit('importCSVForm', 'importCSVBtn');
 handleFormSubmit('createProductForm', 'createProductBtn');
 
-// Update Product Forms
 {% for product in products %}
 handleFormSubmit('updateProductForm{{ product.id }}', 'updateProductBtn{{ product.id }}');
-{% endfor %}
-
-// Delete Product Forms
-{% for product in products %}
 handleFormSubmit('deleteProductForm{{ product.id }}', 'deleteProductBtn{{ product.id }}');
 {% endfor %}
-
-// Import CSV Form
-handleFormSubmit('importCSVForm', 'importCSVBtn');
 </script>
