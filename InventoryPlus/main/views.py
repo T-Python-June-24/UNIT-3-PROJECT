@@ -10,7 +10,7 @@ def home_view(request:HttpRequest):
     #get all products
     products = Product.objects.all().order_by("product_name")[0:3]
 
-    return render(request, 'main/index.html', {"product" : products} )
+    return render(request, 'main/index.html', {"products" : products} )
 
 
 def contact_view(request:HttpRequest):

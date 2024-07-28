@@ -11,11 +11,16 @@ h1 {
 }
 h1, h2 {
     font-family: "Bungee", sans-serif;
-    color: #345611;
+    color: #0a739a;
 }
 
 .navbar_background{
-    background-color: #3e7205;
+    background-color: #08a9e2;
+}
+
+.btn-background{
+    background-color: #08a9e2;
+    color: white;
 }
 
 .navbar-brand h2 {
@@ -63,7 +68,7 @@ hr {
     height: 1rem;
     border: none;
     background-color: rgb(230, 230, 230);
-    /* transform: skewX(-20deg); */
+
 }
 
 .top-logo {
@@ -78,7 +83,7 @@ hr {
 }
 
 .top-video {
-    transform: skewX(-20deg);
+    /* transform: skewX(-20deg); */
     transition: all 0.3s ease-in;
 }
 
@@ -98,7 +103,7 @@ hr {
 
 input[type="search"]{
     border-radius: 0px !important;
-    /* transform: skew(-10deg); */
+  
 }
 
 
@@ -188,7 +193,7 @@ a:hover {
 }
 
 .top-nav a.active {
-    background-color: rgb(227, 146, 6) !important;
+    background-color: rgb(4, 61, 102) !important;
     border-radius: 10px;
     padding: 2px 18px !important;
 }
@@ -200,3 +205,4 @@ a:hover {
         transition: all 0.3s ease-in;
     }
 }
+
