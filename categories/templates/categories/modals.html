@@ -96,30 +96,28 @@
       <form method="POST" action="{% url 'category_update' category.id %}">
         {% csrf_token %}
         <div class="form-control">
-          <label class="label" for="id_name">
+          <label class="label" for="id_name_{{ category.id }}">
             <span class="label-text">Category Name</span>
           </label>
           <input
             type="text"
             name="name"
-            id="id_name"
+            id="id_name_{{ category.id }}"
             class="input input-bordered"
             value="{{ category.name }}"
             required
           />
         </div>
         <div class="form-control">
-          <label class="label" for="id_description">
+          <label class="label" for="id_description_{{ category.id }}">
             <span class="label-text">Description</span>
           </label>
           <textarea
             name="description"
-            id="id_description"
+            id="id_description_{{ category.id }}"
             class="textarea textarea-bordered"
             rows="3"
-          >
-  {{ category.description }}</textarea
-          >
+          >{{ category.description }}</textarea>
         </div>
         <div class="modal-action">
           <button type="submit" class="btn btn-primary">Update</button>
@@ -135,7 +133,6 @@
     </div>
   </div>
   {% endfor %}
-  
   <!-- Delete Category Modals -->
   {% for category in object_list %}
   <div id="deleteModal{{ category.id }}" class="modal z-[1000]">
