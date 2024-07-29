@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" class="transition-colors duration-300">
   <head>
     <script>
       (function () {
@@ -43,6 +43,15 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <style>
+      .theme-transition,
+      .theme-transition *,
+      .theme-transition *:before,
+      .theme-transition *:after {
+        transition: all 0.3s ease-in-out !important;
+        transition-delay: 0 !important;
+      }
+    </style>
   </head>
 
   <body class="flex flex-col md:flex-row min-h-screen bg-base-200">
@@ -75,6 +84,15 @@
         const html = document.documentElement;
         const currentTheme = html.getAttribute("data-theme");
         const newTheme = currentTheme === "light" ? "dark" : "light";
+        
+        // Add transition class
+        html.classList.add('theme-transition');
+        
+        // Set timeout to remove transition class after animation completes
+        setTimeout(() => {
+          html.classList.remove('theme-transition');
+        }, 300);
+
         html.setAttribute("data-theme", newTheme);
         html.classList.toggle("dark");
         localStorage.setItem("theme", newTheme);
