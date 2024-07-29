@@ -1,13 +1,11 @@
-<!-- inventory/templates/inventory/product_detail.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Back to Product List button moved outside of the product-detail-card -->
-<a class="btn btn-secondary back-to-list-btn" href="{% url 'product_list' %}" title="Back to Product List">
-    <i class="fas fa-arrow-left"></i> Back to List
-</a>
+<div style="margin-top: 20px;">
+    <a href="{% url 'product_list' %}" style="color: #007bff; text-decoration: none; font-size: 16px;"> <i class="fas fa-arrow-left"></i> Back to List</a>
+</div>
 
-<div class="product-detail-card">
+<div class="product-detail-card small-card">
     <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
 
     <h1>{{ product.name }}</h1>
@@ -39,8 +37,8 @@
     {% endif %}
 
     <div class="product-actions">
-        <a class="btn btn-success" href="{% url 'stock_update' pk=product.pk %}">Update Stock</a>
-        <a class="btn btn-info" href="{% url 'product_edit' pk=product.pk %}">Edit Product</a>
+        <a class="btn btn-success"style="margin-left: 10px;" href="{% url 'stock_update' pk=product.pk %}">Update Stock</a>
+        <a class="btn btn-info"style="margin-left: 10px;" href="{% url 'product_edit' pk=product.pk %}">Edit Product</a>
         <form method="POST" action="{% url 'product_delete' pk=product.pk %}" class="delete-form" style="display:inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete Product</button>
