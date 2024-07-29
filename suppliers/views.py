@@ -6,7 +6,6 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from .models import Supplier
-import csv
 from .forms import SupplierForm
 from products.models import Product
 
@@ -19,7 +18,7 @@ def supplier_list(request):
             output_field=BooleanField()
         ),
         is_best_seller=ExpressionWrapper(
-            Q(highest_quantity_supplied__gte=1000),  # Arbitrary threshold for best seller
+            Q(highest_quantity_supplied__gte=1000),
             output_field=BooleanField()
         )
     )
@@ -83,9 +82,11 @@ def supplier_create(request):
         form = SupplierForm(request.POST, request.FILES)
         if form.is_valid():
             supplier = form.save()
+            messages.success(request, 'Supplier was created successfully')
             return redirect('supplier_detail', pk=supplier.id)
     else:
         form = SupplierForm()
+        messages.error(request, 'Supplier was not created successfully')
     return redirect('supplier_list')
 
 def supplier_update(request, pk):
@@ -96,7 +97,10 @@ def supplier_update(request, pk):
             supplier = form.save(commit=False)
             supplier.last_active = timezone.now()
             supplier.save()
+            messages.success(request, 'Supplier was updated successfully')
             return redirect('supplier_list')
+        else:
+            messages.error(request, 'Supplier was not updated successfully')
     else:
         form = SupplierForm(instance=supplier)
     return render(request, 'suppliers/supplier_form.html', {'form': form, 'supplier': supplier})
@@ -105,6 +109,7 @@ def supplier_delete(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
         supplier.delete()
+        messages.success(request, 'Supplier was deleted successfully')
         return redirect('supplier_list')
     return render(request, 'suppliers/supplier_confirm_delete.html', {'supplier': supplier})
 
@@ -152,6 +157,7 @@ def export_suppliers_csv(request):
     for supplier in suppliers:
         writer.writerow([supplier.name, supplier.email, supplier.phone, supplier.address, supplier.website])
 
+    messages.success(request, 'Suppliers exported successfully.')
     return response
 
 

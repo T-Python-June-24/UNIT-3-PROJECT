@@ -140,90 +140,19 @@
   </div>
 </div>
 {% endfor %}
-<!-- Delete Category Modals -->
+<!-- Delete Category Modal -->
 {% for category in object_list %}
-<div id="deleteModal{{ category.id }}" class="modal z-[1000]">
+<dialog id="deleteCategoryModal{{ category.id }}" class="modal">
   <div class="modal-box">
-    <button
-      onclick="closeModal('deleteModal{{ category.id }}')"
-      class="btn btn-sm btn-circle absolute right-2 top-2"
-    >
-      ✕
-    </button>
     <h3 class="font-bold text-lg">Delete Category</h3>
-    <p>Are you sure you want to delete {{ category.name }}?</p>
-    <form method="POST" action="{% url 'category_delete' category.id %}" id="deleteCategoryForm{{ category.id }}">
+    <p class="py-4">Are you sure you want to delete the category "{{ category.name }}"?</p>
+    <form method="post" action="{% url 'category_delete' category.id %}" id="deleteCategoryForm{{ category.id }}">
       {% csrf_token %}
       <div class="modal-action">
         <button type="submit" class="btn btn-error" id="deleteCategoryBtn{{ category.id }}">Delete</button>
-        <button
-          type="button"
-          class="btn"
-          onclick="closeModal('deleteModal{{ category.id }}')"
-        >
-          Cancel
-        </button>
+        <button type="button" class="btn" onclick="closeModal('deleteCategoryModal{{ category.id }}')">Cancel</button>
       </div>
     </form>
   </div>
-</div>
+</dialog>
 {% endfor %}
-
-<!-- Delete Category Modals -->
-{% for category in object_list %}
-<div id="deleteCategoryModal{{ category.id }}" class="modal z-[1000]">
-  <div class="modal-box">
-    <button
-      onclick="closeModal('deleteCategoryModal{{ category.id }}')"
-      class="btn btn-sm btn-circle absolute right-2 top-2"
-    >
-      ✕
-    </button>
-    <h3 class="font-bold text-lg">Delete Category</h3>
-    <p>Are you sure you want to delete {{ category.name }}?</p>
-    <form method="POST" action="{% url 'category_delete' category.id %}" id="deleteCategoryForm{{ category.id }}">
-      {% csrf_token %}
-      <div class="modal-action">
-        <button type="submit" class="btn btn-error" id="deleteCategoryBtn{{ category.id }}">
-          Delete
-        </button>
-        <button
-          type="button"
-          class="btn"
-          onclick="closeModal('deleteCategoryModal{{ category.id }}')"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-{% endfor %}
-
-<script>
-function handleFormSubmit(formId, buttonId) {
-    const form = document.getElementById(formId);
-    const button = document.getElementById(buttonId);
-    
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        
-        if (button.disabled) return;
-        
-        button.disabled = true;
-        button.classList.add('loading');
-        button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
-        
-        this.submit();
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    handleFormSubmit('importCSVForm', 'importCSVBtn');
-    handleFormSubmit('createCategoryForm', 'createCategoryBtn');
-    {% for category in object_list %}
-        handleFormSubmit('updateCategoryForm{{ category.id }}', 'updateCategoryBtn{{ category.id }}');
-        handleFormSubmit('deleteCategoryForm{{ category.id }}', 'deleteCategoryBtn{{ category.id }}');
-    {% endfor %}
-});
-</script>

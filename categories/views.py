@@ -4,7 +4,6 @@ import csv
 from django.views.generic import ListView
 from django.http import HttpResponse
 from .models import Category
-import csv
 from .forms import CategoryForm
 from django.db.models import Count, Q, Sum
 
@@ -53,6 +52,9 @@ def category_create(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Category created successfully.')
+        else:
+            messages.error(request, 'Category creation failed, check the fields correctly')
     return redirect('category_list')
 
 def category_update(request, pk):
@@ -61,12 +63,16 @@ def category_update(request, pk):
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Category updated successfully.')
+        else:
+            messages.error(request, 'Category update failed, check the fields correctly')
     return redirect('category_list')
 
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         category.delete()
+        messages.success(request, 'Category deleted successfully.')
     return redirect('category_list')
 
 
@@ -110,7 +116,11 @@ def export_categories_csv(request):
     writer.writerow(['Name', 'Description'])
 
     categories = Category.objects.all()
-    for category in categories:
-        writer.writerow([category.name, category.description])
+    if categories.exists():
+        for category in categories:
+            writer.writerow([category.name, category.description])
+        messages.success(request, 'Categories exported successfully.')
+    else:
+        messages.warning(request, 'No categories found to export.')
 
     return response

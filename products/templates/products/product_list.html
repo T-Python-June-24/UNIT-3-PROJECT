@@ -154,24 +154,25 @@
             });
         });
 
+
         function handleFormSubmit(formId, buttonId) {
             const form = document.getElementById(formId);
             const button = document.getElementById(buttonId);
             const allButtons = document.querySelectorAll('button');
-
+        
             form.addEventListener("submit", function (e) {
                 e.preventDefault();
-
+        
                 if (button.disabled) return;
-
+        
                 allButtons.forEach(btn => btn.disabled = true);
                 button.disabled = true;
                 button.classList.add('btn-disabled');
-                button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Processing...';
-
+                button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> <span class="text-neutral-content">Processing...</span>';
+        
                 this.submit();
             });
-        }
+          }
     
     });
 

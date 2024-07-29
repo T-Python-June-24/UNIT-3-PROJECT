@@ -9,7 +9,7 @@ class Supplier(models.Model):
     address = models.TextField()
     website = models.URLField(blank=True)
     image = models.ImageField(upload_to='suppliers/', blank=True)
-    last_active = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    last_active = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name

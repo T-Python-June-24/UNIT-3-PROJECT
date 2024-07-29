@@ -1,7 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-import csv
-from django.contrib import messages
 from django.db.models import Q, Sum, Count, F
 from django.db.models.functions import TruncMonth
 from django.core.paginator import Paginator
@@ -9,7 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import Product, Category, Supplier
 import csv
 from .forms import ProductForm, ProductSearchForm
-from .utils import check_product_status, send_product_notification  # Add this import
+from .utils import check_product_status, send_product_notification
 from django.utils import timezone
 from datetime import datetime
 
@@ -121,15 +119,19 @@ def product_list(request):
             if form.is_valid():
                 updated_product = form.save()
                 messages.success(request, f'Product "{updated_product.name}" has been successfully updated.')
-                send_product_notification(updated_product)  # Add this line
+                send_product_notification(updated_product)  
                 return redirect('product_list')
+            else:
+                messages.error(request, 'Product was not updated successfully, check the form again')
         elif 'create' in request.POST:
             form = ProductForm(request.POST)
             if form.is_valid():
                 new_product = form.save()
                 messages.success(request, f'Product "{new_product.name}" has been successfully created.')
-                send_product_notification(new_product)  # Add this line
+                send_product_notification(new_product)  
                 return redirect('product_list')
+            else:
+                messages.error(request, 'Product was not created successfully, check the form again')
 
     if search_form.is_valid():
         search_query = search_form.cleaned_data.get('search_query')
@@ -183,7 +185,7 @@ def product_list(request):
         'now': timezone.now().date(),
     }
     if not products.exists():
-        messages.error(request, 'No products found matching your criteria.')
+        messages.error(request, 'No products found.')
     return render(request, 'products/product_list.html', context)
 
 def product_detail(request, pk):
@@ -196,8 +198,10 @@ def product_detail(request, pk):
             if form.is_valid():
                 updated_product = form.save()
                 messages.success(request, f'Product "{updated_product.name}" has been successfully updated.')
-                send_product_notification(updated_product)  # Add this line
+                send_product_notification(updated_product)  
                 return redirect('product_detail', pk=updated_product.pk)
+            else:
+                messages.error(request, 'Failed to update product. Please check the form and try again.')
         elif 'delete' in request.POST:
             product_name = product.name
             product.delete()
@@ -298,4 +302,5 @@ def export_products_csv(request):
             product.expiry_date
         ])
 
+    messages.success(request, 'Products have been successfully exported to CSV.')
     return response

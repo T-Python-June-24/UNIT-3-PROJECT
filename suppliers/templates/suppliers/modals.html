@@ -327,36 +327,32 @@
 <script>
 
 
-        function handleFormSubmit(formId, buttonId) {
-          const form = document.getElementById(formId);
-          const button = document.getElementById(buttonId);
-          
-          form.addEventListener("submit", function (e) {
+ 
+    function handleFormSubmit(formId, buttonId) {
+        const form = document.getElementById(formId);
+        const button = document.getElementById(buttonId);
+        const allButtons = document.querySelectorAll('button');
+    
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
-            
+    
             if (button.disabled) return;
-            
+    
+            allButtons.forEach(btn => btn.disabled = true);
             button.disabled = true;
-            button.classList.add('loading');
-            button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
-            
+            button.classList.add('btn-disabled');
+            button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> <span class="text-neutral-content">Processing...</span>';
+    
             this.submit();
-          });
-        }
-  // Import CSV Form
-  handleFormSubmit('importCSVForm', 'importCSVBtn');
-
-  // Create Supplier Form
-  handleFormSubmit('createSupplierForm', 'createSupplierBtn');
-
-  // Update Supplier Forms
-  {% for supplier in suppliers %}
-  handleFormSubmit('updateSupplierForm{{ supplier.id }}', 'updateSupplierBtn{{ supplier.id }}');
-  {% endfor %}
-
-  // Delete Supplier Forms
-  {% for supplier in suppliers %}
-  handleFormSubmit('deleteSupplierForm{{ supplier.id }}', 'deleteSupplierBtn{{ supplier.id }}');
-  {% endfor %}
+        });
+      }
+    document.addEventListener('DOMContentLoaded', function() {                                                                                                                                        
+        handleFormSubmit('importCSVForm', 'importCSVBtn');                                                                                                                                            
+        handleFormSubmit('createSupplierForm', 'createSupplierBtn');                                                                                                                                  
+        {% for supplier in suppliers %}                                                                                                                                                               
+            handleFormSubmit('updateSupplierForm{{ supplier.id }}', 'updateSupplierBtn{{ supplier.id }}');                                                                                            
+            handleFormSubmit('deleteSupplierForm{{ supplier.id }}', 'deleteSupplierBtn{{ supplier.id }}');                                                                                            
+        {% endfor %}                                                                                                                                                                                  
+    });  
 </script>
 {% endblock %}

@@ -112,6 +112,7 @@ function closeModal(modalId) {
     document.getElementById(modalId).classList.remove('modal-open');
 }
 
+
 function handleFormSubmit(formId, buttonId) {
     const form = document.getElementById(formId);
     const button = document.getElementById(buttonId);
@@ -125,11 +126,11 @@ function handleFormSubmit(formId, buttonId) {
         allButtons.forEach(btn => btn.disabled = true);
         button.disabled = true;
         button.classList.add('btn-disabled');
-        button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Processing...';
+        button.innerHTML = '<span class="loading loading-spinner loading-sm"></span> <span class="text-neutral-content">Processing...</span>';
 
         this.submit();
     });
-}
+  }
 
 document.addEventListener('DOMContentLoaded', function() {
     handleFormSubmit('updateProductForm', 'updateProductBtn');
