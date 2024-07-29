@@ -1,42 +1,47 @@
+/* Reset default margins and paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Set full height for the body and html */
 html, body {
     height: 100%;
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f8f9fa; 
+    background-color: #f8f9fa; /* Light background for the whole page */
 }
 
+/* Flexbox layout for body */
 body {
     display: flex;
     flex-direction: column;
 }
 
+/* Header styling */
 header {
-    background-color: #343a40; 
-    color: #fff; 
-    padding: 0.5rem 1rem;
+    background-color: #343a40; /* Dark background */
+    color: #fff; /* White text */
+    padding: 0.5rem 1rem; /* Thinner header */
     text-align: center;
-    border-bottom: 1px solid #495057; 
-    position: fixed; 
-    width: 100%; 
-    top: 0; 
-    left: 0; 
-    z-index: 1000; 
+    border-bottom: 1px solid #495057; /* Darker border */
+    position: fixed; /* Fix header at the top */
+    width: 100%; /* Ensure it spans full width */
+    top: 0; /* Position at the top */
+    left: 0; /* Align to the left */
+    z-index: 1000; /* Ensure it sits above other content */
 }
 
+/* Adjust header content to fit thinner header */
 header h1 {
-    margin: 0; 
-    font-size: 1.5rem; 
-    line-height: 1.2; 
+    margin: 0; /* Remove default margin */
+    font-size: 1.5rem; /* Adjusted font size for thinner header */
+    line-height: 1.2; /* Adjust line height to prevent overlap */
 }
 
 header nav {
-    margin-top: 0.5rem; 
+    margin-top: 0.5rem; /* Adjust spacing for navigation */
 }
 
 header nav ul {
@@ -51,7 +56,7 @@ header nav ul li {
 }
 
 header nav ul li a {
-    color: #fff; 
+    color: #fff; /* White text */
     text-decoration: none;
     font-weight: bold;
 }
@@ -60,30 +65,34 @@ header nav ul li a:hover {
     text-decoration: underline;
 }
 
+/* Adjust main content area */
 main {
     flex: 1;
-    padding: 5rem 1rem 1rem; 
-    background-color: #f8f9fa; 
+    padding: 5rem 1rem 1rem; /* Add top padding to prevent overlap with fixed header */
+    background-color: #f8f9fa; /* Light background */
 }
 
+/* Section styling */
 section {
     margin-bottom: 2rem;
 }
 
+/* Footer styling */
 footer {
-    background-color: #343a40; 
-    color: #fff; 
+    background-color: #343a40; /* Dark background */
+    color: #fff; /* White text */
     text-align: center;
     padding: 1rem;
-    border-top: 1px solid #495057; 
+    border-top: 1px solid #495057; /* Darker border */
 }
 
 footer p {
     margin: 0;
 }
 
+/* Button styling */
 button {
-    color: #fff; 
+    color: #fff; /* White text */
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1rem;
@@ -92,61 +101,64 @@ button {
     transition: background-color 0.3s;
     display: inline-block;
     text-align: center;
-    box-sizing: border-box; 
+    box-sizing: border-box; /* Ensure padding is included in width */
 }
 
+/* Button Color Variations */
 .btn-primary {
-    background-color: #007bff; 
+    background-color: #007bff; /* Primary blue */
 }
 
 .btn-primary:hover {
-    background-color: #0056b3; 
+    background-color: #0056b3; /* Darker shade of blue */
 }
 
 .btn-success {
-    background-color: #28a745; 
+    background-color: #28a745; /* Success green */
 }
 
 .btn-success:hover {
-    background-color: #218838; 
+    background-color: #218838; /* Darker green */
 }
 
 .btn-danger {
-    background-color: #dc3545; 
+    background-color: #dc3545; /* Danger red */
 }
 
 .btn-danger:hover {
-    background-color: #c82333; 
+    background-color: #c82333; /* Darker red */
 }
 
 .btn-info {
-    background-color: #17a2b8; 
+    background-color: #17a2b8; /* Info cyan */
 }
 
 .btn-info:hover {
-    background-color: #117a8b; 
+    background-color: #117a8b; /* Darker cyan */
 }
 
 .btn-secondary {
-    background-color: #6c757d; 
+    background-color: #6c757d; /* Secondary gray */
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268; 
+    background-color: #5a6268; /* Darker gray */
 }
 
+/* Aligning buttons in a row */
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; 
-    justify-content: center;
+    gap: 10px; /* Spacing between buttons */
+    justify-content: center; /* Center align buttons */
 }
 
 .button-group .btn {
-    flex: 1; 
-    max-width: 150px; 
+    flex: 1; /* Make buttons flexible */
+    max-width: 150px; /* Optional: constrain maximum width */
 }
 
+/* Product List Section Styling */
 .product-header {
     display: flex;
     justify-content: space-between;
@@ -160,7 +172,7 @@ button {
 }
 
 .product-header .btn {
-    background-color: #28a745; 
+    background-color: #28a745; /* Green background for Add Product button */
     color: #fff;
     text-decoration: none;
     padding: 0.5rem 1rem;
@@ -168,34 +180,38 @@ button {
 }
 
 .product-header .btn:hover {
-    background-color: #218838; 
+    background-color: #218838; /* Darker green on hover */
 }
 
+/* Product Cards Container */
 .product-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; 
-    justify-content: center; 
+    gap: 20px; /* Gap between cards */
+    justify-content: center; /* Center align cards */
 }
 
+/* Individual Product Card */
 .product-card {
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
-    width: 300px; 
-    background-color: #fff; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    transition: transform 0.3s, box-shadow 0.3s; 
+    width: 300px; /* Adjust card width */
+    background-color: #fff; /* White background for card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
     display: flex;
     flex-direction: column;
 }
 
+/* Product Card Image */
 .product-card img {
     width: 100%;
-    height: 200px; 
-    object-fit: cover; 
+    height: 200px; /* Fixed height for image */
+    object-fit: cover; /* Cover the container without distortion */
 }
 
+/* Product Card Content */
 .product-card .content {
     padding: 1rem;
     flex: 1; 
@@ -203,156 +219,168 @@ button {
 
 .product-card h3 {
     font-size: 1.25em;
-    margin: 0.5em 0; 
-    color: #343a40; 
-    padding-left: 1rem; 
+    margin: 0.5em 0; /* Margins for spacing around the heading */
+    color: #343a40; /* Darker text color for better readability */
+    padding-left: 1rem; /* Add left padding for text */
 }
 
 .product-card p {
-    margin: 0.5em 0; 
-    color: #6c757d; 
-    padding-left: 1rem; 
+    margin: 0.5em 0; /* Margin for spacing around paragraphs */
+    color: #6c757d; /* Light gray text for description */
+    padding-left: 1rem; /* Add left padding for text */
 }
 
+/* Product Card Button */
 .product-card .btn {
     display: block;
     text-align: center;
-    margin-top: auto; 
+    margin-top: auto; /* Push button to the bottom of the card */
     padding: 0.75em;
-    background-color: #007bff; 
+    background-color: #007bff; /* Default blue background */
     color: white;
     text-decoration: none;
-    border-radius: 0 0 10px 10px; 
+    border-radius: 0 0 10px 10px; /* Rounded corners on the bottom */
 }
 
 .product-card .btn:hover {
-    background-color: #0056b3; 
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
+/* Hover effect for product card */
 .product-card:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Product Detail Card Styling */
 .product-detail-card {
-    background-color: #fff; 
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    background-color: #fff; /* White background for card */
+    border: 1px solid #ddd; /* Light border around the card */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card */
     padding: 1rem;
-    max-width: 800px; 
-    margin: 2rem auto;
+    max-width: 800px; /* Max width for the card */
+    margin: 2rem auto; /* Center align the card */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Product Detail Image */
 .product-detail-card img {
     width: 100%;
-    height: 400px; 
-    object-fit: cover; 
-    border-bottom: 1px solid #ddd; 
-    border-radius: 10px 10px 0 0; 
+    height: 400px; /* Fixed height for product image */
+    object-fit: cover; /* Cover the container without distortion */
+    border-bottom: 1px solid #ddd; /* Border below image */
+    border-radius: 10px 10px 0 0; /* Rounded corners on top */
 }
 
+/* Card Title */
 .product-detail-card h1 {
     font-size: 2rem;
     margin: 1rem 0;
-    color: #343a40; 
+    color: #343a40; /* Darker text color */
 }
 
+/* Product Description */
 .product-detail-card .product-description {
     margin-bottom: 1rem;
-    color: #6c757d; 
+    color: #6c757d; /* Light gray text color */
     text-align: center;
 }
 
+/* Product Price */
 .product-detail-card .product-price {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #28a745;
+    color: #28a745; /* Green color for price */
     text-align: center;
 }
 
+/* Product Category */
 .product-detail-card .product-category {
     margin-bottom: 1rem;
-    color: #007bff; 
+    color: #007bff; /* Blue color for category */
     text-align: center;
 }
 
+/* Product Suppliers */
 .product-detail-card .product-suppliers {
     margin-bottom: 1rem;
     text-align: center;
 }
 
 .product-detail-card .product-suppliers span {
-    color: #6c757d; 
+    color: #6c757d; /* Light gray color for supplier names */
 }
 
+/* Stock List */
 .product-detail-card .stock-list {
     list-style-type: none;
     padding: 0;
     margin: 1rem 0;
-    color: #6c757d; 
+    color: #6c757d; /* Light gray color for stock entries */
 }
 
+/* Action Buttons */
 .product-detail-card .product-actions {
     display: flex;
-    flex-direction: column; 
-    gap: 10px; 
-    width: 100%; 
-    align-items: center; 
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Spacing between buttons */
+    width: 100%; /* Ensure container spans full width */
+    align-items: center; /* Center align buttons */
 }
 
 .product-detail-card .product-actions .btn {
     display: block;
-    width: 100%; 
+    width: 100%; /* Full width of the container */
     padding: 0.5rem 1rem;
     border-radius: 4px;
     text-align: center;
     text-decoration: none;
     color: #fff;
-    box-sizing: border-box; 
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
+/* Button Color Variations */
 .product-detail-card .product-actions .btn-success {
-    background-color: #28a745; 
+    background-color: #28a745; /* Green background for Update Stock */
 }
 
 .product-detail-card .product-actions .btn-success:hover {
-    background-color: #218838; 
+    background-color: #218838; /* Darker green on hover */
 }
 
 .product-detail-card .product-actions .btn-info {
-    background-color: #17a2b8; 
+    background-color: #17a2b8; /* Cyan background for Edit Product */
 }
 
 .product-detail-card .product-actions .btn-info:hover {
-    background-color: #117a8b; 
+    background-color: #117a8b; /* Darker cyan on hover */
 }
 
 .product-detail-card .product-actions .btn-danger {
-    background-color: #dc3545; 
+    background-color: #dc3545; /* Red background for Delete Product */
 }
 
 .product-detail-card .product-actions .btn-danger:hover {
-    background-color: #c82333; 
+    background-color: #c82333; /* Darker red on hover */
 }
 
 .product-detail-card .product-actions .btn-secondary {
-    background-color: #6c757d; 
+    background-color: #6c757d; /* Gray background for Back to Product List */
 }
 
 .product-detail-card .product-actions .btn-secondary:hover {
-    background-color: #5a6268; 
+    background-color: #5a6268; /* Darker gray on hover */
 }
 
 .product-detail-card .product-actions .delete-form {
-    width: 100%; 
+    width: 100%; /* Full width of the container */
 }
 
 .product-detail-card .product-actions .delete-form button {
-    width: 100%;
+    width: 100%; /* Full width of the container */
     padding: 0.5rem 1rem;
     border-radius: 4px;
     text-align: center;
@@ -360,45 +388,92 @@ button {
     background-color: #dc3545;
     border: none;
     cursor: pointer;
-    box-sizing: border-box; 
+    box-sizing: border-box; /* Include padding in width calculation */
     transition: background-color 0.3s;
 }
 
 .product-detail-card .product-actions .delete-form button:hover {
     background-color: #c82333;
 }
+/* Container for search form */
 .search-container {
     margin: 20px 0;
     display: flex;
     justify-content: center;
 }
 
+/* Search input field */
 .search-input {
     padding: 12px 20px;
     border: 2px solid #ddd;
-    border-radius: 25px; 
-    width: 300px; 
+    border-radius: 25px; /* Rounded corners */
+    width: 300px; /* Fixed width */
     font-size: 16px;
-    transition: border-color 0.3s ease; 
+    transition: border-color 0.3s ease; /* Smooth border color transition */
 }
 
 .search-input:focus {
-    border-color: #007bff; 
-    outline: none; 
+    border-color: #007bff; /* Color when focused */
+    outline: none; /* Remove default outline */
 }
 
+/* Search button */
 .search-btn {
     padding: 12px 20px;
-    background-color: #007bff; 
-    color: white; 
+    background-color: #007bff; /* Button color */
+    color: white; /* Text color */
     border: none;
-    border-radius: 25px; 
+    border-radius: 25px; /* Rounded corners */
     cursor: pointer;
     font-size: 16px;
     margin-left: 10px;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
 .search-btn:hover {
-    background-color: #0056b3; 
+    background-color: #0056b3; /* Darker color on hover */
+}
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown button */
+.dropbtn {
+    color: white;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #fcfcfc;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
