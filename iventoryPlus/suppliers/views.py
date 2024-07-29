@@ -5,6 +5,11 @@ import time
 # Create your views here.
 def all_suppliers(request:HttpRequest):
     suppliers=Supplier.objects.all()
+    #print(suppliers[0].product_set.all())
+
+    for index, supplier in enumerate(suppliers):
+        suppliers[index].percentage = 9
+
     return render(request,"suppliers/supplier.html",{"suppliers":suppliers})
 
 def add_supplier(request:HttpRequest):

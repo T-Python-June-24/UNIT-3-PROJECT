@@ -3,19 +3,32 @@ from django.http import HttpRequest
 from products.models import Product
 from categories.models import Category
 from suppliers.models import Supplier
+import humanize
 from django.utils.timezone import now
-
+from datetime import date, timedelta, timezone
+  
 # Create your views here.
 def home_view(request:HttpRequest):
     products=Product.objects.all()
+    categories=Category.objects.all()
     products_count=products.count()
     suppliers_count=Supplier.objects.all().count()
-    # added_today_suppliers=Supplier.objects.filter(added=now().date())
+    added_today_suppliers=Supplier.objects.filter(added=now().date())   
+    added_today_products=products.filter(added__gte=now().date()) 
+    print(added_today_products)
     total_values=0
     for product in products:
-        total_values+=product.price
-
-    return render(request,"main/index.html",{"total_value":total_values,"products_count":products_count,"suppliers_count":suppliers_count})
+        total_values+=product.price*product.stock_level
+    formatted_total_value = humanize.intcomma(total_values) 
+    
+    return render(request,"main/index.html",{
+                                             "total_value":formatted_total_value,
+                                             "products_count":products_count,
+                                             "suppliers_count":suppliers_count,
+                                             "suppliers":added_today_suppliers,
+                                             "products":added_today_products,
+                                             "categories":categories,
+                                             })
 
 
 

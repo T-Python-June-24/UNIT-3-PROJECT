@@ -21,11 +21,12 @@ def add_product_view(request:HttpRequest)->render:
             expirment=request.POST["expirment_date"]
         
         price=request.POST["price"]
-        category=Category.objects.get(pk=request.POST["category"]) if "category" in request.POST else None
+        category=Category.objects.get(pk=request.POST["category"]) if request.POST["category"] !="" else None
         
         new_product=Product(name=name,description=description,stock_level=stock_level,expirment=expirment,price=price,category=category)
         new_product.save()
-        new_product.supplier.set(request.POST.getlist("supplier"))
+        if "supplier" in  request.POST:
+            new_product.supplier.set(request.POST.getlist("supplier"))
         return redirect("products:products_view")
 
     return render(request,"products/add_product.html",{"suppliers":suppliers,"categories":categories,"product":product})

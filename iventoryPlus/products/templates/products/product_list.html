@@ -8,7 +8,7 @@
             <th class="text-left py-3 px-2">Added At</th>
             <th class="text-left py-3 px-2">Stock Level</th>
             <th class="text-left py-3 px-2 rounded-r-lg">Actions</th>
-        </thead>
+        </thead>  
         {% for product in products %}
         <tr class="border-b border-gray-800">
             <td class="py-3 px-2 font-bold">
@@ -25,7 +25,7 @@
             </td>
             <td class="py-3 px-2">{{product.expirment}}</td>
             <td class="py-3 px-2">{{product.added}}</td>
-            <td class="py-3 px-2 text-red-700">{{product.stock_level}} items</td>
+            <td {% if product.stock_level <= 10 %} class="py-3 px-2 text-red-700" {% else %} class="py-3 px-2 text-green-700" {% endif %}>{{product.stock_level}} items</td>
             <td class="py-3 px-2">
                 <div class="flex flex-row items-center space-x-3 justify-center">
                     <a href="{% url 'products:update_product' product.id %}" title="Edit" class="hover:text-white">
@@ -33,7 +33,7 @@
                             edit
                             </span>
                       </a>
-                   
+                    
                     <a href="{% url 'products:delete_product' product.id %}" title="Delete product" class="hover:text-white">
                         <span class="material-symbols-outlined">
                             delete
