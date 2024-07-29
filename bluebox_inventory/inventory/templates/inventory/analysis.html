@@ -1,0 +1,35 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}Analysis - BlueBox Inventory{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Analysis</h1>
+    <canvas id="productChart" width="400" height="200"></canvas>
+    <a href="{% url 'export_csv' %}" class="btn btn-primary mt-3">Export as CSV</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('productChart').getContext('2d');
+    const productChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ product_data.labels|safe }},
+            datasets: [{
+                label: 'Stock Quantity',
+                data: {{ product_data.data|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

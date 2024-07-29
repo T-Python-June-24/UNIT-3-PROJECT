@@ -1,0 +1,15 @@
+{% extends 'inventory/base.html' %}
+
+{% block title %}{{ form.instance.pk|yesno:"Edit Supplier,Add New Supplier" }} - BlueBox Inventory{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ form.instance.pk|yesno:"Edit Supplier,Add New Supplier" }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+        <a href="{% url 'supplier_list' %}" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+</div>
+{% endblock %}

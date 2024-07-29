@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BlueBox Inventory{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 56px;
+        }
+        .navbar {
+            background-color: darkblue;
+        }
+        .navbar a {
+            color: white;
+        }
+        .navbar a:hover {
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">BlueBox Inventory</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'category_list' %}">Categories</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'supplier_list' %}">Suppliers</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'analysis' %}">Analysis</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
