@@ -141,6 +141,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        handleFormSubmit('searchFilterForm', 'searchFilterSubmitBtn');
         flatpickr("#expiry_date_create", {
             dateFormat: "Y-m-d",
         });
@@ -153,8 +154,26 @@
             });
         });
 
-        handleFormSubmit('searchFilterForm', 'searchFilterSubmitBtn');
+        function handleFormSubmit(formId, buttonId) {                                                                                                                                                     
+            const form = document.getElementById(formId);                                                                                                                                                 
+            const button = document.getElementById(buttonId);                                                                                                                                             
+                                                                                                                                                                                                          
+            form.addEventListener("submit", function (e) {                                                                                                                                                
+                e.preventDefault();                                                                                                                                                                       
+                                                                                                                                                                                                          
+                if (button.disabled) return;                                                                                                                                                              
+                                                                                                                                                                                                          
+                button.disabled = true;                                                                                                                                                                   
+                button.classList.add('loading', 'z-[1000]');                                                                                                                                              
+                button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';                                                                                              
+                                                                                                                                                                                                          
+                this.submit();                                                                                                                                                                            
+            });                                                                                                                                                                                           
+        } 
+    
     });
+
+
 </script>
 
 {% endblock %}

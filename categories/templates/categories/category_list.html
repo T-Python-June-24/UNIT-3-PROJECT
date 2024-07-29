@@ -83,30 +83,32 @@
   function closeModal(modalId) {
     document.getElementById(modalId).classList.remove("modal-open");
   }
-  function handleFormSubmit(formId, buttonId) {
-    const form = document.getElementById(formId);
-    const button = document.getElementById(buttonId);
-    
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        
-        if (button.disabled) return;
-        
-        button.disabled = true;
-        button.classList.add('loading');
-        button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';
-        
-        this.submit();
-    });
-  }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    handleFormSubmit('searchForm', 'searchBtn');
-    handleFormSubmit('createCategoryForm', 'createCategoryBtn');
-    {% for category in categories %}
-      handleFormSubmit('updateCategoryForm{{ category.id }}', 'updateCategoryBtn{{ category.id }}');
-      handleFormSubmit('deleteCategoryForm{{ category.id }}', 'deleteCategoryBtn{{ category.id }}');
-    {% endfor %}
-  });
+  function handleFormSubmit(formId, buttonId) {                                                                                                                                                     
+    const form = document.getElementById(formId);                                                                                                                                                 
+    const button = document.getElementById(buttonId);                                                                                                                                             
+                                                                                                                                                                                                  
+    form.addEventListener("submit", function (e) {                                                                                                                                                
+        e.preventDefault();                                                                                                                                                                       
+                                                                                                                                                                                                  
+        if (button.disabled) return;                                                                                                                                                              
+                                                                                                                                                                                                  
+        button.disabled = true;                                                                                                                                                                   
+        button.classList.add('loading', 'z-[1000]');                                                                                                                                              
+        button.innerHTML = '<span class="loading loading-spinner loading-md"></span> Processing...';                                                                                              
+                                                                                                                                                                                                  
+        this.submit();                                                                                                                                                                            
+    });                                                                                                                                                                                           
+}     
+
+ document.addEventListener('DOMContentLoaded', function() {                                                                                                                                        
+     handleFormSubmit('searchForm', 'searchBtn');                                                                                                                                                                                                                           
+     handleFormSubmit('importCSVForm', 'importCSVBtn');                                                                                                                                            
+     handleFormSubmit('createCategoryForm', 'createCategoryBtn');                                                                                                                                  
+     {% for category in categories %}                                                                                                                                                              
+         handleFormSubmit('updateCategoryForm{{ category.id }}', 'updateCategoryBtn{{ category.id }}');                                                                                            
+         handleFormSubmit('deleteCategoryForm{{ category.id }}', 'deleteCategoryBtn{{ category.id }}');                                                                                            
+     {% endfor %}                                                                                                                                                                                  
+ }); 
 </script>
 {% endblock %}
