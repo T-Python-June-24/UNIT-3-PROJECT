@@ -46,11 +46,7 @@
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
     <style>
       .theme-transition,
       .theme-transition *,
@@ -145,16 +141,8 @@
       window.addEventListener("load", adjustContentPadding);
       window.addEventListener("resize", adjustContentPadding);
 
-      // Initialize AOS
-      AOS.init({
-        duration: 800,
-        once: true,
-      });
+  
 
-      // Refresh AOS on route change
-      document.addEventListener("turbolinks:load", () => {
-        AOS.refresh();
-      });
     </script>
     {% block scripts %} {% endblock %}
   </body>
