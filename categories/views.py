@@ -1,52 +1,54 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 import csv
-from django.views.generic import ListView
 from django.http import HttpResponse
 from .models import Category
 from .forms import CategoryForm
 from django.db.models import Count, Q, Sum
+from django.core.paginator import Paginator
 
-class CategoryListView(ListView):
-    model = Category
-    template_name = 'categories/category_list.html'
-    context_object_name = 'categories'
-    paginate_by = 10  # Number of categories per page
+def staff_required(view_func):
+    decorated_view_func = user_passes_test(lambda u: u.is_staff, login_url='login')(view_func)
+    return decorated_view_func
 
-# this function is used to get the product count, and total quantity related to the category
-    def get_queryset(self):
-        queryset = Category.objects.annotate(
-            product_count=Count('product'),
-            total_quantity=Sum('product__quantity')
+@staff_required
+def category_list(request):
+    queryset = Category.objects.annotate(
+        product_count=Count('product'),
+        total_quantity=Sum('product__quantity')
+    )
+    
+    # Search functionality
+    search_query = request.GET.get('search', '')
+    if search_query:
+        queryset = queryset.filter(
+            Q(name__icontains=search_query) | Q(description__icontains=search_query)
         )
-        
-        # Search functionality
-        search_query = self.request.GET.get('search', '')
-        if search_query:
-            queryset = queryset.filter(
-                Q(name__icontains=search_query) | Q(description__icontains=search_query)
-            )
-        
-        # Sorting
-        sort = self.request.GET.get('sort', 'name')
-        if sort == 'name':
-            queryset = queryset.order_by('name')
-        elif sort == '-name':
-            queryset = queryset.order_by('-name')
-        
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = CategoryForm()
-        context['search_query'] = self.request.GET.get('search', '')
-        context['current_sort'] = self.request.GET.get('sort', 'name')
-        return context
-
-
+    
+    # Sorting
+    sort = request.GET.get('sort', 'name')
+    if sort == 'name':
+        queryset = queryset.order_by('name')
+    elif sort == '-name':
+        queryset = queryset.order_by('-name')
+    
+    # Pagination
+    paginator = Paginator(queryset, 10)  # 10 categories per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'categories': page_obj,
+        'form': CategoryForm(),
+        'search_query': search_query,
+        'current_sort': sort,
+    }
+    return render(request, 'categories/category_list.html', context)
 
 # CRUD FUNCTIONS
 
+@staff_required
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -57,6 +59,7 @@ def category_create(request):
             messages.error(request, 'Category creation failed, check the fields correctly')
     return redirect('category_list')
 
+@staff_required
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -68,6 +71,7 @@ def category_update(request, pk):
             messages.error(request, 'Category update failed, check the fields correctly')
     return redirect('category_list')
 
+@staff_required
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -75,10 +79,9 @@ def category_delete(request, pk):
         messages.success(request, 'Category deleted successfully.')
     return redirect('category_list')
 
-
-
 # CSV RELATED FUNCTIONS
 
+@staff_required
 def import_categories_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -107,7 +110,7 @@ def import_categories_csv(request):
         messages.success(request, 'Categories imported successfully.')
     return redirect('category_list')
 
-
+@staff_required
 def export_categories_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="categories_export.csv"'

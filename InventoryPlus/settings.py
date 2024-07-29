@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'categories',
     'suppliers',
     'products',
+    'accounts',
     "whitenoise.runserver_nostatic",
 
 
@@ -153,3 +154,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 MANAGER_EMAIL = os.getenv('MANAGER_EMAIL')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') 
+
+LOGIN_REDIRECT_URL = '/dashboard/' 
+LOGIN_URL = '/accounts/login/'  

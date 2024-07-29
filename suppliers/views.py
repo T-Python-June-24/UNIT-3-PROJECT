@@ -8,7 +8,13 @@ from django.utils import timezone
 from .models import Supplier
 from .forms import SupplierForm
 from products.models import Product
+from django.contrib.auth.decorators import user_passes_test
 
+def staff_required(view_func):
+    decorated_view_func = user_passes_test(lambda u: u.is_staff, login_url='login')(view_func)
+    return decorated_view_func
+
+@staff_required
 def supplier_list(request):
     thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
     suppliers = Supplier.objects.annotate(
@@ -72,11 +78,13 @@ def supplier_list(request):
     }
     return render(request, 'suppliers/supplier_list.html', context)
 
+@staff_required
 def supplier_detail(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     supplier_products = Product.objects.filter(supplier=supplier)
     return render(request, 'suppliers/supplier_detail.html', {'supplier': supplier, 'supplier_products': supplier_products})
 
+@staff_required
 def supplier_create(request):
     if request.method == 'POST':
         form = SupplierForm(request.POST, request.FILES)
@@ -89,6 +97,7 @@ def supplier_create(request):
         messages.error(request, 'Supplier was not created successfully')
     return redirect('supplier_list')
 
+@staff_required
 def supplier_update(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
@@ -105,6 +114,7 @@ def supplier_update(request, pk):
         form = SupplierForm(instance=supplier)
     return render(request, 'suppliers/supplier_form.html', {'form': form, 'supplier': supplier})
 
+@staff_required
 def supplier_delete(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
@@ -113,6 +123,7 @@ def supplier_delete(request, pk):
         return redirect('supplier_list')
     return render(request, 'suppliers/supplier_confirm_delete.html', {'supplier': supplier})
 
+@staff_required
 def import_suppliers_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -146,6 +157,7 @@ def import_suppliers_csv(request):
         messages.success(request, 'Suppliers imported successfully.')
     return redirect('supplier_list')
 
+@staff_required
 def export_suppliers_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="suppliers_export.csv"'
@@ -160,7 +172,7 @@ def export_suppliers_csv(request):
     messages.success(request, 'Suppliers exported successfully.')
     return response
 
-
+@staff_required
 def update_last_active(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     supplier.last_active = timezone.now()

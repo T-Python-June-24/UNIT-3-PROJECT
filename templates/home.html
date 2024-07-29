@@ -2,7 +2,7 @@
 Management System{% endblock %} {% block content %}
 <div class="container mx-auto px-2 py-4 bg-base-100 text-base-content">
   <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-center">
-    Inventory Dashboard
+    <i class="fas fa-chart-line mr-2"></i>Inventory Dashboard
   </h1>
 
   <!-- Top Stats -->
@@ -10,7 +10,7 @@ Management System{% endblock %} {% block content %}
     class="stat bg-transparent text-neutral-content rounded-box shadow-sm p-2"
   >
     <div class="stat-title text-lg sm:text-xl text-base-content font-bold">
-      Total Spending
+      <i class="fas fa-dollar-sign mr-2"></i>Total Spending
     </div>
     <div
       class="stat-value text-3xl sm:text-4xl text-neutral-content"
@@ -24,7 +24,7 @@ Management System{% endblock %} {% block content %}
       class="stat bg-primary/20 text-primary-content rounded-box shadow-sm p-2"
     >
       <div class="stat-title text-sm sm:text-md text-base-content font-bold">
-        Total Products
+        <i class="fas fa-box mr-2"></i>Total Products
       </div>
       <div
         class="stat-value text-xl sm:text-2xl text-primary"
@@ -37,7 +37,7 @@ Management System{% endblock %} {% block content %}
       class="stat bg-secondary/20 text-secondary-content rounded-box shadow-sm p-2"
     >
       <div class="stat-title text-sm sm:text-md text-base-content font-bold">
-        Total Quantity
+        <i class="fas fa-cubes mr-2"></i>Total Quantity
       </div>
       <div
         class="stat-value text-xl sm:text-2xl text-secondary"
@@ -48,7 +48,7 @@ Management System{% endblock %} {% block content %}
     </div>
     <div class="stat bg-info/20 text-info-content rounded-box shadow-sm p-2">
       <div class="stat-title text-sm sm:text-md text-base-content font-bold">
-        Total Suppliers
+        <i class="fas fa-truck mr-2"></i>Total Suppliers
       </div>
       <div
         class="stat-value text-xl sm:text-2xl text-info"
@@ -61,7 +61,7 @@ Management System{% endblock %} {% block content %}
       class="stat bg-accent/20 text-accent-content rounded-box shadow-sm p-2"
     >
       <div class="stat-title text-sm sm:text-md text-base-content font-bold">
-        Low Stock Products
+        <i class="fas fa-exclamation-triangle mr-2"></i>Low Stock Products
       </div>
       <div
         class="stat-value text-xl sm:text-2xl text-accent"
@@ -74,7 +74,9 @@ Management System{% endblock %} {% block content %}
   <!-- Latest Products Table -->
   <div class="space-y-4 mb-4">
     <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
-      <h2 class="text-lg sm:text-xl font-bold mb-2">Latest Products Added</h2>
+      <h2 class="text-lg sm:text-xl font-bold mb-2">
+        <i class="fas fa-list mr-2"></i>Latest Products Added
+      </h2>
       <div class="overflow-x-auto">
         <table class="table w-full">
           <thead>
@@ -109,7 +111,9 @@ Management System{% endblock %} {% block content %}
   <div class="space-y-4 mb-4">
     <!-- First chart (full width) -->
     <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
-      <h2 class="text-lg sm:text-xl font-bold mb-2">Category Distribution</h2>
+      <h2 class="text-lg sm:text-xl font-bold mb-2">
+        <i class="fas fa-chart-pie mr-2"></i>Category Distribution
+      </h2>
       <div style="height: 400px">
         <canvas id="categoryDistribution"></canvas>
       </div>
@@ -123,7 +127,7 @@ Management System{% endblock %} {% block content %}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
       <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
         <h2 class="text-lg sm:text-xl font-bold mb-2">
-          Top 10 Products by Quantity
+          <i class="fas fa-chart-bar mr-2"></i>Top 10 Products by Quantity
         </h2>
         <div style="height: 200px">
           <canvas id="topProducts"></canvas>
@@ -134,7 +138,9 @@ Management System{% endblock %} {% block content %}
         </p>
       </div>
       <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
-        <h2 class="text-lg sm:text-xl font-bold mb-2">Supplier Distribution</h2>
+        <h2 class="text-lg sm:text-xl font-bold mb-2">
+          <i class="fas fa-chart-pie mr-2"></i>Supplier Distribution
+        </h2>
         <div style="height: 200px">
           <canvas id="supplierDistribution"></canvas>
         </div>
@@ -147,13 +153,15 @@ Management System{% endblock %} {% block content %}
 
     <!-- Last chart (full width) -->
     <div class="bg-base-200 p-2 sm:p-4 rounded-box shadow-sm">
-      <h2 class="text-lg sm:text-xl font-bold mb-2">Monthly Spending Trend</h2>
+      <h2 class="text-lg sm:text-xl font-bold mb-2">
+        <i class="fas fa-chart-line mr-2"></i>Monthly Spending Trend
+      </h2>
       <div style="height: 200px">
         <canvas id="monthlySalesTrend"></canvas>
       </div>
       <p id="monthlySalesTrendDescription" class="mt-2 text-xs sm:text-sm">
-        This chart shows the monthly spending trend over time. It helps visualize
-        spending performance and identify patterns or seasonality.
+        This chart shows the monthly spending trend over time. It helps
+        visualize spending performance and identify patterns or seasonality.
       </p>
     </div>
   </div>

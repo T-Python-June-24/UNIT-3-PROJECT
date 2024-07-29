@@ -10,7 +10,13 @@ from .forms import ProductForm, ProductSearchForm
 from .utils import check_product_status, send_product_notification
 from django.utils import timezone
 from datetime import datetime
+from django.contrib.auth.decorators import user_passes_test
 
+def staff_required(view_func):
+    decorated_view_func = user_passes_test(lambda u: u.is_staff, login_url='login')(view_func)
+    return decorated_view_func
+
+@staff_required
 def chart_data(request):
     products = Product.objects.all()
     suppliers = Supplier.objects.all()
@@ -105,7 +111,7 @@ def chart_data(request):
 
     return JsonResponse(data)
 
-
+@staff_required
 def product_list(request):
     products = Product.objects.all()
     categories = Category.objects.all()
@@ -188,6 +194,7 @@ def product_list(request):
         messages.error(request, 'No products found.')
     return render(request, 'products/product_list.html', context)
 
+@staff_required
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     form = ProductForm(instance=product)
@@ -214,14 +221,13 @@ def product_detail(request, pk):
     }
     return render(request, 'products/product_detail.html', context)
 
-
+@staff_required
 def check_product_status_view(request, pk):
     product = get_object_or_404(Product, pk=pk)
     status = check_product_status(product)
     return JsonResponse(status)
 
-
-# CSV RELATED FUNCTIONS
+@staff_required
 def import_products_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
@@ -269,7 +275,7 @@ def import_products_csv(request):
 
     return redirect('product_list')
 
-
+@staff_required
 def product_delete(request, pk):
     try:
         product = get_object_or_404(Product, pk=pk)
@@ -282,7 +288,7 @@ def product_delete(request, pk):
         messages.error(request, f'Error deleting product: {str(e)}')
     return render(request, 'products/product_list.html', {'product': product})
 
-
+@staff_required
 def export_products_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="products_export.csv"'
