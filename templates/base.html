@@ -105,6 +105,17 @@
       // Call the function on load and resize
       window.addEventListener("load", adjustContentPadding);
       window.addEventListener("resize", adjustContentPadding);
+
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        once: true,
+      });
+
+      // Refresh AOS on route change
+      document.addEventListener('turbolinks:load', () => {
+        AOS.refresh();
+      });
     </script>
     {% block scripts %} {% endblock %}
   </body>
