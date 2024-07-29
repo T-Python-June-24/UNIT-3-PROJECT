@@ -7,6 +7,7 @@ from .models import Category
 from .forms import CategoryForm
 from django.db.models import Count, Q, Sum
 from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError
 
 def staff_required(view_func):
     decorated_view_func = user_passes_test(lambda u: u.is_staff, login_url='login')(view_func)
@@ -39,7 +40,7 @@ def category_list(request):
     page_obj = paginator.get_page(page_number)
     
     context = {
-        'categories': page_obj,
+        'page_obj': page_obj,
         'form': CategoryForm(),
         'search_query': search_query,
         'current_sort': sort,
@@ -56,19 +57,27 @@ def category_create(request):
             form.save()
             messages.success(request, 'Category created successfully.')
         else:
-            messages.error(request, 'Category creation failed, check the fields correctly')
+            messages.error(request, 'Category creation failed. Please check the fields.')
     return redirect('category_list')
 
 @staff_required
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            form.save()
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        
+        if name:
+            category.name = name
+        if description is not None:  # Allow empty string for description
+            category.description = description
+        
+        try:
+            category.full_clean()  # Validate the model
+            category.save()
             messages.success(request, 'Category updated successfully.')
-        else:
-            messages.error(request, 'Category update failed, check the fields correctly')
+        except ValidationError as e:
+            messages.error(request, f'Category update failed: {", ".join(e.messages)}')
     return redirect('category_list')
 
 @staff_required

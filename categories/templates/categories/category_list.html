@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for category in categories %}
+        {% for category in page_obj %}
         <tr>
           <td>{{ category.name }}</td>
           <td>{{ category.description }}</td>
@@ -53,7 +53,6 @@
                   >
                     Edit
                   </button>
-                  </li>
                 </li>
                 <li>
                   <button
@@ -77,11 +76,11 @@
 
 <script>
   function openModal(modalId) {
-    document.getElementById(modalId).classList.add("modal-open");
+    document.getElementById(modalId).classList.add('modal-open');
   }
 
   function closeModal(modalId) {
-    document.getElementById(modalId).classList.remove("modal-open");
+    document.getElementById(modalId).classList.remove('modal-open');
   }
 
   function handleFormSubmit(formId, buttonId) {
@@ -107,7 +106,7 @@
     handleFormSubmit('searchForm', 'searchBtn');
     handleFormSubmit('importCSVForm', 'importCSVBtn');
     handleFormSubmit('createCategoryForm', 'createCategoryBtn');
-    {% for category in categories %}
+    {% for category in page_obj %}
       handleFormSubmit('updateCategoryForm{{ category.id }}', 'updateCategoryBtn{{ category.id }}');
       handleFormSubmit('deleteCategoryForm{{ category.id }}', 'deleteCategoryBtn{{ category.id }}');
     {% endfor %}
