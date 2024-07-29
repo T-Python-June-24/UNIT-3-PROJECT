@@ -3,11 +3,90 @@
 {% block title %}Dashboard - BlueBox Inventory{% endblock %}
 
 {% block content %}
-<h1>Dashboard</h1>
-<div>
-    <h2>Low Stock Alerts</h2>
-    <!-- Low stock products go here -->
-    <h2>Expiry Date Alerts</h2>
-    <!-- Expiry date products go here -->
+<div class="container mt-4">
+    <h1>Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Total Products</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ total_products }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Total Categories</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ total_categories }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Total Suppliers</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ total_suppliers }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Stock Levels</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Recent Activities</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for activity in recent_activities %}
+                            <li class="list-group-item">{{ activity }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('stockChart').getContext('2d');
+    const stockChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ stock_data.labels|safe }},
+            datasets: [{
+                label: 'Stock Quantity',
+                data: {{ stock_data.data|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

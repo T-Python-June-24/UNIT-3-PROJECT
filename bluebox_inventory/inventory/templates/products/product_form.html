@@ -1,15 +1,40 @@
+<!-- templates/inventory/product_form.html -->
 {% extends 'inventory/base.html' %}
-
-{% block title %}{{ form.instance.pk|yesno:"Edit Product,Add New Product" }} - BlueBox Inventory{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1>{{ form.instance.pk|yesno:"Edit Product,Add New Product" }}</h1>
-    <form method="post">
+    <h2>{{ form_title }}</h2>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary mt-3">Save</button>
-        <a href="{% url 'product_list' %}" class="btn btn-secondary mt-3">Cancel</a>
+        <div class="mb-3">
+            {{ form.name.label_tag }}
+            {{ form.name|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.category.label_tag }}
+            {{ form.category|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.supplier.label_tag }}
+            {{ form.supplier|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.price.label_tag }}
+            {{ form.price|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.stock_quantity.label_tag }}
+            {{ form.stock_quantity|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.expiry_date.label_tag }}
+            {{ form.expiry_date|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.image.label_tag }}
+            {{ form.image|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-primary">{{ submit_button }}</button>
     </form>
 </div>
 {% endblock %}
