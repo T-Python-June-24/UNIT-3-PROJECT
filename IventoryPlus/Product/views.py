@@ -5,7 +5,7 @@ from .forms import ProductForm
 from Category.models import Category
 from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
-
+from django.core.mail import send_mail
 
 def add_product(request):
     products = Product.objects.all()

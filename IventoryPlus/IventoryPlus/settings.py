@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i5*5pzn6v1qf_ua*yxj4j-ts*ssn5(-fvhb9noac9!fs*4%=6!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+    
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'IventoryPlus.urls'
@@ -129,3 +132,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yourmailserver.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sarahmoniftest@gmail.com'
+EMAIL_HOST_PASSWORD = 'xsac sahi hjko lkwg'
+DEFAULT_FROM_EMAIL = 'webmaster@yourdomain.com'
