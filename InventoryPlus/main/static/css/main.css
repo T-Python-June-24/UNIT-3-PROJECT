@@ -14,7 +14,7 @@ h1, h2 {
     color: #0a739a;
 }
 
-.navbar_background{
+.sky-bg{
     background-color: #08a9e2;
 }
 
@@ -126,9 +126,13 @@ input[type="search"]{
 
 
 .poster-thumb {
-    height: 250px;
+    height: 250px
 }
 
+.product-img{
+    height: 250px;
+    width: 250px;
+}
 
 a {
     color:black;
@@ -141,9 +145,9 @@ a:hover {
     transition: all 0.15s ease-out;
 }
 
-.cat {
+/* .cat {
     background-color: rgb(120, 120, 120);
-}
+} */
 
 .cat:hover {
     background-color: #3e7205;

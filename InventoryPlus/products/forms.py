@@ -1,6 +1,5 @@
 from django import forms
 from products.models import Product
-from suppliers.models import Supplier
 
 class ProductForm(forms.ModelForm):
     class Meta:

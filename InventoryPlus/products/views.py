@@ -27,9 +27,9 @@ def add_product_view(request:HttpRequest):
         # new_product.suppliers.set(request.POST.getlist("suppliers"))
         # return redirect('main:home_view')
     
-    return render(request, "products/add.html", {"product_form":product_form, "categories":categories, "suppliers": suppliers})
+    return render(request, "products/add_product.html", {"product_form":product_form, "categories":categories, "suppliers": suppliers})
 
-def all_products_view(request:HttpRequest, category_name):
+def all_products_view(request:HttpRequest, type, product_param):
     # products = Product.objects.filter(stock_level__gte=3).order_by("-expiry_date")
     # products = Product.objects.filter(stock_level__gte=3).exclude(product_name__contains="iphon11").order_by("-expiry_date")
     
@@ -40,17 +40,58 @@ def all_products_view(request:HttpRequest, category_name):
     # else:
     #     products = []
 
-    
-    if category_name == "all":
+    if product_param == "all":
         products = Product.objects.all().order_by("-expiry_date")
-    else:
-        products = Product.objects.filter(category__name = category_name).order_by("-expiry_date")
-        # products = Product.objects.filter(suppliers__supplier_name__in=[supplier_name]).order_by("-expiry_date")
+    elif type =="category_name":
+        products = Product.objects.filter(category__name = product_param).order_by("-expiry_date")
+    elif type == "supplier_id":
+        products = Product.objects.filter(suppliers__id__in=[product_param]).order_by("-expiry_date")
+        supplier  = Supplier.objects.filter(pk=product_param)
+
+    return render(request, "products/all_products.html", {"products":products, "product_param":product_param, 'type':type})
 
 
-    return render(request, "products/all_products.html", {"products":products, "category_name":category_name})
+def product_detail_view(request:HttpRequest, product_id:int):
+
+    product = Product.objects.get(pk=product_id)
+    # reviews = Review.objects.filter(product=product)
+
+    return render(request, 'products/product_detail.html', {"product" : product})
 
 
+def update_product_view(request:HttpRequest, product_id:int):
+
+    product = Product.objects.get(pk=product_id)
+    product_suppliers = product.suppliers.all()
+    suppliers = Supplier.objects.all()
+    categories = Category.objects.all()
+    
+
+    if request.method == "POST":
+        #using ProductForm for updating
+        product_form = ProductForm(instance=product, data=request.POST, files=request.FILES)
+        if product_form.is_valid():
+             product_form.save()
+        else:
+            print( product_form.errors)
+        ##basic update
+        # product.name = request.POST["name"]
+        # product.description = request.POST["description"]
+        # product.expiry_date = request.POST["expiry_date"]
+        # product.supplier = request.POST["supplier"]
+        # if "image" in request.FILES: product.image = request.FILES["image"]
+        # product.save()
+
+        return redirect("products:product_detail_view", product_id=product.id)
+
+    return render(request, "products/update_product.html", {"product":product,"suppliers": suppliers ,"product_suppliers": product_suppliers, "categories": categories})
+
+def delete_product_view(request:HttpRequest, product_id:int):
+
+    product = Product.objects.get(pk=product_id)
+    product.delete()
+
+    return redirect("main:home_view")
 
 
 def search_products_view(request:HttpRequest):
