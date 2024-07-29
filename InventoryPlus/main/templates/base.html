@@ -1,4 +1,4 @@
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,9 +34,8 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li>
-                        <a href="{% url 'main:dashboard_view' %}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <a href="{% url 'main:dashboard_view' %}" >
                             <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
-                       
                     </li>
                     <li>
                         <a href="" class="nav-link px-0 align-middle">
@@ -47,7 +46,7 @@
                             <i class="bi bi-box-seam"></i></i> <span class="ms-1 d-none d-sm-inline">Inventory</span></a>
                     </li>
                     <li>
-                        <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <a href="{% url 'supplier:all_suppliers_view' %}" >
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Suppliers</span> </a>
                     </li>
                     <li>
