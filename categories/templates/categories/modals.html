@@ -1,6 +1,6 @@
 <!-- Import CSV Modal -->
-<div id="importModal" class="modal z-[1000]">
-  <div class="modal-box relative">
+<div id="importModal" class="modal">
+  <div class="modal-box relative max-w-xl mx-auto">
     <button
       onclick="closeModal('importModal')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
@@ -45,8 +45,8 @@
   </div>
 </div>
 <!-- Create Category Modal -->
-<div id="createModal" class="modal z-[1000]">
-  <div class="modal-box relative">
+<div id="createModal" class="modal">
+  <div class="modal-box relative max-w-xl mx-auto">
     <button
       onclick="closeModal('createModal')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
@@ -97,8 +97,8 @@
 
 <!-- Update Category Modals -->
 {% for category in page_obj %}
-<div id="updateModal{{ category.id }}" class="modal z-[1000]">
-  <div class="modal-box relative">
+<div id="updateModal{{ category.id }}" class="modal">
+  <div class="modal-box relative max-w-xl mx-auto">
     <button
       onclick="closeModal('updateModal{{ category.id }}')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
@@ -161,8 +161,8 @@
 
 <!-- Delete Category Modal -->
 {% for category in page_obj %}
-<div id="deleteCategoryModal{{ category.id }}" class="modal z-[1000]">
-  <div class="modal-box relative">
+<div id="deleteCategoryModal{{ category.id }}" class="modal">
+  <div class="modal-box relative max-w-xl mx-auto">
     <h3 class="font-bold text-lg">Delete Category</h3>
     <p class="py-4">
       Are you sure you want to delete the category "{{ category.name }}"?
