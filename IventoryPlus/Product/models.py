@@ -5,7 +5,8 @@ from Category.models import Category
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+from dotenv import load_dotenv
+import os
 class Product(models.Model):
     name = models.CharField(max_length=1024)
     description = models.TextField()
@@ -33,7 +34,9 @@ class Product(models.Model):
 
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
-        server.login(sender_email, "xsac sahi hjko lkwg")  # Secure your credentials
+        load_dotenv()
+        EMAIL_KEY=os.getenv("EMAIL_KEY")
+        server.login(sender_email, EMAIL_KEY)  # Secure your credentials
         server.sendmail(sender_email, receiver_email, msg.as_string())
         server.quit()
 
@@ -72,6 +75,9 @@ class Product(models.Model):
             return 'Low Stock'
         else:
             return 'In Stock'
+
+
+
     def __str__(self):
         return self.name
     

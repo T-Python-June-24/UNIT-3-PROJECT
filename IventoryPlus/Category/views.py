@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
+from django.db.models import ProtectedError  
+
 from .models import Category
 from .forms import CategoryForm
 
@@ -50,7 +52,18 @@ def category_update(request, category_id: int):
 
     return render(request, 'Category/category_detail.html', {'categoryForm': categoryForm, 'category': category})
 
-def delete_category(request:HttpRequest,category_id:int):
-    category = Category.objects.get(pk=category_id)
-    category.delete()
+def delete_category(request: HttpRequest, category_id: int):
+    try:
+        category = Category.objects.get(pk=category_id)
+        
+        category.delete()
+        messages.success(request, "Category deleted successfully.")
+        
+    except ProtectedError as e:
+        # Handle the case where the category cannot be deleted if it has products (protected)
+        messages.error(request, "This category cannot be deleted because it has products ")
+        
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
+
     return redirect('Category:category_page')
