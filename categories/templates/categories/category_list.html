@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container mx-auto p-6 bg-base-100 text-base-content rounded-lg">
-  <h1 class="text-3xl font-bold mb-6">Categories</h1>
+<div class="container mx-auto p-6 bg-base-100 text-base-content rounded-lg" data-aos="fade-up">
+  <h1 class="text-3xl font-bold mb-6" data-aos="fade-down">Categories</h1>
 
   <!-- Search form -->
-  <form method="get" class="mb-4" id="searchForm">
+  <form method="get" class="mb-4" id="searchForm" data-aos="fade-right">
     {% csrf_token %}
     <div class="form-control">
       <div class="input-group join">
@@ -17,7 +17,7 @@
     </div>
   </form>
 
-  <div class="overflow-x-auto">
+  <div class="overflow-x-auto" data-aos="fade-up" data-aos-delay="200">
     <table class="table table-zebra w-full transition-opacity duration-500">
       <thead>
         <tr>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto p-6 bg-base-100 text-base-content rounded-lg">
-    <h1 class="text-3xl font-bold mb-6">Products</h1>
+<div class="container mx-auto p-6 bg-base-100 text-base-content rounded-lg" data-aos="fade-up">
+    <h1 class="text-3xl font-bold mb-6" data-aos="fade-down">Products</h1>
 
     <!-- Search and Filter Form -->
-    <form method="get" class="mb-6" id="searchFilterForm">
+    <form method="get" class="mb-6" id="searchFilterForm" data-aos="fade-right">
         <div class="flex flex-wrap gap-4">
             <div class="form-control">
                 <div class="input-group join">
@@ -44,7 +44,7 @@
     </form>
 
     <!-- Product List -->
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" data-aos="fade-up" data-aos-delay="200">
         <table class="table table-zebra w-full">
             <thead>
                 <tr>
