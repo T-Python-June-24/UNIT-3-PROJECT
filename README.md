@@ -129,7 +129,7 @@ As an Inventory Manager, I want to export inventory data to CSV files so that I 
 
 
 ## To be provided by you
-- UML link here.
+- UML link here: https://lucid.app/lucidchart/990df465-504a-41be-a8df-bf6d7b8d1542/edit?viewport_loc=435%2C408%2C3446%2C1874%2CHWEp-vi-RSFO&invitationId=inv_78fac710-c236-4fc2-9b71-78caa480a4b8.
 - wireframe link here.
 
       
