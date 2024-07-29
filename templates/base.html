@@ -9,7 +9,11 @@
       })();
     </script>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="https://i.ibb.co/P9Ccr3b/icons8-inventory-96.png">
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://i.ibb.co/P9Ccr3b/icons8-inventory-96.png"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Inventory Management System{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,7 +46,10 @@
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <style>
       .theme-transition,
@@ -85,13 +92,13 @@
         const html = document.documentElement;
         const currentTheme = html.getAttribute("data-theme");
         const newTheme = currentTheme === "light" ? "dark" : "light";
-        
+
         // Add transition class
-        html.classList.add('theme-transition');
-        
+        html.classList.add("theme-transition");
+
         // Set timeout to remove transition class after animation completes
         setTimeout(() => {
-          html.classList.remove('theme-transition');
+          html.classList.remove("theme-transition");
         }, 300);
 
         html.setAttribute("data-theme", newTheme);
@@ -109,7 +116,10 @@
       document.addEventListener("DOMContentLoaded", function () {
         const savedTheme = localStorage.getItem("theme") || "dark";
         document.documentElement.setAttribute("data-theme", savedTheme);
-        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        document.documentElement.classList.toggle(
+          "dark",
+          savedTheme === "dark"
+        );
         updateThemeToggles(savedTheme);
       });
 
@@ -135,7 +145,7 @@
       });
 
       // Refresh AOS on route change
-      document.addEventListener('turbolinks:load', () => {
+      document.addEventListener("turbolinks:load", () => {
         AOS.refresh();
       });
     </script>

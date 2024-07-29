@@ -1,6 +1,6 @@
         <!-- Import CSV Modal -->
-        <div id="importModal" class="modal z-[1000]">
-            <div class="modal-box">
+        <div id="importModal" class="modal">
+            <div class="modal-box relative">
                 <button onclick="closeModal('importModal')" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
             <h3 class="font-bold text-lg">Import Products CSV</h3>
             <form method="POST" action="{% url 'import_products_csv' %}" enctype="multipart/form-data" id="importCSVForm">
@@ -22,8 +22,8 @@
     </div>
 
     <!-- Create Product Modal -->
-    <div id="createModal" class="modal z-[1000]">
-        <div class="modal-box">
+    <div id="createModal" class="modal">
+        <div class="modal-box relative">
             <button onclick="closeModal('createModal')" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
             <h3 class="font-bold text-lg">Create Product</h3>
             <form method="POST" action="{% url 'product_list' %}" id="createProductForm">
@@ -121,8 +121,8 @@
 
     <!-- Update Product Modals -->
     {% for product in products %}
-    <div id="updateModal{{ product.id }}" class="modal z-[1000]">
-        <div class="modal-box">
+    <div id="updateModal{{ product.id }}" class="modal">
+        <div class="modal-box relative">
             <button onclick="closeModal('updateModal{{ product.id }}')" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
             <h3 class="font-bold text-lg">Update Product</h3>
             <form method="POST" action="{% url 'product_list' %}" id="updateProductForm{{ product.id }}">
@@ -203,8 +203,8 @@
 
     <!-- Delete Product Modals -->
     {% for product in products %}
-    <div id="deleteModal{{ product.id }}" class="modal z-[1000]">
-        <div class="modal-box">
+    <div id="deleteModal{{ product.id }}" class="modal">
+        <div class="modal-box relative">
             <button onclick="closeModal('deleteModal{{ product.id }}')" class="btn btn-sm btn-circle absolute right-2 top-2">✕</button>
             <h3 class="font-bold text-lg">Delete Product</h3>
             <p>Are you sure you want to delete {{ product.name }}?</p>

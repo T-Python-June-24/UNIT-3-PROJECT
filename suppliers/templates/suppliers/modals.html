@@ -1,6 +1,6 @@
 <!-- Import CSV Modal -->
 <div id="importModal" class="modal z-[1000]">
-  <div class="modal-box">
+  <div class=" modal-box relative">
     <button
       onclick="closeModal('importModal')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
@@ -43,7 +43,7 @@
 
 <!-- Create Supplier Modal -->
 <div id="createModal" class="modal z-[1000]">
-  <div class="modal-box">
+  <div class=" modal-box relative">
     <button
       onclick="closeModal('createModal')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
@@ -156,7 +156,7 @@
 <!-- Update Supplier Modals -->
 {% for supplier in suppliers %}
 <div id="updateModal{{ supplier.id }}" class="modal z-[1000]">
-  <div class="modal-box">
+  <div class="modal-box relative">
     <button
       onclick="closeModal('updateModal{{ supplier.id }}')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
@@ -288,7 +288,7 @@
 <!-- Delete Supplier Modals -->
 {% for supplier in suppliers %}
 <div id="deleteModal{{ supplier.id }}" class="modal z-[1000]">
-  <div class="modal-box">
+  <div class="modal-box relative">
     <button
       onclick="closeModal('deleteModal{{ supplier.id }}')"
       class="btn btn-sm btn-circle absolute right-2 top-2"
