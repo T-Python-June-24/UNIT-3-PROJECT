@@ -34,6 +34,8 @@
         <option value="$MODULE_DIR$/InventoryPlus/product/templates/product" />
         <option value="$MODULE_DIR$/InventoryPlus/main/templates/main" />
         <option value="$MODULE_DIR$/InventoryPlus/product/templates/product" />
+        <option value="$MODULE_DIR$/InventoryPlus/category/templates/category" />
+        <option value="$MODULE_DIR$/InventoryPlus/supplier/templates/supplier" />
       </list>
     </option>
   </component>

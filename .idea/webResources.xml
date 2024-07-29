@@ -9,6 +9,8 @@
             <path value="file://$PROJECT_DIR$/InventoryPlus/main/static" />
             <path value="file://$PROJECT_DIR$/InventoryPlus/media" />
             <path value="file://$PROJECT_DIR$/InventoryPlus/static" />
+            <path value="file://$PROJECT_DIR$/InventoryPlus/category/static" />
+            <path value="file://$PROJECT_DIR$/InventoryPlus/supplier/static" />
           </resourceRoots>
         </entryData>
       </entry>
