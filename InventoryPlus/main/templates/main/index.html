@@ -6,7 +6,7 @@
 {% block content %}
 
 
-
+<!--
 <div class="row   row-cols-1 row-cols-md-2  video-row">
     <div class="col order-2 order-md-1 ">
         <div class="d-flex flex-column justify-content-center align-items-center h-100">
@@ -18,9 +18,6 @@
 
     <div class="col order-1 overflow-hidden top-video h-100 p-0">
         <img class="w-100 h-100 object-fit-cover" src="static/images/chart.avif" />
-        <!-- <div class="vid-container">
-          <video class="h-100" src="/static/videos/backvid.mp4" muted autoplay loop></video>
-        </div> -->
     </div>
 </div>
 
@@ -30,8 +27,67 @@
   <h2 class="m-0 p-0">All Products</h2>
   <span class="material-symbols-outlined text-fxl">arrow_forward</span>
 </div>
-</a>
+</a> -->
 
-{% include 'products/products_list.html' %}
+<div class="row mt-2 row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+          <div class="d-flex justify-content-between align-items-center w-100">
+              <div class="d-flex align-items-center gap-1 ">
+                  <a href="{% url 'products:all_products_view' 'all' 'all' %}"><img src="static/images/products.png" class="rounded-circle overflow-hidden supplier-logo-small" /></a>
+              </div>
+              <h5 class="text-primary">TOTAL PRODUCTS</h5>
+              <h5 class="m-0 p-0 text-danger">{{products.count}}</h5>
+          </div>
+        </div>
+    </div>  
+      
+    <div class="col" >
+      <div class="d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+          <div class="d-flex justify-content-between align-items-center w-100">
+              <div class="d-flex align-items-center gap-1 ">
+                  <a href="{% url 'suppliers:all_suppliers_view' 'all' %}"><img src="static/images/suppliers.png" class="rounded-circle  overflow-hidden supplier-logo-small" /></a>
+              </div>
+              <h5 class="text-success">TOTAL SUPPLIERS</h5>
+              <h5 class="m-0 p-0 text-danger">{{suppliers.count}}</h5>
+          </div>
+        </div>
+    </div>  
+  
+    <div class="col" >
+      <div class="d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+          <div class="d-flex justify-content-between align-items-center w-100">
+              <div class="d-flex align-items-center gap-1 ">
+                  <a href="{% url 'suppliers:all_suppliers_view' 'all' %}"><img src="static/images/categories.png" class="rounded-circle  overflow-hidden supplier-logo-small" /></a>
+              </div>
+              <h5 class="text-warning">TOTAL CATEGORIES</h5>
+              <h5 class="m-0 p-0 text-danger">{{categories.count}}</h5>
+          </div>
+        </div>
+    </div>  
+
+    <div class="col w-100" >
+      <div class="d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
+          <div class="d-flex justify-content-between align-items-center w-100">
+              <div class="d-flex align-items-center gap-1 ">
+                  <a href="{% url 'suppliers:all_suppliers_view' 'all' %}"><img src="static/images/expiring_products.png" class="rounded-circle  overflow-hidden supplier-logo-small" /></a>
+              </div>
+              <h5 class="text-danger">PRODUCTS EXPRING IN 10 DAYS</h5>
+              <h5 class="m-0 p-0 text-danger">{{ex_products.count}}</h5>
+              <div class="d-flex flex-column gap-1">
+              {% for product in ex_products %}
+              <a href="{% url 'products:product_detail_view' product.id %}"><p class="m-0 p-0 text-danger">{{product.product_name}}</p></a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+    </div>  
+
+
+</div>
+
+
+
+
 
 {% endblock %}

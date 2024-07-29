@@ -9,16 +9,18 @@ h1 {
     font-size: 3rem;
     
 }
-h1, h2 {
+h1, h2,h5 {
     font-family: "Bungee", sans-serif;
     color: #0a739a;
 }
 
+
+
 .sky-bg{
     background-color: #08a9e2;
+    color: white;
 }
-
-.btn-background{
+.sky-bg:hover{
     background-color: #08a9e2;
     color: white;
 }
@@ -73,14 +75,15 @@ hr {
 
 .top-logo {
     font-size: 2.2rem;
-    color: orange;
+    color: rgb(9, 35, 95);
     transition: all 0.2s ease-in;
+    
 }
 
-.top-logo:hover {
+/* .top-logo:hover {
     transform: translate(5%, -5%) skewX(-20deg);
     text-shadow: -0.2rem 0.1rem 0px rgb(218, 194, 12);
-}
+} */
 
 .top-video {
     /* transform: skewX(-20deg); */
@@ -137,7 +140,7 @@ input[type="search"]{
 a {
     color:black;
     text-decoration: none;
-    transition: all 0.1s ease-in;
+    /* transition: all 0.1s ease-in; */
 }
 
 a:hover {
@@ -191,8 +194,8 @@ a:hover {
 }
 
 .supplier-logo-small {
-    height: 80px;
-    width:80px;
+    height: 100px;
+    width:100px;
     object-fit: contain;
 }
 
