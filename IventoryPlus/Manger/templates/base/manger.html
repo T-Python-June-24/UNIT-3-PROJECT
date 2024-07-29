@@ -5,25 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sidebar</title>
-  
+ 
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="{% static 'css/style.css'%}" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
-
+    a.link-input {
+    color: #fff;
+}
     .material-symbols-outlined{
-      font-size: 3rem;
+      font-size: 1.5rem;
     }
     .bg-dark {
       background: linear-gradient(45deg, #00188F, #EC008C);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 5rem;
-      border-radius: 1rem;
-      height: 5rem;
+      width: 2.5rem;
+      border-radius: .5rem;
+      height: 2.5rem;
   }
     .background1 {
       background: #3c4a67;
@@ -40,7 +42,8 @@
     }
     .product img {
       height: 3rem;
-      border-radius: 50%;
+      border-radius: 100%;
+      width: 3rem;
   }
   .product {
     display: flex;
@@ -81,6 +84,9 @@
     flex-direction: row;
     justify-content: space-between;
 }
+a.link-input:hover {
+    text-decoration: none;
+}
     .main-stats {
       float: right;
       width: 100%;
@@ -88,8 +94,8 @@
       border: 1px solid var(--color-gray-200);
       border-radius: 0 var(--b-radius) var(--b-radius) 0;
       border-left: 0;
-      background: #f6f3f3;
-      
+      background: #3c4a67;
+      color: #fff;
       border-radius: .5rem;
   }
   .Supplier {
@@ -110,6 +116,9 @@
   width: 50%;
   padding: 5px;
   margin: 5px 0 20px;
+}
+h1.font {
+    font-size: 1rem;
 }
 .stats-icon {
   display: inline-block;
@@ -144,7 +153,7 @@
 }
     body {
       margin: 0;
-      background-color: #ffffff;
+      background-color: #242f4a;
       font-family: Arial, sans-serif;
     }
     img.img-logo {
@@ -196,6 +205,7 @@
     }
 
     @media (max-width: 768px) {
+      
       .sidebar {
         transform: translateX(-100%);
         width: 100%;
@@ -270,6 +280,6 @@
       document.getElementById('sidebar').classList.toggle('show');
     });
   </script>
-
+  
 </body>
 </html>

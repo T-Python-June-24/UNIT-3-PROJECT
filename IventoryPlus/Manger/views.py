@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest 
 from product.models import Product
 from Category.models import Category
 from Supplier.models import Supplier
-import plotly.express as px
-import pandas
+
 # Create your views here.
 
 
