@@ -11,13 +11,13 @@ class Category(models.Model):
     return self.name
 
 class Product(models.Model):
-  name = models.CharField(max_length=512)
+  name = models.CharField(max_length=512)  
+  category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+  supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
   image = models.ImageField(upload_to="images/")
   description = models.TextField()
   price = models.DecimalField(max_digits=10, decimal_places=2)
   stock_quantity = models.IntegerField()
-  category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
-  suppliers = models.ManyToManyField(Supplier, related_name='products')
 
   def __str__(self) -> str:
     return self.name

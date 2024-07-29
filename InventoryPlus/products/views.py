@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import Product, Category
+from suppliers.models import Supplier
 from django.db.models import Q
 
 # Create your views here.
@@ -12,40 +13,48 @@ def products_view(request: HttpRequest):
 
 
 def add_product(request: HttpRequest):
-  Categories = Category.objects.all()
+    categories = Category.objects.all()
+    suppliers = Supplier.objects.all()
 
-  if request.method == 'POST':
-    name = request.POST.get('name')
-    category_id = request.POST['category']
-    category = Category.objects.get(pk=category_id)
-    image = request.FILES.get('image')
-    description = request.POST.get('description')
-    price = request.POST.get('price')
-    stock_quantity = request.POST.get('stock_quantity')
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        category_id = request.POST.get('category')
+        category = Category.objects.get(pk=category_id)
+        supplier_id = request.POST.get('supplier')
+        supplier = Supplier.objects.get(pk=supplier_id)
+        image = request.FILES.get('image')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        stock_quantity = request.POST.get('stock_quantity')
 
-    product = Product(name=name, category=category, image=image, description=description, price=price, stock_quantity=stock_quantity)
-    product.save()
+        product = Product(name=name, category=category, supplier=supplier, image=image, description=description, price=price, stock_quantity=stock_quantity)
+        product.save()
 
-    return redirect("products:products_view")
-  
-  return render(request, "products/add_product.html")
+        return redirect("products:products_view")
+    
+    return render(request, "products/add_product.html", {'categories': categories, 'suppliers': suppliers})
 
 
 
 
 def edit_product_view(request: HttpRequest, product_id):
   product = Product.objects.get(pk=product_id)
+  categories = Category.objects.all()
+  suppliers = Supplier.objects.all()
   
   if request.method == 'POST':
     product.name = request.POST.get('name')
-    product.image = request.FILES.get('image', product.image)
+    product.category_id = request.POST.get('category')
+    product.supplier_id = request.POST.get('supplier')
+    if 'image' in request.FILES:
+      product.image = request.FILES['image']
     product.description = request.POST.get('description')
     product.price = request.POST.get('price')
     product.stock_quantity = request.POST.get('stock_quantity')
     product.save()
     return redirect("products:edit_product_view", product_id=product_id)
   
-  return render(request, "products/edit_product.html", {'product': product})
+  return render(request, "products/edit_product.html", {'product': product}, {'categories': categories}, {'suppliers': suppliers})
 
 
 
@@ -111,3 +120,9 @@ def delete_category_view(request: HttpRequest, category_id):
     category.delete()
     return redirect('products:categories_view')
 
+
+# def stock_management_view(request: HttpRequest):
+#     products = Product.objects.all()
+#     for product in products:
+#         product.stock_level_percentage = (product.stock_quantity / product.maximum_stock_quantity) * 100
+#     return render(request, "products/stock_management.html", {'products': products})

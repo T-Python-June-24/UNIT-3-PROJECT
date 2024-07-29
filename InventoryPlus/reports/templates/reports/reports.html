@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<main>
+  <h1>Inventory and Supplier Reports</h1>
+
+  <h2>Inventory Report</h2>
+  <div>{{ inventory_plot_div|safe }}</div>
+
+  <h2>Supplier Report</h2>
+  <div>{{ supplier_plot_div|safe }}</div>
+
+</main>
+{% endblock %}
