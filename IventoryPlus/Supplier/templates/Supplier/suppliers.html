@@ -31,6 +31,7 @@
         <thead>
             <tr>
                 <th style="background-color: #E7EFF3; color: #495D69;"></th>
+                <th style="background-color: #E7EFF3; color: #495D69;"></th>
                 <th style="background-color: #E7EFF3; color: #495D69;">Name</th>
                 <th style="background-color: #E7EFF3; color: #495D69;">email</th>
                 <th style="background-color: #E7EFF3; color: #495D69;">number of products</th>
@@ -41,6 +42,10 @@
                 {% for supplier in suppliers %}
                     <tr>
                         <td>
+                            <a data-bs-toggle="modal" data-bs-target="#updateModal-{{ supplier.id }}" href="#">
+                            <span class="material-symbols-outlined">edit</span>    
+                        </td>
+                        <td>
                             <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ supplier.id }}" href="#">
                                 <span class="material-symbols-outlined">delete</span>
                             </a>
@@ -50,6 +55,41 @@
 
                         <td>{{supplier.product_set.count }}</td>
                     </tr>
+
+
+
+                    <!-- Modal for Update Form -->
+                    <div class="modal fade" id="updateModal-{{ supplier.id }}" tabindex="-1" aria-labelledby="updateModalLabel-{{ supplier.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel-{{ supplier.id }}">Update Supplier</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="{% url 'Supplier:supplier_update' supplier.id%}">
+                                        {% csrf_token %}
+                                        <label for="supplier-name class="form-label">name</label>
+                                        <input type="text" class="form-control mb-3" id="supplier-name" name="name" value="{{ supplier.name }}" placeholder="Supplier Name">
+                                        
+                                        <label for="supplier-description class="form-label">description</label>
+                                        <textarea class="form-control mb-3" id="supplier-description" name="description" rows="3" placeholder="Description">{{ supplier.description }}</textarea>
+                                       
+                                        <label for="supplier-email class="form-label">email</label>
+                                        <input type="email" class="form-control mb-3" id="supplier-email" name="email" value="{{ supplier.email }}" placeholder="Email">
+                                        
+                                        <label for="supplier-phone class="form-label">phone number</label>
+                                        <input type="text" class="form-control mb-3" id="supplier-phone" name="phone_number" value="{{ supplier.phone_number }}" placeholder="Phone Number">
+                                       
+                                        <label for="supplier-website class="form-label">website</label>
+                                        <input type="text" class="form-control mb-3" id="supplier-website" name="website" value="{{ supplier.website }}" placeholder="Website">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Modal for deletion confirmation -->
                     <div class="modal fade" id="deleteModal-{{ supplier.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ supplier.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">

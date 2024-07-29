@@ -62,7 +62,7 @@ def product_update(request, product_id: int):
         productForm = ProductForm(request.POST, request.FILES, instance=product)
         if productForm.is_valid():
             productForm.save()
-            return redirect("Product:product_detail",product_id=product.id)
+            return redirect("Product:product_page")
         else:
             print(productForm.errors)
 

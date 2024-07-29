@@ -7,6 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
+
+
 class Product(models.Model):
     name = models.CharField(max_length=1024)
     description = models.TextField()

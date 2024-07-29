@@ -13,7 +13,8 @@ def home_view(request: HttpRequest):
     names = [product.name for product in product_queryset]
     stocks = [product.stock for product in product_queryset]
     colors = [product.stock_status() for product in product_queryset]  # Get stock status for color coding
-    
+    product_ids = [product.id for product in product_queryset]
+
     color_map = {
         'In Stock': 'lightgreen',
         'Low Stock': 'red',
@@ -27,7 +28,8 @@ def home_view(request: HttpRequest):
         title="Current Stock Levels",
         labels={'x': "Product Name", 'y': "Stock Level"},
         color=bar_colors,
-        color_discrete_map="identity"
+        color_discrete_map="identity",
+        # hovertemplate='<a href="/detail/{product_ids}/"></a>',
     )
      
     product_fig.update_layout(
@@ -65,6 +67,6 @@ def home_view(request: HttpRequest):
     )
 
     supplier_chart = supplier_fig.to_html()
-
-
+   
+ 
     return render(request, 'main/index.html', {'product_chart': product_chart,'supplier_chart': supplier_chart,'low_stock_warning': low_stock_warning, })

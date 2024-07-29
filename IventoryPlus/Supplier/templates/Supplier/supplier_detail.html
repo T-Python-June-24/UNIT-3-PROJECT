@@ -53,60 +53,14 @@
         </div>
 
         <p>{{ supplier.description }}</p>
-        <div class="d-flex gap-2">
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-       </div>
-    </div>
 
-    <!-- Modal for Update Form -->
-    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateModalLabel">Update Supplier</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{% url 'Supplier:supplier_update' supplier.id%}">
-                        {% csrf_token %}
-                        <input type="text" class="form-control mb-3" id="supplier-name" name="name" value="{{ supplier.name }}" placeholder="Supplier Name">
-                        <textarea class="form-control mb-3" id="supplier-description" name="description" rows="3" placeholder="Description">{{ supplier.description }}</textarea>
-                        <input type="email" class="form-control mb-3" id="supplier-email" name="email" value="{{ supplier.email }}" placeholder="Email">
-                        <input type="text" class="form-control mb-3" id="supplier-phone" name="phone_number" value="{{ supplier.phone_number }}" placeholder="Phone Number">
-                        <input type="text" class="form-control mb-3" id="supplier-website" name="website" value="{{ supplier.website }}" placeholder="Website">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <!-- Modal for deletion confirmation -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete {{ supplier.name }}?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="{%url 'Supplier:delete_supplier' supplier.id%}" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 </div>
 <section>
     <div class="container">
  <hr>
- <h1>{{ supplier.name }}'s Products</h1>
+ <h1>{{ supplier.name }}'s Products Catalog</h1>
  {% include 'Product/product_list.html' %}
 </div>
 </section>

@@ -92,6 +92,7 @@
         <thead>
             <tr>
                 <th style="background-color: #E7EFF3; color: #495D69;"></th>
+                <th style="background-color: #E7EFF3; color: #495D69;"></th>
                 <th style="background-color: #E7EFF3; color: #495D69;">Name</th>
                 <th style="background-color: #E7EFF3; color: #495D69;">Number of Products</th>
             </tr>
@@ -101,6 +102,10 @@
                 {% for category in categories %}
                     <tr>
                         <td>
+                            <a data-bs-toggle="modal" data-bs-target="#updateModal-{{ category.id }}" href="#">
+                            <span class="material-symbols-outlined">edit</span>    
+                        </td>
+                        <td>
                             <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ category.id }}" href="#">
                                 <span class="material-symbols-outlined">delete</span>
                             </a>
@@ -108,6 +113,32 @@
                         <td><a href="{% url 'Category:category_detail' category.id %}">{{ category.name }}</a></td>
                         <td>{{ category.product_set.count }}</td>
                     </tr>
+
+                     <!-- Modal for Update Form -->
+                     <div class="modal fade" id="updateModal-{{ category.id }}" tabindex="-1" aria-labelledby="updateModalLabel-{{ category.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel-{{ category.id }}">Update Category</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="{% url 'Category:category_update' category.id%}">
+                                        {% csrf_token %}
+                                        <label for="category-name" class="form-label">name</label>
+
+                                        <input type="text" class="form-control mb-3" id="category-name" name="name" value="{{ category.name }}" placeholder="Category Name">
+                                        
+                                        <label for="category-info" class="form-label">Description</label>
+                                        <textarea class="form-control mb-3" id="category-info" name="info" rows="3" placeholder="Description">{{ category.info }}</textarea>
+
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
                     <!-- Modal for deletion confirmation -->
                     <div class="modal fade" id="deleteModal-{{ category.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ category.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">

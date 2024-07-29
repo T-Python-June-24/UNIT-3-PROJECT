@@ -32,7 +32,7 @@ def category_page(request:HttpRequest):
             categories=categories.filter(name__icontains=searched)
 
     return render(request, "Category/categories.html", {"categories" : categories
-    , "search_term": searched if 'searched' in request.GET else ""                                                    })
+    , "search_term": searched if 'searched' in request.GET else ""     })
 
 def category_added_success(request):
     return render(request, "Category/category_added_success.html")
@@ -40,15 +40,15 @@ def category_added_success(request):
 def category_detail(request,category_id:int):
 
     category = Category.objects.get(pk=category_id)
-
-    return render(request, 'Category/category_detail.html', {"category" : category})
+    products = category.product_set.all()
+    return render(request, 'Category/category_detail.html', {"category" : category , "products":products})
 def category_update(request, category_id: int):
     category = Category.objects.get(pk=category_id)
     if request.method == "POST":
         categoryForm = CategoryForm(request.POST, request.FILES, instance=category)
         if categoryForm.is_valid():
             categoryForm.save()
-            return redirect('Category:category_detail', category_id=category.id)
+            return redirect('Category:category_page')
 
     return render(request, 'Category/category_detail.html', {'categoryForm': categoryForm, 'category': category})
 

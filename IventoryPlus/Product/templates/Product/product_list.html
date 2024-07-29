@@ -1,12 +1,35 @@
-<div class="container">
-    <div class="row mt-2 row-cols-1 row-cols-md-3 g-4">
-        {% for product in products %}
-        <div class="col">
-            <div class="category-card d-flex flex-column justify-content-start align-items-start h-100 p-4 shadow gap-2">
-                <h4 class="align-self-center" style="color: black;">{{ product.name }}</h4> 
-                <a href="{% url 'Product:product_detail' product.id %}"><img src="{{ product.image.url }}" class="w-100 poster-thumb object-fit-cover"/></a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+<div class="shadow-sm p-3 mt-5 mb-5 bg-white rounded"> 
+    <table class="table table-striped ">
+        <thead >
+            <tr > 
+            
+                </style>
+                <th style="background-color: #E7EFF3; color: #495D69;">Name</th>              
+                <th style="background-color: #E7EFF3;color: #495D69;">Category</th>
+                <th style="background-color: #E7EFF3;color: #495D69;">Expiry Date</th>
+                <th style="background-color: #E7EFF3;color: #495D69;">Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if products %}
+                {% for product in products %}
+                    <tr>
+                  
+                        <td><a href="{% url 'Product:product_detail' product.id %}">{{ product.name }}</a></td>
+                        <td><a href="{% url 'Category:category_detail' product.category.id %}">{{ product.category.name }}</a></td>
+                       
+                        <td>{{ product.expiry_date|date:"Y-m-d" }}</td>
+                        <td>{{ product.stock }}</td>
+                    </tr>
+
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">No products available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
 </div>
