@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h2 class="my-4">{% if form.instance.pk %}Edit Category{% else %}Add Category{% endif %}</h2>
+    <form class="d-flex flex-column gap-3" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Category Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ form.name.value|default_if_none:'' }}">
+            {% if form.name.errors %}
+            <div class="alert alert-danger">{{ form.name.errors|striptags }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" id="description">{{ form.description.value|default_if_none:'' }}"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">{% if form.instance.pk %}Update{% else %}Add{% endif %} Category</button>
+    </form>
+{% endblock %}

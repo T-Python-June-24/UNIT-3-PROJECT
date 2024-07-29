@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <section class="text-center my-5">
+        <h1 class="display-4">Welcome to Inventory Plus</h1>
+        <p class="lead">This is the home page of the Inventory Plus management system</p>
+        <form class="form-inline justify-content-center mt-4" action="{% url 'inventory:search' %}">
+            <input class="form-control form-control-lg" name="q" type="search" placeholder="Search For Product...">
+            <button class="btn btn-lg btn-dark ml-2" type="submit">Search</button>
+        </form>
+    </section>
+
+
+    <section>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>products</h2>
+            <a href="{% url 'inventory:product_list' %}" class="btn btn-link">More →</a>
+        </div>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4">
+                <a href="{% url 'inventory:product_detail' product.id %}" class="text-decoration-none text-dark">
+                    <div class="card">
+                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text"><strong>{{ product.category }}</strong></p>
+                            <a href="{% url 'inventory:product_detail' product.id %}" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <p>No products available.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+
+
+
+
+<!-- <hr/>
+{% include 'inventory/product_list.html' %} -->

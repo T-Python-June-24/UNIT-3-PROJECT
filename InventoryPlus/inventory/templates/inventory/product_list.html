@@ -1,0 +1,75 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">All Products</h2>
+    <form method="get" class="mb-4">
+        <div class="form-row">
+            <div class="col">
+                <label for="category">Category</label>
+                <select name="category" class="form-control" id="category">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col align-self-end">
+                <button type="submit" class="btn btn-dark mt-2">Filter</button>
+                <a href="{% url 'inventory:product_list' %}" class="btn btn-secondary mt-2 ml-2">Clear Filter</a>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <a href="{% url 'inventory:product_detail' product.pk %}">View</a> |
+                    <a href="{% url 'inventory:product_edit' product.pk %}">Edit</a> |
+                    <a href="{% url 'inventory:product_delete' product.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'inventory:product_create' %}" class="btn btn-primary">Add Product</a>
+
+    <div class="row mt-5">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'inventory:product_detail' product.id %}" class="text-decoration-none text-dark">
+                <div class="card">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text"><strong>{{ product.category.name }}</strong></p>
+                        <a href="{% url 'inventory:product_detail' product.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

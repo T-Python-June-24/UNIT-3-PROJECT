@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="container my-4">
+        <h2>{{ supplier.name }}</h2>
+        <p><strong>Email:</strong> {{ supplier.contact_email }}</p>
+        <p><strong>Phone Number:</strong> {{ supplier.phone_number }}</p>
+        <p><strong>Website:</strong> <a href="{{ supplier.website }}" target="_blank">{{ supplier.website }}</a></p>
+        <p><strong>Address:</strong> {{ supplier.address }}</p>
+        {% if supplier.logo %}
+        <p><strong>Logo:</strong></p>
+        <img src="{{ supplier.logo.url }}" alt="{{ supplier.name }}" class="img-fluid">
+        {% endif %}
+        <a href="{% url 'inventory:supplier_edit' supplier.id %}" class="btn btn-warning mt-2">Edit</a>
+        <form action="{% url 'inventory:supplier_delete' supplier.id %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-2">Delete</button>
+        </form>
+    </div>
+{% endblock %}

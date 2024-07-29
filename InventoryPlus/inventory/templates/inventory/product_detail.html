@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}{{ product.name }} Details{% endblock %}
+
+{% block content %}
+    <div class="row my-4">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p><strong>Category:</strong> {{ product.category.name }}</p>
+            <p>{{ product.description }}</p>
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <p><strong>Stock:</strong> {{ product.stock }}</p>
+            <a href="{% url 'inventory:product_update' product.id %}" class="btn btn-warning mt-2">Update</a>
+            <form action="{% url 'inventory:product_delete' product.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mt-2">Delete</button>
+            </form>
+        </div>
+    </div>
+    <h3>Related Products</h3>
+    {% if related_products %}
+    <div class="row">
+        {% for related_product in related_products %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'inventory:product_detail' related_product.id %}" class="text-decoration-none text-dark">
+                <div class="card">
+                    <img src="{{ related_product.image.url }}" class="card-img-top" alt="{{ related_product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ related_product.name }}</h5>
+                        <p><strong>{{ related_product.category.name }}</strong></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No related products found.</p>
+    {% endif %}
+{% endblock %}

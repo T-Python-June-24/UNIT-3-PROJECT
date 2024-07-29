@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h2 class="my-4">Supplier Report</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Supplier Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Website</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.contact_email }}</td>
+                <td>{{ supplier.phone_number }}</td>
+                <td>{{ supplier.website }}</td>
+                <td>{{ supplier.address }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

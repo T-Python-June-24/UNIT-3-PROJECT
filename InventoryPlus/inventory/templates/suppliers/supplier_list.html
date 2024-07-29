@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h2 class="my-4">All Suppliers</h2>
+    <div class="row">
+        {% for supplier in suppliers %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'inventory:supplier_detail' supplier.id %}" class="text-decoration-none text-dark">
+                <div class="card">
+                    {% if supplier.logo %}
+                    <img src="{{ supplier.logo.url }}" class="card-img-top" alt="{{ supplier.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ supplier.name }}</h5>
+                        <p>{{ supplier.contact_email }}</p>
+                        <p>{{ supplier.phone_number }}</p>
+                        <a href="{% url 'inventory:supplier_detail' supplier.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'inventory:supplier_create' %}" class="btn btn-primary">Add Supplier</a>
+{% endblock %}
