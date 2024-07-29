@@ -9,7 +9,7 @@
       })();
     </script>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="https://i.ibb.co/LgtzM26/Untitled-2-1.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/P9Ccr3b/icons8-inventory-96.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Inventory Management System{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -102,12 +102,15 @@
 
       function updateThemeToggles(theme) {
         document.querySelectorAll(".theme-toggle").forEach((toggle) => {
-          toggle.checked = theme === "dark";
+          toggle.checked = theme === "light";
         });
       }
 
       document.addEventListener("DOMContentLoaded", function () {
-        updateThemeToggles(localStorage.getItem("theme") || "dark");
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document.documentElement.classList.toggle("dark", savedTheme === "dark");
+        updateThemeToggles(savedTheme);
       });
 
       // Add this new function
