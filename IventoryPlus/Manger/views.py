@@ -15,6 +15,10 @@ def Manger(request:HttpRequest):
     number_product = Product.objects.count()
     number_Supplier = Supplier.objects.count()
     number_Category = Category.objects.count()
+    sold_out_product = Product.objects.filter(Quantity_Product=0).count()
+    running_out_product = Product.objects.filter(Quantity_Product__lt=2).exclude(Quantity_Product=0).count()
+    
+    
     category = Category.objects.all()
 
     return render(request , 'pages/pages_manger.html' ,
@@ -32,3 +36,7 @@ def manger_product(request:HttpRequest):
     views_supplier = Supplier.objects.all()
     views_product = Product.objects.all().select_related('Category_product').prefetch_related('Supplier_product')
     return render(request , "pages/views_product.html" , {"views_product":views_product,"category":category , "views_supplier":views_supplier})
+
+def manger_Category(request:HttpRequest):
+    category = Category.objects.all()
+    return render(request , "pages/views_category.html" , {"category":category})

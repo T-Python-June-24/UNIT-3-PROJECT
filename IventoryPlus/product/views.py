@@ -1,22 +1,94 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import Product
-from .forms import ProductForms  
 from Category.models import Category
+from Supplier.models import Supplier
 import os
+import csv
+from django.http import FileResponse
+from django.conf import settings
+from django.conf.urls.static import static
 
-def Add_product(request: HttpRequest):
+def download_file(request:HttpRequest):
+    file_path = settings.STATICFILES_DIRS[0] / 'file/product.csv'
+    return FileResponse(open(file_path, 'rb'), content_type='text/csv', as_attachment=True, filename='product.csv')
+
+
+
+
+
+#bonus
+def upload_csv(request:HttpRequest):
     if request.method == 'POST':
-        product_form = ProductForms(request.POST, request.FILES)
-        if product_form.is_valid():
-            product_form.save()
-            return redirect('views_product')  
-        else:
-            print('Error:', product_form.errors)
-    else:
-        product_form = ProductForms()
+        file = request.FILES['file']
+        if file.name.endswith('.csv'):
+            decoded_file = file.read().decode('utf-8')
+            reader = csv.DictReader(decoded_file.splitlines())
+            
+            for row in reader:
+                # Parsing data from CSV
+                name = row['Name']
+                status = row['Status'] == 'True'
+                quantity = int(row['Quantity'])
+                price = float(row['Price'])
+                expiration_date = row['Expiration Date'] if row['Expiration Date'] else None
+                description = row['Description']
+                category_id = int(row['Category ID'])
+                supplier_ids = row['Supplier IDs'].split(',') if row['Supplier IDs'] else []
 
-    return render(request, 'index.html', {'form': product_form})
+                # Get or create Category
+                category = Category.objects.get(id=category_id)
+
+                # Create Product
+                product = Product(
+                    Name_Product=name,
+                    Status_Product=status,
+                    Quantity_Product=quantity,
+                    Price_Product=price,
+                    Expiration_date=expiration_date,
+                    Description_product=description,
+                    Category_product=category
+                )
+                product.save()
+
+                # Add Suppliers
+                suppliers = Supplier.objects.filter(id__in=supplier_ids)
+                product.Supplier_product.set(suppliers)
+
+            return redirect('product_list')  
+def Add_product(request: HttpRequest):
+   if request.method == 'POST':
+        name = request.POST.get('Name')
+        description = request.POST.get('description')
+        category_id = request.POST.get('category')
+        supplier_ids = request.POST.getlist('supplier')
+        status = request.POST.get('Status') == 'True'
+        quantity = request.POST.get('quantity')
+        price = request.POST.get('price')
+        expiration = request.POST.get('expiration')
+        image = request.FILES.get('image')
+
+        expiration_date = expiration if expiration else None
+        new_product = Product(
+            Name_Product=name,
+            Description_product=description,
+            Status_Product=status,
+            Quantity_Product=quantity,
+            Price_Product=price,
+            Expiration_date=expiration_date,
+            Images_Product=image
+        )
+
+        if category_id:
+            new_product.Category_product = Category.objects.get(pk=category_id)
+        if supplier_ids:
+            suppliers = Supplier.objects.filter(pk__in=supplier_ids)
+            new_product.save()  
+            new_product.Supplier_product.set(suppliers) 
+
+       
+        new_product.save()
+        return redirect('Manger:manger_product')
 def views_product(request:HttpRequest):
     view_product = Product.objects.all().select_related('Category_product')
     return render(request , 'index.html' , {'product':view_product})
@@ -27,13 +99,17 @@ def update_product(request:HttpRequest , product_id):
         up_product.Status_Product = request.POST['Status']
         up_product.Quantity_Product = request.POST['quantity']
         up_product.Price_Product = request.POST['price']
-        up_product.Expiration_date = request.POST['expiration']
+        expiration = request.POST['expiration']
         up_product.Description_product = request.POST['description']
         category_id = request.POST['category']
+        up_product.Expiration_date = expiration if expiration else None
         if category_id:
             up_product.Category_product = Category.objects.get(pk = category_id)
-        up_product.Supplier_product = request.POST['supplier']
-        if ['image'] in request.FILES: up_product.Images_Product = request.FILES['image']
+        supplier_ids = request.POST.getlist('supplier')  
+        if supplier_ids:
+            suppliers = Supplier.objects.filter(pk__in=supplier_ids)
+            up_product.Supplier_product.set(suppliers)
+        if 'image' in request.FILES:up_product.Images_Product = request.FILES['image']
         up_product.save()
         return redirect('Manger:manger_product')
     return render(request , 'product/update_product.html' )
@@ -43,7 +119,7 @@ def delete(request:HttpRequest , product_id):
         if os.path.isfile(del_product.Images_Product.path):
             os.remove(del_product.Images_Product.path)
     del_product.delete()
-    return redirect('product:views_product')
+    return redirect('Manger:manger_product')
 def detail_product(request:HttpRequest , product_id):
     det_product = Product.objects.get(pk=product_id)
     return render(request , 'product/detail_product.html',{'product': det_product})

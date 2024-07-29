@@ -82,30 +82,24 @@
   </div>
 </div>
 <div class="row">
-    {% for product in views_product %}
+    {% for product in category %}
     <div class="col-md-4 mb-4">
         <div class="card">
-            <img src="{{ product.Images_Product.url }}" class="card-img-top {% if product.Quantity_Product == 0 %} img-out{% endif %}" alt="...">
-            {% if product.Quantity_Product == 0 %}
-            <div class="text-img">
-              sold out
-            </div>
-            {% endif %}
+            
             <div class="card-body">
-                <h5 class="card-title">{{ product.Name_Product }}</h5>
-                <p class="card-text">{{product.Description_product}}</p>
-                <p class="card-text">{{product.Price_Product}} $</p>
+                <h5 class="card-title">{{ product.name_Category }}</h5>
+                <p class="card-text">{{product.Description_Category}}</p>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                    Product update
+                    Category update
                 </button>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                  Product delete
+                  Category delete
               </button>
                   <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Product update</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Category update</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -113,41 +107,6 @@
                                 {% csrf_token%}
                                 <input type="text" placeholder="Plant name" name="Name" value='{{product.Name_Product}}' class="form-control" required/>
                                 <textarea name="description" placeholder="About the plant" class="form-control" required>{{product.Description_product}}</textarea>
-                                <select name="category" class="form-select" required>
-                                    <option  value="">Choose a category</option>
-                                    {% for views_category in category%}
-                                    <option value="{{views_category.id}}" {% if product.Category_product.name_Category == views_category.name_Category %} selected{% endif %}>{{views_category.name_Category}}</option>
-                                {%endfor%}
-                                </select>
-                                <select name="supplier" class="form-select" required>
-                                    <option value="">Choose the appropriate supplier</option>
-                                    {% for supplier in views_supplier %}
-                                    <option value="{{ supplier.id }}" {% if supplier in product.Supplier_product.all %} selected{% endif %}>{{ supplier.name_Supplier }}</option>
-                                    {% endfor %}
-                                </select>
-                                <select name="Status" class="form-select" required>
-                                    <option  value="">Status</option>
-                                    <option value="True" {% if product.Status_Product == 1 %} selected{% endif %}>Yes</option>
-                                    <option value="False" {% if product.Status_Product == 0 %} selected {% endif %}>No</option>
-                                </select>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" id="basic-addon3">quantity</span>
-                                    </div>
-                                    <input type="number" name="quantity" value="{{product.Quantity_Product}}" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                                  </div>
-                                  <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text">$</span>
-                                    </div>
-                                    <input type="text" name="price" value="{{product.Price_Product}}" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                    <div class="input-group-append">
-                                      <span class="input-group-text">.00</span>
-                                    </div>
-                                  </div>
-                                  <input type="date" name="expiration" value='{{product.Expiration_date.isoformat}}' class="form-control" />
-                                <input type="file" accept="image/*" name="image" class="form-control" value="{{product.Images_Product.url}}" />
-                                <img src="{{product.Images_Product.url}}" alt="">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <input type="submit" class="btn btn-primary" value="Save changes">
