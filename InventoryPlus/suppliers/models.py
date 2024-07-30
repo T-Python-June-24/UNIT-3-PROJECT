@@ -8,5 +8,5 @@ class Supplier(models.Model):
     website = models.URLField(max_length=255, blank=True, null=True)
     phone_number = models.CharField(max_length=20)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name

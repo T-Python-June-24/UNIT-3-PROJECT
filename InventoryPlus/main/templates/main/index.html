@@ -1,7 +1,30 @@
 {% extends "main/base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
+<main>
+  <div class="container">
+    <h1>Dashboard</h1>
+    
+    <!-- Product Overview Section -->
+    <div class="overview">
+        <h2>Product Overview</h2>
+        <p>Total Products: {{ total_products }}</p>
+        <p>Low Stock Items: {{ low_stock_items }}</p>
+        <p>Expired Items: {{ expired_items }}</p>
+    </div>
 
+    <!-- Supplier Overview Section -->
+    <div class="overview">
+        <h2>Supplier Overview</h2>
+        <p>Total Suppliers: {{ total_suppliers }}</p>
+        <p>Products Supplied: {{ products_supplied }}</p>
+    </div>
+
+    <!-- Plotly Static Diagram -->
+    <div id="stock-chart">{{ plot_div|safe }}</div>
+</div>
+
+</main>
 {% endblock %}
