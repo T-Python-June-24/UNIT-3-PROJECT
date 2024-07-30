@@ -53,7 +53,18 @@
 .category-card:hover .explore-more {
     opacity: 1;
 }
-
+    input[type="submit"] {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #495D69;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    input[type="submit"]:hover {
+        background-color: #354B56;
+    }
 </style>
 <div class="container mt-4">
     
@@ -168,6 +179,11 @@
     
    <a href="{% url 'Category:add_category' %}"><div class="circle"></div></a> 
 </div>
+        <!-- Export Form -->
+        <form class="mt-5" method="post" action="">
+            {% csrf_token %}
+            <input type="submit" name="export" value="Export to CSV" class="btn btn-primary">
+        </form>
 </div>
 
 {% endblock %}

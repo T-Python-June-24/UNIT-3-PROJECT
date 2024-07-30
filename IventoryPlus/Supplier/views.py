@@ -4,7 +4,7 @@ from .models import Supplier
 from Product.models import Product
 from .forms import SupplierForm
 from django.contrib import messages  # Import messages
-
+from .admin import SupplierResource
 
 def add_supplier(request):
     suppliers = Supplier.objects.all()
@@ -32,10 +32,23 @@ def supplier_page(request:HttpRequest):
         if searched:
 
             suppliers = suppliers.filter(name__icontains=searched)
+    if 'export' in request.POST:
+        dataset = SupplierResource().export(suppliers)
+        response_data = dataset.csv
+        content_type = 'text/csv'
+
+        response = HttpResponse(response_data, content_type=content_type)
+        response['Content-Disposition'] = 'attachment; filename="suppliers.csv"'
+        return response
+    
+
 
     return render(request, "Supplier/suppliers.html", {"suppliers" : suppliers,
  "search_term": searched if 'searched' in request.GET else ""
 })
+
+
+
 
 def supplier_detail(request,supplier_id:int):
 

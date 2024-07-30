@@ -6,7 +6,7 @@ from .models import Category
 from .forms import CategoryForm
 
 from django.contrib import messages  # Import messages
-
+from .admin import CategoryResources
 
 def add_category(request):
     categories = Category.objects.all()
@@ -30,7 +30,15 @@ def category_page(request:HttpRequest):
         searched=request.GET['searched']
         if searched:
             categories=categories.filter(name__icontains=searched)
+    if 'export' in request.POST:
+        dataset = CategoryResources().export(categories)
+        response_data = dataset.csv
+        content_type = 'text/csv'
 
+        response = HttpResponse(response_data, content_type=content_type)
+        response['Content-Disposition'] = 'attachment; filename="categories.csv"'
+        return response
+    
     return render(request, "Category/categories.html", {"categories" : categories
     , "search_term": searched if 'searched' in request.GET else ""     })
 

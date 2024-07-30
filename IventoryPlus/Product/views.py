@@ -5,7 +5,6 @@ from .forms import ProductForm
 from Category.models import Category
 from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
-from django.views.generic import ListView,FormView
 from .admin import ProductResource
 
 
