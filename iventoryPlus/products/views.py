@@ -27,7 +27,8 @@ def add_product_view(request:HttpRequest)->render:
         new_product.save()
         if "supplier" in  request.POST:
             new_product.supplier.set(request.POST.getlist("supplier"))
-        return redirect("products:products_view")
+        response = redirect('products:products_view')
+        return response
 
     return render(request,"products/add_product.html",{"suppliers":suppliers,"categories":categories,"product":product})
 
@@ -49,11 +50,14 @@ def update_product(request,product_id):
         product.category=Category.objects.get(pk=request.POST["category"]) if "category" in request.POST else None
         product.save()
         product.supplier.set(request.POST.getlist("supplier"))
-        return redirect("products:products_view")
+        response = redirect(request.GET.get("next", "/"))
+        return response
     return render(request,"products/update_product.html",{"product":product,"suppliers":suppliers,"categories":categories})
     
-def delete_product(requesr:HttpRequest,product_id):
+def delete_product(request:HttpRequest,product_id):
     product=Product.objects.get(pk=product_id)
     product.delete()
-    return redirect("products:products_view")
+    response = redirect(request.GET.get("next", "/"))
+    return response
+
         

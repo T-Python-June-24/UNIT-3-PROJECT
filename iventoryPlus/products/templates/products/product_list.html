@@ -28,13 +28,13 @@
             <td {% if product.stock_level <= 10 %} class="py-3 px-2 text-red-700" {% else %} class="py-3 px-2 text-green-700" {% endif %}>{{product.stock_level}} items</td>
             <td class="py-3 px-2">
                 <div class="flex flex-row items-center space-x-3 justify-center">
-                    <a href="{% url 'products:update_product' product.id %}" title="Edit" class="hover:text-white">
+                    <a href="{% url 'products:update_product' product.id %}?next={{ request.path }}" title="Edit" class="hover:text-white">
                         <span class="material-symbols-outlined">
                             edit
                             </span>
                       </a>
                     
-                    <a href="{% url 'products:delete_product' product.id %}" title="Delete product" class="hover:text-white">
+                    <a href="{% url 'products:delete_product' product.id %}?next={{ request.path }}" title="Delete product" class="hover:text-white">
                         <span class="material-symbols-outlined">
                             delete
                             </span>

@@ -41,5 +41,12 @@ def update_supplier(request:HttpRequest,supplier_id):
         supplier.country=request.POST["country"]
         if "logo" in request.FILES: supplier.logo=request.FILES['logo']
         supplier.save()
-        return redirect("suppliers:all_suppliers")
+        return redirect(request.GET.get("next","/"))
     return render(request,"suppliers/update_supplier.html",{"supplier":supplier})
+
+def supplier_detailes(request:HttpRequest,supplier_id):
+    supplier=Supplier.objects.get(pk=supplier_id)
+    totalProducts=Product.objects.all().count()
+    supplier_percentage=math.floor((supplier.product_set.count()/totalProducts)*100)
+    products=Product.objects.filter(supplier=supplier)
+    return render (request,"suppliers/supplier_detailes.html",{"supplier":supplier,"supplier_percentage":supplier_percentage,"products":products})
