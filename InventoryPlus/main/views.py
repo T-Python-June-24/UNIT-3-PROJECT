@@ -2,7 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from products.models import Product,Supplier,Category
 from datetime import datetime,timedelta
-# Create your views here.
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 
 
@@ -17,7 +18,28 @@ def home_view(request:HttpRequest):
     # Filter products with expiry_date less than or equal to 10 days from today
     ex_products = Product.objects.filter(expiry_date__lte=ten_days_from_today).order_by('product_name')
 
-    return render(request, 'main/index.html', {"products" : products,"suppliers": suppliers, 'categories': categories, 'ex_products':ex_products})
+    low_level_products = Product.objects.filter(stock_level__lte=10).order_by("product_name")
+
+    return render(request, 'main/index.html', {"products" : products,"suppliers": suppliers, 'categories': categories, 'ex_products':ex_products, 'low_level_products':low_level_products})
+
+
+def suppliers_report_view(request:HttpRequest):
+    # Query the suppliers
+    suppliers = Supplier.objects.all().order_by('supplier_name')
+    # Get the current date
+    current_date = datetime.now().strftime('%B %d, %Y')  # Format as needed
+    
+    # Render the template to a string
+    html_string = render_to_string('main/suppliers_report.html', {'suppliers': suppliers,'current_date':current_date})
+    
+    # Generate the PDF
+    pdf_file = HTML(string=html_string, base_url="/").write_pdf()
+    
+    # Create an HTTP response with the PDF file
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="suppliers_report.pdf"'
+    
+    return response
 
 
 def contact_view(request:HttpRequest):
