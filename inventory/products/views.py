@@ -29,7 +29,7 @@ def add_product_view(request:HttpRequest):
         # return redirect('main:home_view')
     
 
-    return render(request, "products/add.html", {"product_form":product_form,"RatingChoices": reversed(Product.RatingChoices.choices), "categories":categories, "suppliers": suppliers})
+    return render(request, "products/add.html", {"product_form":product_form, "categories":categories, "suppliers": suppliers})
 
 
 def product_detail_view(request:HttpRequest, product_id:int):

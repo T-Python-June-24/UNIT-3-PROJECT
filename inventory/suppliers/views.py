@@ -7,22 +7,32 @@ from .forms import SupplierForm
 
 
 # Create your views here.
-def add_supplier(request:HttpRequest):
+# def add_supplier(request:HttpRequest):
 
+#     if request.method == "POST":
+#         #addin a new product in database
+#         supplier_form = SupplierForm(request.POST, request.FILES)
+#         if supplier_form.is_valid():
+#             supplier_form.save()
+#         else:
+#             print(supplier_form.errors)
+
+#         return redirect("suppliers:suppliers_page")
+
+#     return render(request, "suppliers/add_supplier.html")
+def add_supplier(request: HttpRequest):
     if request.method == "POST":
-        #addin a new product in database
-        supplier_form = SupplierForm(request.POST, request.FILES)
-        if supplier_form.is_valid():
-            supplier_form.save()
-        else:
-            print(supplier_form.errors)
-
+        new_product = Supplier(name=request.POST['name'],  #send to data base
+                                description=request.POST['description'],
+                                logo= request.FILES['logo'])
+        new_product.save()#save to database
         return redirect("suppliers:suppliers_page")
-
-    return render(request, "suppliers/add_supplier.html")
+    
+    return render(request,"suppliers/add_supplier.html")
 
 
 def suppliers_page(request:HttpRequest):
+# Abdullah The beat teacher
 
     suppliers = Supplier.objects.all()[:8]
 

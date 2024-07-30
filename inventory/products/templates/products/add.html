@@ -23,17 +23,11 @@
                 {% endfor %}
             </select>
 
-            <div class="d-flex gap-2 align-items-center">
-                <h5 class="m-0 p-0">Rating: </h5>
-                <div class="rate">
-                    {% for val, label in RatingChoices %}
-                        <input type="radio" id="{{val}}" name="rating" value="{{val}}" required/>
-                        <label for="{{val}}" title="text">{{label}}</label>
-                    {% endfor %}
-                </div>
+            
+            <div>
+                <h5>production date</h5>
+                <input type="date" name="production_date" class="form-control" required/>
             </div>
-
-            <input type="date" name="production_date" class="form-control" required/>
 
             <input type="file" name="poster" class="form-control" required accept="image/*"/>
 
@@ -45,7 +39,7 @@
                     <label for="check-{{category.id}}">{{category.name}}</label>
                 {% endfor %}
             </div>
-            <input type="submit" value="Create Game" class="btn btn-primary mt-4" />
+            <input type="submit" value="Add Product" class="btn btn-primary mt-4" />
 
         </form>
 

@@ -17,7 +17,7 @@
             </div>
 
             <img src="{{product.poster.url}}" class="w-100 poster-thumb object-fit-cover"/>
-            <a href="{% url products:product_detail_view' product.id %}"><h3>{{product.title}}</h3></a>
+            <a href="{% url 'products:product_detail_view' product.id %}"><h3>{{product.title}}</h3></a>
             <div class="d-flex justify-content-between align-items-center w-100">
                 <div class="d-flex align-items-center gap-1 ">
                     <img src="{{product.supplier.logo.url}}" class="rounded-circle overflow-hidden supplier-logo-small " />
