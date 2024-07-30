@@ -20,7 +20,7 @@
             <td class="py-3 px-2 flex flex-col justify-center items-center gap-1">
                 {% for supplier in product.supplier.all %}
 
-                <p class="text-xs bg-white/30 rounded-md p-1">{{supplier.name}}</p>
+                <p class="text-xs  p-1 rounded-md "><img class="w-12" src="{{supplier.logo.url}}" alt=""></p>
                 {% endfor %}
             </td>
             <td class="py-3 px-2">{{product.expirment}}</td>

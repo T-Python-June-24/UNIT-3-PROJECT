@@ -12,3 +12,6 @@ class Product(models.Model):
     stock_level=models.IntegerField()
     expirment=models.DateField(null=True)
     price=models.IntegerField()
+    notified=models.BooleanField(default=False)
+    notifeied_exieration=models.BooleanField(default=False)
+    

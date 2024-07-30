@@ -1,14 +1,16 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest
 from .models import Supplier
+from products.models import Product
 import time
+import math
 # Create your views here.
 def all_suppliers(request:HttpRequest):
     suppliers=Supplier.objects.all()
-    #print(suppliers[0].product_set.all())
-
+    totalProducts=Product.objects.all().count()
     for index, supplier in enumerate(suppliers):
-        suppliers[index].percentage = 9
+        suppliers[index].percentage = math.floor((supplier.product_set.all().count()/totalProducts)*100)
+    
 
     return render(request,"suppliers/supplier.html",{"suppliers":suppliers})
 
