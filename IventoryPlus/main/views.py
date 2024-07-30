@@ -3,8 +3,9 @@ from django.http import HttpRequest, HttpResponse
 from Product.models import Product
 from Supplier.models import Supplier
 import plotly.express as px
-
 def home_view(request: HttpRequest):
+        return render(request, 'main/index.html')
+def analytics_view(request: HttpRequest):
 
 
     ################# Stock chart######################
@@ -69,4 +70,4 @@ def home_view(request: HttpRequest):
     supplier_chart = supplier_fig.to_html()
    
  
-    return render(request, 'main/index.html', {'product_chart': product_chart,'supplier_chart': supplier_chart,'low_stock_warning': low_stock_warning, })
+    return render(request, 'main/analytics.html', {'product_chart': product_chart,'supplier_chart': supplier_chart,'low_stock_warning': low_stock_warning, })

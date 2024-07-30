@@ -15,6 +15,7 @@
 </head>
 <body>
   {% url 'main:home_view' as home_view_url %}
+  {% url 'main:analytics_view' as analytics_view_url %}
   {% url 'Product:add_product' as add_product_url %}
   {% url 'Product:product_page' as all_products_url %}
   {% url 'Category:add_category' as add_category_url %}
@@ -34,7 +35,9 @@
           <li class="nav-item">
             <a class="nav-link {% if request.path == home_view_url %} active{% endif %}" aria-current="page" href="{{ home_view_url }}">Home</a>
           </li>
-         
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == analytics_view_url %} active{% endif %}" aria-current="page" href="{{ analytics_view_url }}"> Analytics</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {% if request.path == add_product_url or  request.path == all_products_url %}  active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Products

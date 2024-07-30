@@ -61,20 +61,7 @@ p{
     font-family: "Rubik", sans-serif;
 
 }
-.img-font{
-    font-family: "Rubik", sans-serif;
-    color: #ffffff ;
-}
-.img-font-main{
-    font-family: "Rubik", sans-serif;
-    color: orange ;
-}
-.label{
-    color:#388E3C ;
-    font-family: "Rubik", sans-serif;
-    font-weight: 500;
 
-}
 .form-container {
     background-color: white;
     padding: 20px; 
@@ -90,34 +77,4 @@ p{
 h4{
     font-family: "Rubik", sans-serif;
 
-}
-
-.circle {
-    width: 50px; 
-    height: 50px; 
-    background-color: #4796BD; 
-    border-radius: 50%; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 0;  
-    bottom: 0; 
-    margin: 20px; 
-}
-
-.circle::before, .circle::after {
-    content: '';
-    position: absolute;
-    background-color: white;
-}
-
-.circle::before {
-    width: 60%;  
-    height: 10%; 
-}
-
-.circle::after {
-    width: 10%;   
-    height: 60%;  
 }

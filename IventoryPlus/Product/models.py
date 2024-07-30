@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 
 class Product(models.Model):
@@ -77,6 +78,31 @@ class Product(models.Model):
             return 'Low Stock'
         else:
             return 'In Stock'
+        
+
+    def check_expiry_date(self):
+        today = datetime.now().date()
+        expiry_date = self.expiry_date
+        
+        if (expiry_date - today).days <= 7:
+            subject = f"Expiry Alert: {self.name}"
+            message = f"{self.name} is expiring soon. The expiry date is {expiry_date.strftime('%Y-%m-%d')}."
+            html_content = f"""\
+            <html>
+            <head></head>
+            <body>
+                <p>Hi,<br>
+                   <b>Expiry Alert:</b> {message}<br>
+                   Please check the inventory and take necessary actions.
+                </p>
+            </body>
+            </html>
+            """
+            self.send_email(subject, message, html_content)
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.check_expiry_date()
 
 
 

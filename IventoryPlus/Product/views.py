@@ -87,7 +87,15 @@ def product_page(request):
         response = HttpResponse(response_data, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="products.csv"'
         return response
+    #filter by category
+    category=request.GET.get('category')
+    if category:
+        products = products.filter(category=category)
+    #filter by supplier
 
+    supplier_id = request.GET.get('supplier', '')
+    if supplier_id:
+        products = products.filter(suppliers__id=supplier_id)
     # Render the page normally if not exporting
     return render(request, "Product/products.html", {
         "categories": categories,

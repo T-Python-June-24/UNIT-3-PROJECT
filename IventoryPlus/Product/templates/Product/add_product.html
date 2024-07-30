@@ -67,17 +67,17 @@
             <form action="{%url 'Product:add_product'%}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="nameInput" class="form-label label">Name <span class="required-asterisk">*</span></label>
+                    <label for="nameInput" class="form-label ">Name <span class="required-asterisk">*</span></label>
                     <input type="text" class="form-control" id="nameInput" placeholder="Fill in name" name="name" required minlength="3">
                 </div>
                 <hr>
                 <div class="mb-3">
-                    <label for="descriptionArea" class="form-label label">Description <span class="required-asterisk">*</span></label>
+                    <label for="descriptionArea" class="form-label ">Description <span class="required-asterisk">*</span></label>
                     <textarea class="form-control" id="descriptionArea" placeholder="Fill in description" name="description" required minlength="3" maxlength="2000"></textarea>
                 </div>
                 <hr>
                 <div class="mb-3">
-                    <label for="categoryInput" class="form-label label">Category <span class="required-asterisk">*</span></label>
+                    <label for="categoryInput" class="form-label ">Category <span class="required-asterisk">*</span></label>
                     <select class="form-control" id="categoryInput" name="category" required>
                         <option value="">Select a category</option>
                         {% for category in categories %}
@@ -101,23 +101,23 @@
                 </div>
                 <hr>
                 <div class="mb-3">
-                    <label for="expiryDateInput" class="form-label label">Expiry Date <span class="required-asterisk">*</span></label>
+                    <label for="expiryDateInput" class="form-label ">Expiry Date <span class="required-asterisk">*</span></label>
                     <input type="date" class="form-control" id="expiryDateInput" name="expiry_date" required>
                 </div>
                 <hr>
                 <div class="mb-3">
-                    <label for="stockInput" class="form-label label">Stock <span class="required-asterisk">*</span></label>
+                    <label for="stockInput" class="form-label ">Stock <span class="required-asterisk">*</span></label>
                     <input type="number" class="form-control" id="stockInput" placeholder="Fill in stock" name="stock" required min="0">
                 </div>
                 <hr>
                 <div class="mb-3">
-                    <label for="minimumStockInput" class="form-label label">Minimum Stock <span class="required-asterisk">*</span></label>
+                    <label for="minimumStockInput" class="form-label ">Minimum Stock <span class="required-asterisk">*</span></label>
                     <input type="number" class="form-control" id="minimumStockInput" placeholder="Fill in minimum stock" name="minimum_stock" required min="0">
                 </div>
                 <hr>
                 <div class="mb-3">
-                    <label for="fileInput" class="form-label label">Choose Image </label>
-                    <input type="file" name="image" class="form-control" id="fileInput" />
+                    <label for="fileInput" class="form-label">Choose Image</label>
+                    <input type="file" name="image" class="form-control" id="fileInput" accept="image/*" />
                 </div>
                 <hr/>
 

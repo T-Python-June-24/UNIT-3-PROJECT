@@ -5,7 +5,7 @@
 {% block content %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
-    input[type="submit"] {
+        input[type="submit"] {
         padding: 5px 10px;
         border-radius: 5px;
         background-color: #495D69;
@@ -17,6 +17,24 @@
     input[type="submit"]:hover {
         background-color: #354B56;
     }
+    th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            
+        }
+        a {
+            text-decoration: none;
+            color: #354B56;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0);
+            border-radius: 4px;
+        }
+        a:hover {
+            color: rgb(202, 40, 40);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 </style>
 
 <div class="container mt-4">
@@ -37,12 +55,29 @@
             <p>No products found.</p>
         {% endif %}
     {% endif %}
-
     
+<form method="get" action="{%url 'Product:product_page'%}" class="mb-4">
+    <div class="d-flex align-items-center mt-2">
+        <!-- Category Filter -->
+        <select name="category" class="form-select me-2">
+            <option value="">Select a Category</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
 
-  
+        <!-- Supplier Filter -->
+        <select name="supplier" class="form-select me-2">
+            <option value="">Select a Supplier</option>
+            {% for supplier in suppliers %}
+            <option value="{{ supplier.id }}" {% if supplier.id|stringformat:"s" == request.GET.supplier %}selected{% endif %}>{{ supplier.name }}</option>
+            {% endfor %}
+        </select>
 
-
+        <!-- Search Button -->
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </div>
+</form>
     <!-- Product Table -->
     <div class="shadow-sm p-3 mt-2 mb-5 bg-white rounded"> 
         <table class="table table-striped ">
