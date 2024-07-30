@@ -5,7 +5,9 @@
 {% block content %}
 <div class="col py-3">
             <h1> Suppliers Management</h1>
-            <a href="{% url 'supplier:add_suppliers_view' %}" class="btn btn-primary">ADD Supplier +</a>
+            <div class="m-4">
+                     <a href="{% url 'supplier:add_suppliers_view' %}" class="btn btn-primary">ADD Supplier +</a>
+            </div>
   <table class="table table-bordered">
     <tr class="bg-info text-white">
       <td>NO.</td>

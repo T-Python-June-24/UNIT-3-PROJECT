@@ -5,7 +5,9 @@
 {% block content %}
 <div class="col py-3">
             <h1> Inventory Management</h1>
-            <a href="{% url 'inventory:add_inventories_view' %}" class="btn btn-primary">ADD Inventory +</a>
+            <div class="m-4">
+                <a href="{% url 'inventory:add_inventories_view' %}" class="btn btn-primary">ADD Inventory +</a>
+            </div>
   <table class="table table-bordered">
     <tr class="bg-info text-white">
       <td>NO.</td>

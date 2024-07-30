@@ -23,39 +23,25 @@
     <label class="form-label" for="form6Example5">Price</label>
   </div>
   <div data-mdb-input-init class="form-outline mb-4">
-    <input type="text" id="form6Example5" class="form-control" name="category"/>
-    <label class="form-label" for="form6Example5">Category</label>
-  </div>
-  <div data-mdb-input-init class="form-outline mb-4">
-   <select name="cars" id="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
-</select>
-    <!-- <select  size="2" aria-label="size 3 select example">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select> -->
-  </div>
+    <label >Category name</label>
 
-  <!-- <label for="suppliers">Suppliers:</label>
-    <select name="suppliers" id="suppliers" multiple>
-        {% for supplier in suppliers %}
-            <option value="{{ supplier.id }}">{{ supplier.name }}</option>
-        {% endfor %}
-    </select> -->
-  <!-- <label for="suppliers">Suppliers:</label>
-  <div class="form-outline" data-mdb-input-init="" data-mdb-input-initialized="true"><input class="form-control select-input placeholder-active" type="text" role="listbox" aria-multiselectable="true" aria-disabled="false" aria-haspopup="true" aria-expanded="false" placeholder="Example placeholder" readonly="true"><span class="select-arrow"></span><div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 0px;"></div><div class="form-notch-trailing"></div></div></div>
-    <select data-mdb-select-init="" data-mdb-placeholder="Example placeholder" multiple="" class="select-initialized" data-mdb-select-initialized="true">
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-          <option value="4">Four</option>
-          <option value="5">Five</option>
-        </select> -->
+        <select style="width: 100%;" name="category" >
+            {%for category in categories %}
+            <option value="{{category.id}}">{{category.name}}</option>
+            {% endfor%}
+        </select>
+  </div>
+  <div class="mb-3">
+                <label for="suppliers" class="form-label">Suppliers</label>
+                {% for supplier in suppliers %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="supplier{{ supplier.id }}" name="suppliers" value="{{ supplier.id }}">
+                    <label class="form-check-label" for="supplier{{ supplier.id }}">{{ supplier.name }}</label>
+                </div>
+                {% endfor %}
+            </div>
+  
+
  <div>
     <div class="mb-4 d-flex justify-content-start">
         <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
@@ -64,12 +50,12 @@
     <div class="d-flex justify-content-start">
         <div data-mdb-ripple-init class="mb-4">
             <label class="form-label text-black m-1" for="customFile1">Upload Image</label>
-            <input type="file" class="form-control " id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" accept="image/*"/>
+            <input type="file" class="form-control " id="customFile1" name="image" onchange="displaySelectedImage(event, 'selectedImage')" accept="image/*"/>
         </div>
     </div>
     </div>
 
-  <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Add Supplier</button>
+  <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Add Product</button>
 </form>
 </div>
   <table class="table table-bordered">
@@ -89,11 +75,26 @@
       <td>{{forloop.counter}}</td>
       <td>{{product.id}}</td>
       <td>{{product.name}}</td>
-      <td>{{product.image}}</td>
+      <td>{% if product.image %}
+        <img
+          src="{{ product.image.url }}"
+          class="object-fit-contain"
+          height="150px"
+          width="150px"
+        />
+        {% else %}
+        <img
+          src="/media/images/defualt.png"
+          class="w-20 poster-thumb object-fit-contain"
+        />
+        {% endif %}</td>
       <td>{{product.description}}</td>
       <td>{{product.price}}</td>
       <td>{{product.category}}</td>
-      <td>{{product.supplier}}</td>
+      <td>{% for supplier in product.suppliers.all %}
+           - {{ supplier.name }} <br>
+          {% endfor %}
+        </td>
 
 
       <td>
@@ -250,24 +251,3 @@
 </div>
 
 {% endblock %}
-<!-- 
-  <input type="text" placeholder="Name of the plant" name="name" class="form-control" />
-            <textarea placeholder="write " name="about" class="form-control"></textarea>
-            <input type="text" placeholder="What is used for?" name="used_for" class="form-control" />
-            <input type="file" placeholder="uploadImage" name="image" class="form-control" accept="image/*"/>
-
-            <select class="form-select" aria-placeholder="Choose category" id="category"name="category" required>
-                <option value="1">Fruit</option>
-                <option value="2">Vegetables</option>
-                <option value="3">Decorating tree</option>
-                <option value="4">Medicine</option>
-                </select>
-              <label for="is_edible">Is Edible:</label>
-        <select class="form-select" id="is_edible" name="is_edible" required>
-            <option value="True">Yes</option>
-            <option value="False">No</option>
-        </select>
-            <input type="date" name="created_at" class="form-control"/>
-            <input type="submit" value="add plant" class="btn btn-primary" />
-        </form>
-        <a href="/plant/listAll/plant" class="btn btn-success align-middle">Manage Plant product</a> -->

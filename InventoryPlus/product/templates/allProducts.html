@@ -5,7 +5,9 @@
 {% block content %}
 <div class="col py-3">
             <h1> Products Management</h1>
-            <a href="{% url 'product:add_products_view' %}" class="btn btn-primary">ADD Product +</a>
+            <div class="m-4">
+                <a href="{% url 'product:add_products_view' %}" class="btn btn-primary">ADD Product +</a>
+            </div>
   <table class="table table-bordered">
     <tr class="bg-info text-white">
       <td>NO.</td>
@@ -23,11 +25,25 @@
       <td>{{forloop.counter}}</td>
       <td>{{product.id}}</td>
       <td>{{product.name}}</td>
-      <td>{{product.image}}</td>
+      <td>{% if product.image %}
+        <img
+          src="{{ product.image.url }}"
+          class="object-fit-contain"
+          height="150px"
+          width="150px"
+        />
+        {% else %}
+        <img
+          src="/media/images/defualt.png"
+          class="w-20 poster-thumb object-fit-contain"
+        />
+        {% endif %}</td></td>
       <td>{{product.description}}</td>
       <td>{{product.price}}</td>
       <td>{{product.category}}</td>
-      <td>{{product.supplier}}</td>
+      <td>{% for supplier in product.suppliers.all %}
+          - {{ supplier.name }} <br>
+          {% endfor %}</td>
 
 
       <td>
