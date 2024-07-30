@@ -8,5 +8,5 @@ class Inventory(models.Model):
     create_date = models.DateField(auto_now_add=True)
 
 
-def __str__(self):
-        return self.product
+    def __str__(self):
+        return f"{self.product.name} - {self.quantity} - {'In Stock' if self.status else 'Out of Stock'}"

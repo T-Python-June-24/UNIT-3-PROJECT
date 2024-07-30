@@ -1,50 +1,36 @@
 {% extends 'base.html' %}
 
-{% block title %} All Suppliers {% endblock %}
+{% block title %} All Inventory {% endblock %}
 
 {% block content %}
 <div class="col py-3">
-            <h1> Suppliers Management</h1>
-            <div class="col py-3">
-    <h1> Add Supplier</h1>
-    <form action="{% url 'supplier:add_suppliers_view' %}" method="post">
-    {% csrf_token %}
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="text" id="form6Example1" class="form-control" name="name"/>
-        <label class="form-label" for="form6Example1">Supplier name</label>
-    </div>
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="email" id="form6Example5" class="form-control" name="email"/>
-    <label class="form-label" for="form6Example5">Email</label>
-  </div>
-
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="number" id="form6Example6" class="form-control" name="phone" />
-    <label class="form-label" for="form6Example6">Phone</label>
-</div>
-
-  <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Add Supplier</button>
-</form>
-</div> 
+            <h1> Inventory Management</h1>
+            <a href="{% url 'inventory:add_inventories_view' %}" class="btn btn-primary">ADD Inventory +</a>
   <table class="table table-bordered">
     <tr class="bg-info text-white">
       <td>NO.</td>
-      <td>ID</td>
-      <td>Supplier Name</td>
-      <td>Supplier Email</td>
-      <td>Supplier Phone</td>
+      <td>Inventory ID</td>
+      <td>Product Name</td>
+      <td>Quantity</td>
+      <td>Status</td>
+      <td>Created Date</td>
       <td>Actions</td>
     </tr>
-    {%for supplier in suppliers %}
+    {%for inventory in inventories %}
     <tr class="text-center">
       <td>{{forloop.counter}}</td>
-      <td>{{supplier.id}}</td>
-      <td>{{supplier.name}}</td>
+      <td>{{inventory.id}}</td>
+      <td>{{inventory.product}}</td>
+      <td>{{inventory.quantity}}</td>
+      <td>
+        {% if inventory.status == True %}
+        In Stock
+        {% else %}
+        Out of Stock
+        {%endif%}
+    </td>
+      <td>{{inventory.create_date}}</td>
 
-      <td>{{supplier.email}}</td>
-      <td>{{supplier.phone}}</td>
 
       <td>
         <button
@@ -52,7 +38,7 @@
           class="btn btn-success"
           data-mdb-ripple-init
           data-mdb-modal-init
-          data-mdb-target="#updateModal{{supplier.id}}"
+          data-mdb-target="#updateModal{{inventory.id}}"
           data-mdb-whatever="@fat"
         >
           Update
@@ -61,7 +47,7 @@
           type="button"
           class="btn btn-danger"
           data-bs-toggle="modal"
-          data-bs-target="#deleteModal{{ supplier.id }}"
+          data-bs-target="#deleteModal{{ inventory.id }}"
         >
           Delete
         </button>
@@ -69,7 +55,7 @@
       <!-- delete modal -->
       <div
         class="modal fade"
-        id="deleteModal{{ supplier.id }}"
+        id="deleteModal{{ inventory.id }}"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -91,7 +77,7 @@
               <p>
                 Are you sure you want to delete the
                 <strong>
-                  Supplier: {{supplier.name}} ID: {{ supplier.id }}</strong
+                  inventory: {{inventory.name}} ID: {{ inventory.id }}</strong
                 >?
               </p>
             </div>
@@ -104,7 +90,7 @@
                 Close
               </button>
               <a
-                href="{% url 'supplier:delete_suppliers_view' supplier.id %}"
+                href="{% url 'inventory:delete_inventories_view' inventory.id %}"
                 class="btn btn-danger"
                 >Delete</a
               >
@@ -115,7 +101,7 @@
       <!-- Update modal -->
       <div
         class="modal fade"
-        id="updateModal{{ supplier.id }}"
+        id="updateModal{{ inventory.id }}"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -124,7 +110,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">
-                Update Supplier {{suppliers.name}}
+                Update inventory {{inventory.product}}
               </h5>
 
               <button
@@ -137,37 +123,32 @@
             </div>
             <div class="modal-body">
               <form
-                id="updateForm{{ supplier.id }}"
-                action="{% url 'supplier:update_suppliers_view' supplier.id %}"
+                id="updateForm{{ inventory.id }}"
+                action="{% url 'inventory:update_inventories_view' inventory.id %}"
                 method="post"
               >
                 {% csrf_token %}
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label"
-                    >Supplier name</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="recipient-name"
-                    name="name"
-                    value="{{supplier.name}}"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="message-text" class="col-form-label">Email:</label
+                  <label for="message-text" class="col-form-label">Product Quantity:</label
                   >
                   <input
                     class="form-control"
                     id="message-text"
-                    name="email" value="{{supplier.email}}"></input>
+                    name="quantity" value="{{inventory.quantity}}"></input>
                 </div>
                 <div class="mb-3">
-                  <label for="message-text" class="col-form-label">Phone:</label>
-                  <input
-                    class="form-control"
-                    id="message-text"
-                    name="phone" value="{{supplier.phone}}"></input>
+                  <label for="message-text" class="col-form-label">Status:</label>
+                <div data-mdb-input-init class="form-outline mb-4">
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="True" />
+                    <label class="form-check-label" for="inlineRadio1">In Stock</label>
+                    </div>
+                
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="False" />
+                    <label class="form-check-label" for="inlineRadio2">Out of Stock</label>
+                    </div>
+                </div>
                 </div>
               </form>
             </div>
@@ -183,7 +164,7 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                form="updateForm{{ supplier.id }}"
+                form="updateForm{{ inventory.id }}"
                 data-mdb-ripple-init
               >
                 Update
@@ -196,6 +177,6 @@
 
     {%endfor%}
   </table>
-</div>
+        </div>
 
 {% endblock %}

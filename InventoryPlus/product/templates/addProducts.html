@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Products {% endblock %}
+
+{% block content %}
+
+<div class="col py-3">
+            <h1> Products Management</h1>
+    <div class="col py-3">
+    <h1> Add Product</h1>
+    <form action="{% url 'product:add_products_view' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+      <div data-mdb-input-init class="form-outline mb-4">
+        <input type="text" id="form6Example1" class="form-control" name="name"/>
+        <label class="form-label" for="form6Example1">Product name</label>
+    </div>
+  <div data-mdb-input-init class="form-outline mb-4">
+    <textarea class="form-control" id="textAreaExample" rows="4" name="description"></textarea>
+  <label class="form-label" for="textAreaExample">Description</label>
+  </div>
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input type="number" id="form6Example5" class="form-control" name="price"/>
+    <label class="form-label" for="form6Example5">Price</label>
+  </div>
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input type="text" id="form6Example5" class="form-control" name="category"/>
+    <label class="form-label" for="form6Example5">Category</label>
+  </div>
+  <div data-mdb-input-init class="form-outline mb-4">
+   <select name="cars" id="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+    <!-- <select  size="2" aria-label="size 3 select example">
+  <option selected>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select> -->
+  </div>
+
+  <!-- <label for="suppliers">Suppliers:</label>
+    <select name="suppliers" id="suppliers" multiple>
+        {% for supplier in suppliers %}
+            <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+        {% endfor %}
+    </select> -->
+  <!-- <label for="suppliers">Suppliers:</label>
+  <div class="form-outline" data-mdb-input-init="" data-mdb-input-initialized="true"><input class="form-control select-input placeholder-active" type="text" role="listbox" aria-multiselectable="true" aria-disabled="false" aria-haspopup="true" aria-expanded="false" placeholder="Example placeholder" readonly="true"><span class="select-arrow"></span><div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 0px;"></div><div class="form-notch-trailing"></div></div></div>
+    <select data-mdb-select-init="" data-mdb-placeholder="Example placeholder" multiple="" class="select-initialized" data-mdb-select-initialized="true">
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+          <option value="4">Four</option>
+          <option value="5">Five</option>
+        </select> -->
+ <div>
+    <div class="mb-4 d-flex justify-content-start">
+        <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+        alt="example placeholder" style="width: 300px;" name="image"/>
+    </div>
+    <div class="d-flex justify-content-start">
+        <div data-mdb-ripple-init class="mb-4">
+            <label class="form-label text-black m-1" for="customFile1">Upload Image</label>
+            <input type="file" class="form-control " id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" accept="image/*"/>
+        </div>
+    </div>
+    </div>
+
+  <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4">Add Supplier</button>
+</form>
+</div>
+  <table class="table table-bordered">
+    <tr class="bg-info text-white">
+      <td>NO.</td>
+      <td>ID</td>
+      <td>Product Name</td>
+      <td>Product Image</td>
+      <td>Product Description</td>
+      <td>Product Price</td>
+      <td>Product Category</td>
+      <td>Product Suppliers</td>
+      <td>Actions</td>
+    </tr>
+    {%for product in products %}
+    <tr class="text-center">
+      <td>{{forloop.counter}}</td>
+      <td>{{product.id}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.image}}</td>
+      <td>{{product.description}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.category}}</td>
+      <td>{{product.supplier}}</td>
+
+
+      <td>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-mdb-ripple-init
+          data-mdb-modal-init
+          data-mdb-target="#updateModal{{product.id}}"
+          data-mdb-whatever="@fat"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteModal{{ product.id }}"
+        >
+          Delete
+        </button>
+      </td>
+      <!-- delete modal -->
+      <div
+        class="modal fade"
+        id="deleteModal{{ product.id }}"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Delete Category
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Are you sure you want to delete the
+                <strong>
+                  product: {{product.name}} ID: {{ product.id }}</strong
+                >?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <a
+                href="{% url 'product:delete_products_view' product.id %}"
+                class="btn btn-danger"
+                >Delete</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Update modal -->
+      <div
+        class="modal fade"
+        id="updateModal{{ product.id }}"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Update product {{products.name}}
+              </h5>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-ripple-init
+                data-mdb-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                id="updateForm{{ product.id }}"
+                action="{% url 'product:update_products_view' product.id %}"
+                method="post"
+              >
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label"
+                    >product name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="recipient-name"
+                    name="name"
+                    value="{{product.name}}"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Email:</label
+                  >
+                  <input
+                    class="form-control"
+                    id="message-text"
+                    name="email" value="{{product.email}}"></input>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Phone:</label>
+                  <input
+                    class="form-control"
+                    id="message-text"
+                    name="phone" value="{{product.phone}}"></input>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-mdb-ripple-init
+                data-mdb-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                form="updateForm{{ product.id }}"
+                data-mdb-ripple-init
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tr>
+
+    {%endfor%}
+  </table>
+        
+</div>
+
+{% endblock %}
+<!-- 
+  <input type="text" placeholder="Name of the plant" name="name" class="form-control" />
+            <textarea placeholder="write " name="about" class="form-control"></textarea>
+            <input type="text" placeholder="What is used for?" name="used_for" class="form-control" />
+            <input type="file" placeholder="uploadImage" name="image" class="form-control" accept="image/*"/>
+
+            <select class="form-select" aria-placeholder="Choose category" id="category"name="category" required>
+                <option value="1">Fruit</option>
+                <option value="2">Vegetables</option>
+                <option value="3">Decorating tree</option>
+                <option value="4">Medicine</option>
+                </select>
+              <label for="is_edible">Is Edible:</label>
+        <select class="form-select" id="is_edible" name="is_edible" required>
+            <option value="True">Yes</option>
+            <option value="False">No</option>
+        </select>
+            <input type="date" name="created_at" class="form-control"/>
+            <input type="submit" value="add plant" class="btn btn-primary" />
+        </form>
+        <a href="/plant/listAll/plant" class="btn btn-success align-middle">Manage Plant product</a> -->
