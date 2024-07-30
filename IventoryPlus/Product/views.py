@@ -5,7 +5,10 @@ from .forms import ProductForm
 from Category.models import Category
 from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
-from django.core.mail import send_mail
+from django.views.generic import ListView,FormView
+from .admin import ProductResource
+
+
 
 def add_product(request):
     products = Product.objects.all()
@@ -26,25 +29,7 @@ def add_product(request):
 def Product_added_success(request):
     return render(request, "Product/added_success.html")
 
-def product_page(request):
-    # Start with all products
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    suppliers = Supplier.objects.all()
 
-    # Check if a search was made
-    if 'searched' in request.GET:
-        searched = request.GET['searched']
-        if searched:
-
-            products = products.filter(name__icontains=searched)
-
-    return render(request, "Product/products.html", {
-        "categories": categories,
-        "suppliers": suppliers,
-        "products": products,
-        "search_term": searched if 'searched' in request.GET else ""
-    })
 def product_detail(request,product_id:int):
 
     product = Product.objects.get(pk=product_id)
@@ -82,3 +67,32 @@ def search_product(request:HttpRequest):
     return redirect('Product:product_page')
 
 
+
+def product_page(request):
+    # Start with all products
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    suppliers = Supplier.objects.all()
+
+    # Check if a search was made
+    searched = request.GET.get('searched', '')
+    if searched:
+        products = products.filter(name__icontains=searched)
+
+    # Check for export action
+    if 'export' in request.POST:
+        dataset = ProductResource().export(products)
+        response_data = dataset.csv
+        content_type = 'text/csv'
+
+        response = HttpResponse(response_data, content_type=content_type)
+        response['Content-Disposition'] = 'attachment; filename="products.csv"'
+        return response
+
+    # Render the page normally if not exporting
+    return render(request, "Product/products.html", {
+        "categories": categories,
+        "suppliers": suppliers,
+        "products": products,
+        "search_term": searched
+    })
