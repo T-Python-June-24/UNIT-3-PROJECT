@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Product',
     'Category',
     'Supplier',
+    'import_export'
 ]
 
 MIDDLEWARE = [
