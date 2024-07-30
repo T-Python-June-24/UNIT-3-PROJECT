@@ -46,8 +46,15 @@ def home_view(request:HttpRequest):
         elif product.stock_level>10 and product.notified:
             product.notified=False
             product.save()
-        if product.expirment and product.expirment <= now().date() + timedelta(days=7):
+         # Expiration alerts
+        if product.expirment and product.expirment <= now().date() + timedelta(days=5) and not product.notifeied_exieration:
             need_to_notify_expiration.append(product)
+            product.notifeied_exieration = True
+            product.save()
+        elif product.expirment and product.expirment > now().date() + timedelta(days=5) and product.notifeied_exieration:
+            product.notifeied_exieration = False
+            product.save()
+
 
     manager_email = os.getenv("EMAIL_MANAGER")  
 
@@ -76,42 +83,44 @@ def home_view(request:HttpRequest):
                 fail_silently=False,
                 html_message=body  # Use the html_message parameter to send HTML content
             )
-            print("Email sent successfully.")
+            print("Email sent successfully. for stock level")
         
         except Exception as e:
             print(e)
             print("Failed to send email")
-    # for experation date ..
-        for product in need_to_notify:
-            subject = f"Low Stock Alert for {product.name}"
-            body = f"""
-    <html>
-    <body>
-        <h2 style="color: #d9534f;">Expiration Alert!</h2>
-        <p style="font-size: 16px;">The product <strong>{product.name}</strong> is nearing its expiration date.</p>
-        <p style="font-size: 16px;">Expiration date: <strong>{product.expirment}</strong>.</p>
-        <p style="font-size: 14px; color: #999;">Please review the product's status and take appropriate action.</p>
-        <footer>
-            <p style="font-size: 12px; color: #aaa;">This is an automated message from InventoryPlus.</p>
-        </footer>
-    </body>
-    </html>
-    """
 
-            try:
-                send_mail(
-                    subject,
-                    "",  # Leave the plain text part empty if you are sending HTML
-                    os.getenv("EMAIL_HOST_USER"),
-                    [manager_email],
-                    fail_silently=False,
-                    html_message=body  # Use the html_message parameter to send HTML content
-                )
-                print("Email sent successfully.")
-            
-            except Exception as e:
-                print(e)
-                print("Failed to send email")
+      
+    # Send expiration notifications
+    for product in need_to_notify_expiration:
+        
+        subject = f"Expiration Alert for {product.name}"
+        print(subject)
+        body = f"""
+        <html>
+        <body>
+            <h2 style="color: #d9534f;">Expiration Alert!</h2>
+            <p style="font-size: 16px;">The product <strong>{product.name}</strong> is nearing its expiration date.</p>
+            <p style="font-size: 16px;">Expiration date: <strong>{product.expirment}</strong>.</p>
+            <p style="font-size: 14px; color: #999;">Please review the product's status and take appropriate action.</p>
+            <footer>
+                <p style="font-size: 12px; color: #aaa;">This is an automated message from InventoryPlus.</p>
+            </footer>
+        </body>
+        </html>
+        """
+        try:
+            send_mail(
+                subject,
+                "",  # Leave the plain text part empty if you are sending HTML
+                os.getenv("EMAIL_HOST_USER"),
+                [manager_email],
+                fail_silently=False,
+                html_message=body
+            )
+            print(f"Expiration email sent successfully for {product.name}.")
+        except Exception as e:
+            print(e)
+            print(f"Failed to send expiration email for {product.name}.")
             
 
     
