@@ -9,12 +9,12 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    suppliers = models.ManyToManyField(Supplier, null=True, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.IntegerField()
-    image = models.ImageField(upload_to='images/', default='images/default.jpg')
-    expiry_date = models.DateField(null=True)
-    reorder_level = models.IntegerField()
+    suppliers = models.ManyToManyField(Supplier, blank=True)
+    price = models.FloatField()
+    quantity = models.PositiveIntegerField()
+    image = models.ImageField(upload_to='images/', default='images/default-product.jpg', blank=True)
+    expiry_date = models.DateField(null=True, blank=True)
+    reorder_level = models.PositiveIntegerField()
     date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
