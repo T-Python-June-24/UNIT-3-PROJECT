@@ -8,27 +8,27 @@
         {% csrf_token %}
         <div class="mb-3">
             {{ form.name.label_tag }}
-            {{ form.name|add_class:"form-control" }}
+            {{ form.name }}
         </div>
         <div class="mb-3">
             {{ form.email.label_tag }}
-            {{ form.email|add_class:"form-control" }}
+            {{ form.email }}
         </div>
         <div class="mb-3">
             {{ form.phone.label_tag }}
-            {{ form.phone|add_class:"form-control" }}
+            {{ form.phone }}
         </div>
         <div class="mb-3">
             {{ form.address.label_tag }}
-            {{ form.address|add_class:"form-control" }}
+            {{ form.address }}
         </div>
         <div class="mb-3">
             {{ form.website.label_tag }}
-            {{ form.website|add_class:"form-control" }}
+            {{ form.website }}
         </div>
         <div class="mb-3">
             {{ form.image.label_tag }}
-            {{ form.image|add_class:"form-control" }}
+            {{ form.image }}
         </div>
         <button type="submit" class="btn btn-primary">{{ submit_button }}</button>
     </form>

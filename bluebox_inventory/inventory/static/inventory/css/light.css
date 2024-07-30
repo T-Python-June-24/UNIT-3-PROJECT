@@ -1,8 +1,7 @@
-/* static/inventory/css/light.css */
-
 body {
     background-color: white;
-    color: black;
+    color: #21273a;
 }
-
-/* Additional light mode styles */
+.bg-primary {
+    background-color: #21273a !important;
+}

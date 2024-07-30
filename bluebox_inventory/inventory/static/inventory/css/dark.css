@@ -1,8 +1,7 @@
-/* static/inventory/css/dark.css */
-
 body {
-    background-color: #121212;
+    background-color: #21273a;
     color: white;
 }
-
-/* Additional dark mode styles */
+.bg-light {
+    color: #21273a;
+}

@@ -18,7 +18,6 @@ from .forms import ProductForm, CategoryForm, SupplierForm, ContactForm
 # Dashboard view
 
 # Product views
-@login_required
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -27,9 +26,8 @@ def product_create(request):
             return redirect('product_list')
     else:
         form = ProductForm()
-    return render(request, 'inventory/product_form.html', {'form': form})
+    return render(request, 'products/product_form.html', {'form': form})
 
-@login_required
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -39,28 +37,25 @@ def product_edit(request, pk):
             return redirect('product_detail', pk=product.pk)
     else:
         form = ProductForm(instance=product)
-    return render(request, 'inventory/product_form.html', {'form': form})
+    return render(request, 'products/product_form.html', {'form': form})
 
-@login_required
+
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
         product.delete()
         return redirect('product_list')
-    return render(request, 'inventory/product_confirm_delete.html', {'product': product})
+    return render(request, 'products/product_confirm_delete.html', {'product': product})
 
-@login_required
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, 'inventory/product_detail.html', {'product': product})
+    return render(request, 'products/product_detail.html', {'product': product})
 
-@login_required
 def product_list(request):
     products = Product.objects.all()
-    return render(request, 'inventory/product_list.html', {'products': products})
+    return render(request, 'products/product_list.html', {'products': products})
 
 # Category views
-@login_required
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -69,9 +64,8 @@ def category_create(request):
             return redirect('category_list')
     else:
         form = CategoryForm()
-    return render(request, 'inventory/category_form.html', {'form': form})
+    return render(request, 'category/category_form.html', {'form': form})
 
-@login_required
 def category_edit(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -81,23 +75,20 @@ def category_edit(request, pk):
             return redirect('category_list')
     else:
         form = CategoryForm(instance=category)
-    return render(request, 'inventory/category_form.html', {'form': form})
+    return render(request, 'category/category_form.html', {'form': form})
 
-@login_required
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         category.delete()
         return redirect('category_list')
-    return render(request, 'inventory/category_confirm_delete.html', {'category': category})
+    return render(request, 'category/category_confirm_delete.html', {'category': category})
 
-@login_required
 def category_list(request):
     categories = Category.objects.all()
-    return render(request, 'inventory/category_list.html', {'categories': categories})
+    return render(request, 'category/category_list.html', {'categories': categories})
 
 # Supplier views
-@login_required
 def supplier_create(request):
     if request.method == 'POST':
         form = SupplierForm(request.POST, request.FILES)
@@ -106,9 +97,8 @@ def supplier_create(request):
             return redirect('supplier_list')
     else:
         form = SupplierForm()
-    return render(request, 'inventory/supplier_form.html', {'form': form})
+    return render(request, 'suppliers/supplier_form.html', {'form': form})
 
-@login_required
 def supplier_edit(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
@@ -118,25 +108,22 @@ def supplier_edit(request, pk):
             return redirect('supplier_detail', pk=supplier.pk)
     else:
         form = SupplierForm(instance=supplier)
-    return render(request, 'inventory/supplier_form.html', {'form': form})
+    return render(request, 'suppliers/supplier_form.html', {'form': form})
 
-@login_required
 def supplier_delete(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
         supplier.delete()
         return redirect('supplier_list')
-    return render(request, 'inventory/supplier_confirm_delete.html', {'supplier': supplier})
+    return render(request, 'suppliers/supplier_confirm_delete.html', {'supplier': supplier})
 
-@login_required
 def supplier_detail(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
-    return render(request, 'inventory/supplier_detail.html', {'supplier': supplier})
+    return render(request, 'suppliers/supplier_detail.html', {'supplier': supplier})
 
-@login_required
 def supplier_list(request):
     suppliers = Supplier.objects.all()
-    return render(request, 'inventory/supplier_list.html', {'suppliers': suppliers})
+    return render(request, 'suppliers/supplier_list.html', {'suppliers': suppliers})
 
 # Contact views
 def contact(request):
@@ -149,7 +136,6 @@ def contact(request):
         form = ContactForm()
     return render(request, 'inventory/contact.html', {'form': form})
 
-@login_required
 def contact_messages(request):
     messages = ContactMessage.objects.all()
     return render(request, 'inventory/contact_messages.html', {'messages': messages})
@@ -168,7 +154,7 @@ def signup(request):
             return redirect('dashboard')  # Redirect to a dashboard or home page
     else:
         form = UserCreationForm()
-        messages.success(request, 'There is a problem.')
+        messages.success(request, 'There is problem.')
     return render(request, 'inventory/signup.html', {'form': form})
 
 def login(request):
@@ -223,7 +209,6 @@ def dashboard(request):
 
 
 def export_csv(request, data_type):
-    # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = f'attachment; filename="{data_type}_data.csv"'
 

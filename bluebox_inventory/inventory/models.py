@@ -1,4 +1,3 @@
-# inventory/models.py
 
 from django.db import models
 from django.utils import timezone
@@ -14,7 +13,7 @@ class Supplier(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
-    address = models.TextField()
+    address = models.CharField(max_length=100)
     website = models.URLField()
     image = models.ImageField(upload_to='supplier_images/', null=True, blank=True)
 

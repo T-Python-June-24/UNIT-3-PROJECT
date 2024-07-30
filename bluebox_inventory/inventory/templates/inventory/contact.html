@@ -1,4 +1,4 @@
-<!-- templates/inventory/contact.html -->
+
 {% extends 'inventory/base.html' %}
 
 {% block content %}
@@ -8,15 +8,15 @@
         {% csrf_token %}
         <div class="mb-3">
             {{ form.name.label_tag }}
-            {{ form.name|add_class:"form-control" }}
+            {{ form.name }}
         </div>
         <div class="mb-3">
             {{ form.email.label_tag }}
-            {{ form.email|add_class:"form-control" }}
+            {{ form.email }}
         </div>
         <div class="mb-3">
             {{ form.message.label_tag }}
-            {{ form.message|add_class:"form-control" }}
+            {{ form.message }}
         </div>
         <button type="submit" class="btn btn-primary">Send Message</button>
     </form>
