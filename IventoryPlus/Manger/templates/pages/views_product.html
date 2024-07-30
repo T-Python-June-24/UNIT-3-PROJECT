@@ -1,22 +1,23 @@
 {% extends "base/manger.html" %}
 {% load static %}
 {%block body%}
-<div class="row mb-5 mt-5">
-    <div class="col">
-        <form class="mt-3" action="" method="get">
-            {% csrf_token%}
-            <div class="input-group gap-3">
-                <input type="text" class="form-control" name='search' placeholder="Search For product...">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </div>
-            </div>
-        </form>
-    </div>
+<div class="row mb-5 mt-5 ">
+  <div class="col d-flex justify-content-center  align-items-center">
+      <form class="mt-3" action="{% url 'Manger:search' %}" method="GET">
+          {% csrf_token%}
+          <input type="hidden" name="type_search" value="product">
+          <div class="input-group gap-3">
+              <input type="text" class="form-control" name='search' placeholder="Search For product...">
+              <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+          </div>
+      </form>
+  </div>
 </div>
 <div class="row">
   <div class="col d-flex justify-content-between mb-5">
-    <h1>Product</h1>
+    <h1 class="text-white">Product</h1>
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       create product
@@ -41,8 +42,8 @@
                   <option value="{{views_category.id}}" {% if product.Category_product.name_Category == views_category.name_Category %} selected{% endif %}>{{views_category.name_Category}}</option>
               {%endfor%}
               </select>
-              <select name="supplier" class="form-select" required>
-                  <option value="">Choose the appropriate supplier</option>
+              <select name="supplier" class="form-select" multiple  required>
+                  
                   {% for supplier in views_supplier %}
                   <option value="{{ supplier.id }}" {% if supplier in product.Supplier_product.all %} selected{% endif %}>{{ supplier.name_Supplier }}</option>
                   {% endfor %}
@@ -68,8 +69,8 @@
                   </div>
                 </div>
                 <input type="date" name="expiration" value='{{product.Expiration_date.isoformat}}' class="form-control" />
-              <input type="file" accept="image/*" name="image" class="form-control" value="{{product.Images_Product.url}}" />
-              <img src="{{product.Images_Product.url}}" alt="">
+              <input type="file" accept="image/*" name="image" class="form-control"  />
+              
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   <input type="submit" class="btn btn-primary" value=" Add Product">
@@ -81,6 +82,7 @@
     </div>
   </div>
 </div>
+<hr style="border-color: #3c4a67;"/>
 <div class="row">
   {% for product in views_product %}
   <div class="col-md-4 mb-4">
@@ -119,8 +121,7 @@
                                       <option value="{{ views_category.id }}" {% if product.Category_product.id == views_category.id %} selected{% endif %}>{{ views_category.name_Category }}</option>
                                       {% endfor %}
                                   </select>
-                                  <select name="supplier" class="form-select" required>
-                                      <option value="">Choose the appropriate supplier</option>
+                                  <select name="supplier" class="form-select" multiple  required>
                                       {% for supplier in views_supplier %}
                                       <option value="{{ supplier.id }}" {% if supplier in product.Supplier_product.all %} selected{% endif %}>{{ supplier.name_Supplier }}</option>
                                       {% endfor %}

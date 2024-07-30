@@ -20,7 +20,7 @@
         <div class=" dash col-xs-12 col-md-6">
             <div class="stats main-stats">
                 <div class="stats-title">
-                    <h6>Preparation summary</h6>
+                    <h6>Inventory Summary</h6>
                 </div>
 
                 <div class="stats-body">
@@ -55,117 +55,157 @@
                     </div>
                 </div>
             </div>
-                <div class="views_product">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading" style="background-color: #00b4d8;">Latest products</div>
-                        <div class="panel-body">
-                            <div class="header-product text-white">
-                                <p>images</p>
-                                <p>name</p>
-                                <p>Quantity</p>
-                            </div>
-                            {% for product in update_product %}
-                            <div class="product">
-                                <img src="{{product.Images_Product.url}}" alt="">
-                                <h1>{{product.Name_Product}}</h1>
-                                <p>{{product.Quantity_Product}}</p>
-                            </div>
-                            {% endfor %}
+            <div class="views_product">
+                <div class="panel panel-warning">
+                    <div class="panel-heading" style="background-color: #00b4d8;">Latest products</div>
+                    <div class="panel-body">
+                        <div class="header-product text-white">
+                            <p>images</p>
+                            <p>name</p>
+                            <p>Quantity</p>
                         </div>
-                    </div>
-                </div>
-            
-            </div>
-            <div class="col-md-12 col-lg-5">
-                <div class="progress-div">
-                
-                  <label for="" class="text-white">Products sold out</label>
-                  <div class="progress mb-3">
-                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
+                        {% for product in update_product %}
+    <div class="product" id="product-{{product.id}}" data-bs-toggle="modal"
+        data-bs-target="#modal-{{product.id}}">
+        <img src="{{product.Images_Product.url}}" alt="">
+        <h1>{{product.Name_Product}}</h1>
+        <p>{{product.Quantity_Product}}</p>
+    </div>
 
-                  <label for="" class="text-white">Expired products</label>
-                  <div class="progress mb-3">
-                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  
+   
+    <div class="modal fade" id="modal-{{product.id}}" tabindex="-1" aria-labelledby="modalLabel-{{product.id}}"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel-{{product.id}}"> product: {{product.Name_Product}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="panel panel-warning mt-5">
-                    <div class="panel-heading" >Products are running out</div>
-                    <div class="panel-body">
-                        {% for product in Quantity_product %}
-                        <div class="product">
-                            <img src="{{product.Images_Product.url}}" alt="">
-                            <h1>{{product.Name_Product}}</h1>
-                            <p>{{product.Quantity_Product}}</p>
-                        </div>
+                <div class="modal-body">
+                    <img src="{{product.Images_Product.url}}" alt="" class="img-fluid">
+                    <h1>{{product.Name_Product}}</h1>
+                    <p>SR {{product.Price_Product}}</p>
+                    <p>{{product.Description_product}}</p>
+                    <p> Category :{{product.Category_product.name_Category}}</p>
+                    <p>Supplier:</p>
+                    <div class="supplier">
+                        {% for supplier in product.Supplier_product.all %}
+                        <p>{{supplier.name_Supplier}}</p>
                         {% endfor %}
                     </div>
+                    
                 </div>
-                <div class="panel panel-warning mt-5">
-                    <div class="panel-heading" style="background-color: #ff4747;">Products are out of stock</div>
-                    <div class="panel-body">
-                        {% for product in out_product %}
-                        <div class="product">
-                            <img src="{{product.Images_Product.url}}" alt="">
-                            <h1 style="color:red">{{product.Name_Product}}</h1>
-                            <p>{{product.Quantity_Product}}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
                 </div>
-            </div>
-            
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 h-50 mt-5">
-                <a href="{% url 'ReportsProduct:generate_report' %}" class="link-input">
-                    <div class="download p-5 d-flex justify-content-center align-items-center flex-column" style="background-color: #cbff00a3;">
-                        <span class="material-symbols-outlined">download</span>
-                        <p>Download Report</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-12 col-md-6 h-50 mt-5">
-                <form id="uploadForm" action="{% url 'ReportsProduct:upload_csv' %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="upload pt-4 pb-4 pb-1 d-flex justify-content-center align-items-center flex-column box-tre" style="background-color: #00b4d8; cursor: pointer;">
-                        <input type="file" name="file" id="fileInput" style="display: none;" />
-                        <label for="fileInput" class="d-flex flex-column align-items-center">
-                            <span class="material-symbols-outlined">upload</span>
-                            <p id="fileName">Choose a file</p>
-                            <button type="submit" class="btn" id="submitBtn" disabled>Upload</button>
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="col-12 col-md-6 h-50 mt-1">
-                <a href="{% url 'ReportsProduct:download_sample' %}" class="link-input">
-                    <div class="download p-5 d-flex justify-content-center align-items-center flex-column box-tre" style="background-color: #7a00ff;">
-                        <span class="material-symbols-outlined">download</span>
-                        <p>Download sample products</p>
-                    </div>
-                </a>
-            </div>
-            <div class="col-12 col-md-6 h-50 mt-1">
-                <a href="{% url 'ReportsProduct:download_suppliers_report' %}" class="link-input">
-                    <div class="download p-5 d-flex justify-content-center align-items-center flex-column box-tre" style="background-color: #007bff;">
-                        <span class="material-symbols-outlined">download</span>
-                        <p>Download the supplier form</p>
-                    </div>
-                </a>
             </div>
         </div>
     </div>
-    
+{% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12 col-lg-5">
+            <div class="progress-div">
+
+                <label for="" class="text-white">Products sold out</label>
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+                <label for="" class="text-white">Expired products</label>
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+            <div class="panel panel-warning mt-5">
+                <div class="panel-heading">Products are running out</div>
+                <div class="panel-body">
+                    {% for product in Quantity_product %}
+                    <div class="product">
+                        <img src="{{product.Images_Product.url}}" alt="">
+                        <h1>{{product.Name_Product}}</h1>
+                        <p>{{product.Quantity_Product}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-warning mt-5">
+                <div class="panel-heading" style="background-color: #ff4747;">Products are out of stock</div>
+                <div class="panel-body">
+                    {% for product in out_product %}
+                    <div class="product">
+                        <img src="{{product.Images_Product.url}}" alt="">
+                        <h1 style="color:red">{{product.Name_Product}}</h1>
+                        <p>{{product.Quantity_Product}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 h-50 mt-5">
+            <a href="{% url 'ReportsProduct:generate_report' %}" class="link-input">
+                <div class="download p-5 d-flex justify-content-center align-items-center flex-column"
+                    style="background-color: #cbff00a3;">
+                    <span class="material-symbols-outlined">download</span>
+                    <p>Download Report</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 h-50 mt-5">
+            <form id="uploadForm" action="{% url 'ReportsProduct:upload_csv' %}" method="post"
+                enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="upload pt-4 pb-4 pb-1 d-flex justify-content-center align-items-center flex-column box-tre"
+                    style="background-color: #00b4d8; cursor: pointer;">
+                    <input type="file" name="file" id="fileInput" style="display: none;" />
+                    <label for="fileInput" class="d-flex flex-column align-items-center">
+                        <span class="material-symbols-outlined">upload</span>
+                        <p id="fileName">Choose a file</p>
+                        <button type="submit" class="btn" id="submitBtn" disabled>Upload</button>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-md-6 h-50 mt-1">
+            <a href="{% url 'ReportsProduct:download_sample' %}" class="link-input">
+                <div class="download p-5 d-flex justify-content-center align-items-center flex-column box-tre"
+                    style="background-color: #7a00ff;">
+                    <span class="material-symbols-outlined">download</span>
+                    <p>Download sample products</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 h-50 mt-1">
+            <a href="{% url 'ReportsProduct:download_suppliers_report' %}" class="link-input">
+                <div class="download p-5 d-flex justify-content-center align-items-center flex-column box-tre"
+                    style="background-color: #007bff;">
+                    <span class="material-symbols-outlined">download</span>
+                    <p>Download the supplier form</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const fileInput = document.getElementById('fileInput');
         const submitBtn = document.getElementById('submitBtn');
         const fileName = document.getElementById('fileName');
-        
-        fileInput.addEventListener('change', function() {
+
+        fileInput.addEventListener('change', function () {
             if (fileInput.files.length > 0) {
                 // Update the label text to show the selected file name
                 fileName.textContent = fileInput.files[0].name;

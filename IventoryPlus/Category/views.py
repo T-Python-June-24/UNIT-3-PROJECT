@@ -9,10 +9,10 @@ def views_Category(request:HttpRequest):
     return render(request , 'Category/views_Category.html' , {'view_category':view_Category})
 def add_category(request:HttpRequest):
     if request.method == 'POST':
-        new_category = Category(name_Category = request.POST['name_category'])
+        new_category = Category(name_Category = request.POST['name_category'] , description_Category = request.POST['description'])
         new_category.save()
-        return redirect('Category:views_Category')
-    return render(request , 'Category/add_category.html')
+        return redirect('Manger:manger_Category')
+    return redirect('Manger:manger_Category')
 
 def detail_category(request:HttpRequest , category_id):
     det_category = Category.objects.get(pk = category_id)

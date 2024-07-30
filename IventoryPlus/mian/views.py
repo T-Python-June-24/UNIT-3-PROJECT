@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from product.models import Product
 from Category.models import Category
+from .... import now
+from .. impor
 # Create your views here.
 
 def home(request:HttpRequest):

@@ -2,8 +2,10 @@ from django.shortcuts import redirect
 import pandas as pd
 from openpyxl.drawing.image import Image
 import io
+import requests
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 import csv
-from django.contrib import messages
 from django.utils import timezone
 from django.http import HttpResponse , HttpRequest
 from product.models import Product
@@ -21,7 +23,7 @@ def upload_csv(request):
                 csv_file = io.StringIO(data)
                 reader = csv.reader(csv_file)
                 
-                header = next(reader)  # قراءة العنوان إذا كان موجودًا
+                header = next(reader)  
                 if len(header) != 9:
                     return HttpResponse("CSV file header format is incorrect. Expected 9 columns.")
                 
@@ -29,14 +31,22 @@ def upload_csv(request):
                     if len(row) == 9:
                         name, description, category_id, supplier_ids, price, quantity, expiration_date, image_url, status = row
                         
-                        # تحويل حالة المنتج إلى Boolean
+                        
                         status = status.lower() in ['true', '1', 'yes']
                         
                         try:
                             category = Category.objects.get(id=int(category_id))
-                            supplier_ids = list(map(int, supplier_ids.split(',')))  # افترض أن الموردين مفصولون بفواصل
+                            supplier_ids = list(map(int, supplier_ids.split(',')))  
                             suppliers = Supplier.objects.filter(id__in=supplier_ids)
-                            
+                            if image_url:
+                                response = requests.get(image_url)
+                                if response.status_code == 200:
+                                    image_name = image_url.split('/')[-1]
+                                    image_path = default_storage.save(f'images_Product/{image_name}', ContentFile(response.content))
+                                else:
+                                    image_path = 'images_product/default.png'
+                            else:
+                                image_path = 'images_product/default.png'
                             product = Product.objects.create(
                                 Name_Product=name,
                                 Description_product=description,
@@ -45,10 +55,10 @@ def upload_csv(request):
                                 Quantity_Product=int(quantity),
                                 Expiration_date=expiration_date if expiration_date else None,
                                 Images_Product=image_url,
-                                Status_Product=status  # تعيين القيمة لـ Status_Product
+                                Status_Product=status  
                             )
                             
-                            # استخدام .set() لتعيين الموردين
+                            
                             product.Supplier_product.set(suppliers)
                             
                         except Category.DoesNotExist:
@@ -69,15 +79,15 @@ def upload_csv(request):
         return redirect("Manger:Manger")
 
 def download_sample(request):
-    # إعداد البيانات للنموذج
+    
     fields = ['Name_Product', 'Description_product', 'Category_id', 'Supplier_ids', 'Price_Product', 'Quantity_Product', 'Expiration_date', 'Image_URL', 'Status_Product']
     
-    # نموذج بيانات: القيم لمجرد أمثلة
+   
     data = [
         ['Sample Product', 'This is a sample product', '1', '1,2', '19.99', '10', '2025-12-31', 'https://example.com/sample_image.jpg', 'True'],
     ]
     
-    # إعداد استجابة CSV
+  
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=sample_products.csv'
     
@@ -102,7 +112,7 @@ def generate_report(request:HttpRequest):
     
     df = pd.DataFrame(data)
     
-    # إعداد الرسوم البيانية
+  
     fig, ax = plt.subplots()
     ax.bar(data['Metric'], data['Value'], color='skyblue')
     ax.set_xlabel('Metrics')
@@ -131,13 +141,11 @@ def generate_report(request:HttpRequest):
     
     return response
 def download_suppliers_report(request):
-    # إعداد استجابة CSV
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=suppliers_report.csv'
     
     writer = csv.writer(response)
     
-    # كتابة رأس التقرير
     writer.writerow([
         'ID', 
         'Name', 
@@ -148,7 +156,6 @@ def download_suppliers_report(request):
         'Website'
     ])
     
-    # كتابة بيانات الموردين
     suppliers = Supplier.objects.all()
     for supplier in suppliers:
         writer.writerow([
