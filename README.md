@@ -129,8 +129,8 @@ As an Inventory Manager, I want to export inventory data to CSV files so that I 
 
 
 ## To be provided by you
-- UML link here.
-- wireframe link here.
+- UML link [here](https://app.diagrams.net/#G1zsBRb4qXLpGoaUf8eqrg8sU3soHNENIM#%7B%22pageId%22%3A%22c4acf3e9-155e-7222-9cf6-157b1a14988f%22%7D).
+- wireframe link [here](https://www.figma.com/design/Cf0zN6F6dG6przsSxo9YgZ/Untitled?node-id=0-1&t=9FToS88AM6E7od2o-1).
 
       
 ## Resources:
