@@ -15,28 +15,28 @@ def product_list(request):
     categories = Category.objects.all()
     return render(request, 'inventory/product_list.html', {'products': products, 'categories': categories})
 
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    related_products = Product.objects.filter(category=product.category).exclude(pk=product.pk)[:3]
+    return render(request, 'inventory/product_detail.html', {'product': product, 'related_products': related_products})
+
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('inventory:product_list')
+            product = form.save()
+            return redirect('inventory:product_detail', pk=product.pk)
     else:
         form = ProductForm()
     return render(request, 'inventory/product_form.html', {'form': form})
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    related_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:3]
-    return render(request, 'inventory/product_detail.html', {'product': product, 'related_products': related_products})
-
-def product_update(request, pk):
+def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('inventory:product_detail', pk=product.pk)
+            return redirect('inventory:product_detail', pk=product.pk)  # Redirect to product detail after update
     else:
         form = ProductForm(instance=product)
     return render(request, 'inventory/product_form.html', {'form': form})
@@ -56,6 +56,10 @@ def category_list(request):
     categories = Category.objects.all()
     return render(request, 'categories/category_list.html', {'categories': categories})
 
+def category_detail(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    return render(request, 'categories/category_detail.html', {'category': category})
+
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -66,17 +70,13 @@ def category_create(request):
         form = CategoryForm()
     return render(request, 'categories/category_form.html', {'form': form})
 
-# def category_detail(request, pk):
-#     category = get_object_or_404(Category, pk=pk)
-#     return render(request, 'categories/category_detail.html', {'category': category})
-
 def category_edit(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            return redirect('inventory:category_list')
+            return redirect('inventory:category_detail', pk=category.pk)
     else:
         form = CategoryForm(instance=category)
     return render(request, 'categories/category_form.html', {'form': form})
@@ -97,7 +97,8 @@ def supplier_list(request):
 
 def supplier_detail(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
-    return render(request, 'suppliers/supplier_detail.html', {'supplier': supplier})
+    products = supplier.products.all()
+    return render(request, 'suppliers/supplier_detail.html', {'supplier': supplier, 'products': products})
 
 def supplier_create(request):
     if request.method == 'POST':
@@ -132,15 +133,20 @@ def supplier_delete(request, pk):
 
 #search
 def search(request):
-
     query = request.GET.get('q')
-
     if query:
-        results = Product.objects.filter(name__icontains=query)
-        count = results.count()
-        
-        return render(request, 'product/search_results.html', {'results': results, 'count': count, 'query': query})
-    return render(request, 'product/search_results.html', {'results': None, 'query': query})
+        products = Product.objects.filter(name__icontains=query)
+        suppliers = Supplier.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.none()
+        suppliers = Supplier.objects.none()
+    return render(request, 'inventory/search_results.html', {
+        'products': products,
+        'suppliers': suppliers,
+        'query': query,
+        'product_count': products.count(),
+        'supplier_count': suppliers.count(),
+    })
 
 
 

@@ -16,7 +16,7 @@ class Category(models.Model):
 
 class Supplier(models.Model):
     name = models.CharField(max_length=500, unique=True)
-    logo = models.ImageField(upload_to='supplier_logos/', blank=True, null=True)
+    logo = models.ImageField(upload_to='supplier_logos/', blank=True, null=True, default="images/default.jpg")
     contact_email = models.EmailField()
     website = models.URLField(blank=True, null=True)
     phone_number = models.CharField(max_length=20)
@@ -35,7 +35,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
     description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='product_images/', blank=True, null=True)
 

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Product, Category, Supplier
+import imghdr
 
 
 
@@ -7,15 +8,16 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
-        # widgets = {
-        #     'name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-        #     'category': forms.Select(attrs={'class': 'form-control', 'required': True}),
-        #     'suppliers': forms.SelectMultiple(attrs={'class': 'form-control', 'required': True}),
-        #     'price': forms.NumberInput(attrs={'class': 'form-control', 'required': True, 'min': 0, 'step': '0.01'}),
-        #     'stock': forms.NumberInput(attrs={'class': 'form-control', 'required': True, 'min': 0}),
-        #     'description': forms.Textarea(attrs={'class': 'form-control', 'required': True}),
-        #     'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-        # }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
+            'category': forms.Select(attrs={'class': 'form-control', 'required': True}),
+            'suppliers': forms.SelectMultiple(attrs={'class': 'form-control', 'required': True}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'required': True, 'min': 0, 'step': '0.01'}),
+            'stock': forms.NumberInput(attrs={'class': 'form-control', 'required': True, 'min': 0}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file', 'required': True}),
+        }
+
     def clean_name(self):
         name = self.cleaned_data.get('name')
         if not name:
@@ -50,6 +52,22 @@ class ProductForm(forms.ModelForm):
             raise forms.ValidationError('Stock must be a non-negative integer.')
         return stock
 
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if not image and self.instance.pk:
+            return self.instance.image
+        if not image:
+            raise forms.ValidationError('This field is required.')
+        
+        try:
+            image_type = imghdr.what(image)
+            if image_type not in ['jpeg', 'png', 'gif']:
+                raise forms.ValidationError('Only JPEG, PNG, and GIF images are allowed.')
+        except:
+            raise forms.ValidationError('Invalid image.')
+
+        return image
+
     
 
 
@@ -59,10 +77,10 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = "__all__"
-        # widgets = {
-        #     'name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-        #     'description': forms.Textarea(attrs={'class': 'form-control', 'required': True}),
-        # }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'required': True}),
+        }
     def clean_name(self):
         name = self.cleaned_data.get('name')
         if not name:
@@ -77,15 +95,14 @@ class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = "__all__"
-        # widgets = {
-        #     'name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-        #     'logo': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
-        #     'contact_email': forms.EmailInput(attrs={'class': 'form-control', 'required': True}),
-        #     'website': forms.URLInput(attrs={'class': 'form-control'}),
-        #     'phone_number': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-        #     'address': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-        #     'location': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
-        # }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
+            'logo': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'contact_email': forms.EmailInput(attrs={'class': 'form-control', 'required': True}),
+            'website': forms.URLInput(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'required': True}),
+        }
     def clean_name(self):
         name = self.cleaned_data.get('name')
         if not name:

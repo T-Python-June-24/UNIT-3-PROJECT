@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+<div class="container my-4">
     <h2 class="my-4">{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</h2>
     <form class="d-flex flex-column gap-3" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -54,16 +55,21 @@
             <label for="description">Description</label>
             <textarea name="description" class="form-control" id="description">{{ form.description.value|default_if_none:'' }}</textarea>
         </div>
-        <div class="form-group">
-            <label for="image">Product Image</label>
-            <input type="file" name="image" class="form-control-file" id="image">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="image">Product Image</label>
+                <input type="file" name="image" class="form-control-file" id="image">
+                {% if form.image.errors %}
+                <div class="alert alert-danger">{{ form.image.errors|striptags }}</div>
+                {% endif %}
+            </div>
             {% if form.instance.pk and form.instance.image %}
-            <img src="{{ form.instance.image.url }}" alt="{{ form.instance.name }}" class="img-fluid mt-2">
-            {% endif %}
-            {% if form.image.errors %}
-            <div class="alert alert-danger">{{ form.image.errors|striptags }}</div>
+            <div class="col-md-6">
+                <img src="{{ form.instance.image.url }}" alt="{{ form.instance.name }}" class="img-fluid mt-2" style="max-width: 200px;">
+            </div>
             {% endif %}
         </div>
         <button type="submit" class="btn btn-success">{% if form.instance.pk %}Update{% else %}Add{% endif %} Product</button>
     </form>
+</div>
 {% endblock %}
