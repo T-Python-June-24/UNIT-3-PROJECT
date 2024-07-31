@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Product, Category, Supplier
 from .forms import ProductForm, CategoryForm, SupplierForm
+from .utils import send_low_stock_alert
 import csv
 from .forms import UploadCSVForm
 
@@ -149,6 +150,25 @@ def search(request):
     })
 
 
+
+
+#email notifications
+def check_low_stock_products():
+    low_stock_products = Product.objects.filter(stock__lt=10)
+    for product in low_stock_products:
+        send_low_stock_alert(product)
+
+def inventory_report(request):
+    products = Product.objects.all()
+    low_stock_products = Product.objects.filter(stock__lt=10)
+
+    check_low_stock_products()
+
+    context = {
+        'products': products,
+        'low_stock_products': low_stock_products,
+    }
+    return render(request, 'analytics/inventory_report.html', context)
 
 
 

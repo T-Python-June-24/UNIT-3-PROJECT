@@ -1,31 +1,26 @@
-from django.core.mail import send_mail
+
+
+from celery import shared_task
 from django.utils import timezone
-from .models import Product
 from datetime import timedelta
+from .models import Product
+from .utils import send_low_stock_alert#, send_expiry_alert
 
 
 
-def send_low_stock_alerts():
+
+@shared_task
+def send_low_stock_alerts_task():
     low_stock_products = Product.objects.filter(stock__lt=10)
-    if low_stock_products.exists():
-        product_list = "\n".join([f"{p.name}: {p.stock}" for p in low_stock_products])
-        send_mail(
-            'Low Stock Alert',
-            f'The following products are low in stock:\n{product_list}',
-            'noreply@inventoryplus.com',
-            ['manager@example.com']
-        )
+    for product in low_stock_products:
+        send_low_stock_alert(product)
 
 
 
-def send_expiry_alerts():
-    expiry_date = timezone.now() + timedelta(days=30)
-    expiring_products = Product.objects.filter(expiry_date__lte=expiry_date)
-    if expiring_products.exists():
-        product_list = "\n".join([f"{p.name}: {p.expiry_date}" for p in expiring_products])
-        send_mail(
-            'Expiry Date Alert',
-            f'The following products are nearing expiry:\n{product_list}',
-            'noreply@inventoryplus.com',
-            ['manager@example.com']
-        )
+
+# @shared_task
+# def send_expiry_alerts_task():
+#     expiry_date = timezone.now() + timedelta(days=30)
+#     expiring_products = Product.objects.filter(expiry_date__lte=expiry_date)
+#     if expiring_products.exists():
+#         send_expiry_alert(expiring_products)
