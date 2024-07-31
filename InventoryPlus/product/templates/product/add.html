@@ -2,50 +2,17 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% block title %}
-	Add
+    Add Product
 {% endblock %}
 {% block content %}
-	<h1>Add Product</h1>
-    {{ product_form|crispy }}
-    
-{#    <div class="row">#}
-{##}
-{#    <div class="col-6">#}
-{##}
-{#        <form class="d-flex flex-column gap-2" action="{% url 'product:add_view' %}" method="post" enctype="multipart/form-data">#}
-{#            {% csrf_token %}#}
-{#            <input type="text" placeholder="Name" name="name" class="form-control" required minlength="5" maxlength="512"/>#}
-{#            <textarea placeholder="Description" name="description" class="form-control" required></textarea>#}
-{##}
-{#            <input type="number" placeholder="Price" name="price">#}
-{#            <input type="number" placeholder="Quantity" name="quantity">#}
-{#            <input type="number" placeholder="Reorder Level" name="reorder_level">#}
-{##}
-{#            <select name="category" class="form-select">#}
-{#                <option>Choose Category</option>#}
-{#                {% for category in categories %}#}
-{#                    <option value="{{ category.id }}">{{ category.name }}</option>#}
-{#                {% endfor %}#}
-{#            </select>#}
-{##}
-{#            <input type="date" name="expiry_date" class="form-control" required/>#}
-{##}
-{#            <input type="file" name="image" class="form-control" accept="image/*"/>#}
-{##}
-{##}
-{#            <h3>Suppliers</h3>#}
-{#            <div class="d-flex align-items-center gap-2">#}
-{#                {% for supplier in suppliers %}#}
-{#                    <input type="checkbox" class="form-check-input" name="suppliers" id="check-{{supplier.id}}" value="{{supplier.id}}" />#}
-{#                    <label for="check-{{supplier.id}}">{{supplier.name}}</label>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#            <input type="submit" value="Add Product" class="btn btn-primary mt-4" />#}
-{##}
-{#        </form>#}
-{##}
-{##}
-{#    </div>#}
-{##}
-{#</div>#}
+    <div class="form container mt-4 mb-4 col-6">
+        <h1>Add Product</h1>
+        <form method="post" action="{% url 'product:add_view' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ product_form|crispy }}
+            <div class="d-flex justify-content-center">
+            <input type="submit" value="Add Product" class="btn btn-outline-primary">
+                </div>
+        </form>
+    </div>
 {% endblock %}

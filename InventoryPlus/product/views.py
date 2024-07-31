@@ -15,7 +15,7 @@ def add_view(request: HttpRequest) -> HttpResponse:
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product_form.save()
-            return redirect('main:index_view')
+            return redirect('product:all_view')
     else:
         print("not valid form", product_form.errors)
     return render(request, 'product/add.html',
@@ -26,6 +26,14 @@ def edit_view(request: HttpRequest, product_id: int) -> HttpResponse:
     product = Product.objects.get(pk=product_id)
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
+    if request.method == 'POST':
+        product_form = ProductForm(instance=product, data=request.POST, files=request.FILES)
+        if product_form.is_valid():
+            product_form.save()
+        else:
+            print("not valid form", product_form.errors)
+        return redirect('product:detail_view', product_id=product_id)
+
     return render(request, 'product/edit.html', {'product': product, 'categories': categories, 'suppliers': suppliers})
 
 
@@ -42,12 +50,12 @@ def detail_view(request: HttpRequest, product_id: int) -> HttpResponse:
 def delete_view(request: HttpRequest, product_id: int) -> HttpResponse:
     product = Product.objects.get(pk=product_id)
     product.delete()
-    return redirect('main:index_view')
+    return redirect('product:all_view')
 
 
 def search_view(request: HttpRequest) -> HttpResponse:
     if "search" in request.GET and len(request.GET["search"]) >= 3:
-        products = Product.objects.filter(title__contains=request.GET["search"])
+        products = Product.objects.filter(name__contains=request.GET["search"])
     else:
         products = []
     return render(request, 'product/search.html', {'products': products})
