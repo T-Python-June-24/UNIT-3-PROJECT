@@ -14,16 +14,13 @@ from django.db import models
 #------------------------------------------- later 
 
 class Supplier(models.Model):
+
     supplierName = models.CharField(max_length=100)
     supplierAddress = models.TextField()
     supplierPhoneNumber = models.CharField(max_length=15)
     supplierEmail = models.EmailField()
-    createdAt = models.DateTimeField(auto_now_add=True)
-    productQuantity = models.IntegerField()
-    unitPrice = models.FloatField()
-    totalPrice = models.FloatField()
-    supplierDiscount = models.SmallIntegerField()
     supplierImage = models.ImageField(upload_to='images/',default="default.png")
+    createdAt = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):

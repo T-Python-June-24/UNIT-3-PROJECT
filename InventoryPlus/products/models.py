@@ -8,12 +8,15 @@ class Product(models.Model):
     productName = models.CharField(max_length=128)
     productDescription = models.TextField()
     productImage = models.ImageField(upload_to='images/')
-    productPrice = models.FloatField() # يحدده البائع 
+    productPrice = models.FloatField(default=0) # يحدده البائع 
     productionDate = models.DateField() 
     expirationDate = models.DateField()
-    productStock = models.IntegerField() #بالبدايه راح تتعبى القيمه من السبلايرز في صفحة تسجيل المنتج 
-    productCategory = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products') # المفترض تكون سيلكت اوبشن ويختار منها المدير 
-    productSupplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='supplied_products') # should be select options 
+    productStock = models.IntegerField(default=0) #بالبدايه راح تتعبى القيمه من السبلايرز في صفحة تسجيل المنتج 
+    unitPrice = models.FloatField(default=0.0)
+    totalPriceOfunits = models.FloatField(default=0.0)
+    supplierDiscount = models.SmallIntegerField(default=0)
+    productCategory = models.ForeignKey(Category, on_delete=models.PROTECT,null=True) # المفترض تكون سيلكت اوبشن ويختار منها المدير 
+    productSupplier =  models.ManyToManyField(Supplier) # should be select options 
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
