@@ -70,7 +70,7 @@ def upload_csv(request):
                     else:
                         return HttpResponse("Row format is incorrect. Expected 9 columns.")
                 
-                return HttpResponse("File uploaded and data processed.")
+                return redirect("Manger:Manger")
             else:
                 return HttpResponse("Unsupported file type. Please upload a CSV file.")
         else:
@@ -98,9 +98,15 @@ def download_sample(request):
     return response
 
 def generate_report(request:HttpRequest):
-    
-    data = {
-        'Metric': ['Total Products', 'Total Suppliers', 'Total Categories', 'Expired Products', 'Total Products Expired'],
+     # بيانات التقرير
+    metrics_data = {
+        'Metric': [
+            'Total Products', 
+            'Total Suppliers', 
+            'Total Categories', 
+            'Expired Products', 
+            'Total Products Expired'
+        ],
         'Value': [
             Product.objects.count(),
             Supplier.objects.count(),
@@ -110,31 +116,65 @@ def generate_report(request:HttpRequest):
         ]
     }
     
-    df = pd.DataFrame(data)
+    metrics_df = pd.DataFrame(metrics_data)
     
-  
+    # بيانات المنتجات
+    products_data = Product.objects.all().values(
+        'Name_Product', 'Status_Product', 'Quantity_Product', 
+        'Price_Product', 'Expiration_date', 'Created_at', 
+        'Images_Product', 'Description_product', 
+        'Category_product__name_Category', 'Supplier_product__name_Supplier'
+    )
+    products_df = pd.DataFrame(products_data)
+    
+    # بيانات الموردين
+    suppliers_data = Supplier.objects.all().values(
+        'name_Supplier', 'logo_Supplier', 'email_supplier', 
+        'number_phone', 'address_Supplier', 'website_Supplier'
+    )
+    suppliers_df = pd.DataFrame(suppliers_data)
+    
+    # بيانات الفئات
+    categories_data = Category.objects.all().values(
+        'name_Category', 'description_Category'
+    )
+    categories_df = pd.DataFrame(categories_data)
+    
+    # رسم المخطط البياني
     fig, ax = plt.subplots()
-    ax.bar(data['Metric'], data['Value'], color='skyblue')
+    ax.bar(metrics_data['Metric'], metrics_data['Value'], color='skyblue')
     ax.set_xlabel('Metrics')
     ax.set_ylabel('Values')
     ax.set_title('Product Report Metrics')
 
-    
+    # حفظ الصورة في الذاكرة
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
     buf.seek(0)
     image_data = buf.getvalue() 
     buf.close()
-    
+
+    # إعداد استجابة Excel
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=report.xlsx'
     
     with pd.ExcelWriter(response, engine='openpyxl') as writer:
-        df.to_excel(writer, sheet_name='Report', index=False)
+        # كتابة بيانات الميتريكس
+        metrics_df.to_excel(writer, sheet_name='Metrics', index=False)
+        
+        # كتابة بيانات المنتجات
+        products_df.to_excel(writer, sheet_name='Products', index=False)
+        
+        # كتابة بيانات الموردين
+        suppliers_df.to_excel(writer, sheet_name='Suppliers', index=False)
+        
+        # كتابة بيانات الفئات
+        categories_df.to_excel(writer, sheet_name='Categories', index=False)
         
         workbook = writer.book
-        worksheet = writer.sheets['Report']
+        worksheet = writer.sheets['Metrics']
         
+        # إضافة الصورة إلى ورقة Metrics
         image_buf = io.BytesIO(image_data)
         image = Image(image_buf)
         worksheet.add_image(image, 'E5')  

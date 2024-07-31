@@ -17,45 +17,6 @@ def download_file(request:HttpRequest):
 
 
 
-#bonus
-def upload_csv(request:HttpRequest):
-    if request.method == 'POST':
-        file = request.FILES['file']
-        if file.name.endswith('.csv'):
-            decoded_file = file.read().decode('utf-8')
-            reader = csv.DictReader(decoded_file.splitlines())
-            
-            for row in reader:
-                # Parsing data from CSV
-                name = row['Name']
-                status = row['Status'] == 'True'
-                quantity = int(row['Quantity'])
-                price = float(row['Price'])
-                expiration_date = row['Expiration Date'] if row['Expiration Date'] else None
-                description = row['Description']
-                category_id = int(row['Category ID'])
-                supplier_ids = row['Supplier IDs'].split(',') if row['Supplier IDs'] else []
-
-                # Get or create Category
-                category = Category.objects.get(id=category_id)
-
-                # Create Product
-                product = Product(
-                    Name_Product=name,
-                    Status_Product=status,
-                    Quantity_Product=quantity,
-                    Price_Product=price,
-                    Expiration_date=expiration_date,
-                    Description_product=description,
-                    Category_product=category
-                )
-                product.save()
-
-                # Add Suppliers
-                suppliers = Supplier.objects.filter(id__in=supplier_ids)
-                product.Supplier_product.set(suppliers)
-
-            return redirect('product_list')  
 def Add_product(request: HttpRequest):
    if request.method == 'POST':
         name = request.POST.get('Name')
@@ -88,6 +49,12 @@ def Add_product(request: HttpRequest):
 
        
         new_product.save()
+        from django.core.mail import send_mail
+        subject = f'The  product is about to expire'
+        message = "maldfhsfd"
+        from_email = settings.EMAIL_HOST_USER
+        to_email = 'naif.n115811@gmail.com'
+        send_mail(subject, message, from_email, [to_email])
         return redirect('Manger:manger_product')
 def views_product(request:HttpRequest):
     view_product = Product.objects.all().select_related('Category_product')

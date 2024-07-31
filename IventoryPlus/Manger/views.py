@@ -5,8 +5,56 @@ from Category.models import Category
 from Supplier.models import Supplier
 
 # Create your views here.
+def search_manger(request:HttpRequest):
+    if request.method == 'GET':
+        search_by = request.GET.get('search_by', '')
+        word_search = request.GET.get('search_term', '')
 
+        if search_by == 'product':
+           
+            products = Product.objects.filter(Name_Product__icontains=word_search)
+            count_product = products.count()
+            return render(request, 'pages/views_search.html', {
+                'views_product': products,
+                'count_product': count_product,
+                'word_search': word_search
+            })
+        
+        elif search_by == 'Category':
+            
+            categories = Category.objects.filter(name_Category__icontains=word_search)
+            count_category = categories.count()
+            
+            
+            products_in_categories = Product.objects.filter(Category_product__in=categories)
+            count_products_in_categories = products_in_categories.count()
 
+            return render(request, 'pages/views_search.html', {
+                'category': categories,
+                'views_product': products_in_categories,
+                'count_category': count_category,
+                'count_products_in_categories': count_products_in_categories,
+                'word_search': word_search
+            })
+        
+        elif search_by == 'Supplier':
+          
+            suppliers = Supplier.objects.filter(name_Supplier__icontains=word_search)
+            count_supplier = suppliers.count()
+
+           
+            products_in_suppliers = Product.objects.filter(Supplier_product__in=suppliers)
+            count_products_in_suppliers = products_in_suppliers.count()
+
+            return render(request, 'pages/views_search.html', {
+                'supplier': suppliers,
+                'views_product': products_in_suppliers,
+                'count_supplier': count_supplier,
+                'count_products_in_suppliers': count_products_in_suppliers,
+                'word_search': word_search
+            })
+    
+    return redirect('Manger:search_manger')
 def Manger(request:HttpRequest):
     Quantity_product = Product.objects.filter(Quantity_Product__lt = 2).exclude(Quantity_Product=0)
     out_product = Product.objects.filter(Status_Product = 0)
@@ -16,9 +64,14 @@ def Manger(request:HttpRequest):
     number_Category = Category.objects.count()
     sold_out_product = Product.objects.filter(Quantity_Product=0).count()
     running_out_product = Product.objects.filter(Quantity_Product__lt=2).exclude(Quantity_Product=0).count()
-    
-    
     category = Category.objects.all()
+
+    if number_product == 0:
+        sold = 0
+        running = 0
+    else:
+        sold = (sold_out_product / number_product )*100
+        running = (running_out_product / number_product )*100
 
     return render(request , 'pages/pages_manger.html' ,
                   {"Quantity_product":Quantity_product ,
@@ -27,9 +80,12 @@ def Manger(request:HttpRequest):
                    "number_product":number_product,
                    "number_supplier":number_Supplier,
                    "number_category":number_Category,
+                   'sold':sold,
+                   "running":running,
                    
                    })
-    
+
+
 def manger_product(request:HttpRequest):
     category = Category.objects.all()
     views_supplier = Supplier.objects.all()
@@ -38,10 +94,10 @@ def manger_product(request:HttpRequest):
 
 def manger_Category(request:HttpRequest):
     category = Category.objects.all()
-    return render(request , "pages/views_category.html" , {"category":category})
+    return render(request , "pages/views_category.html" , {"categorys":category})
 def manger_supplier(request:HttpRequest):
     supplier = Supplier.objects.all()
-    return render(request , 'pages/views_supplier.html' ,{'supplier':supplier})
+    return render(request , 'pages/views_supplier.html' ,{'suppliers':supplier})
     
 def search(request: HttpRequest):
     if request.method == 'GET':
@@ -75,3 +131,7 @@ def search(request: HttpRequest):
             })
             
     return redirect('Manger:manger_product')
+def info_supplier(request:HttpRequest , supplier_id):
+    view_supplier = Supplier.objects.get(pk=supplier_id)
+    products = Product.objects.filter(Supplier_product__id=supplier_id)
+    return render(request , 'pages/views_info_supplier.html' , {"supplier":view_supplier , "products":products})

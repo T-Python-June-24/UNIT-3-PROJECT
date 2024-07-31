@@ -1,19 +1,27 @@
 {% extends "base/manger.html" %}
 {% load static %}
 {%block body%}
-<div class="row mb-5 mt-5 ">
-  <div class="col d-flex justify-content-center  align-items-center">
-      <form class="mt-3" action="{% url 'Manger:search' %}" method="GET">
-          {% csrf_token%}
-          <input type="hidden" name="type_search" value="product">
-          <div class="input-group gap-3">
-              <input type="text" class="form-control" name='search' placeholder="Search For product...">
-              <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit">Search</button>
-              </div>
-          </div>
-      </form>
-  </div>
+<div class="row mb-5 mt-5">
+    <div class="col d-flex justify-content-center align-items-center">
+        <form class="mt-3" action="{% url 'Manger:search_manger' %}" method="get">
+            {% csrf_token %}
+            <div class="input-group gap-3">
+                
+                <select class="form-select" name="search_by" aria-label="Select search type">
+                    <option value="product" {% if request.GET.search_by == 'product_name' %}selected{% endif %}>Product Name</option>
+                    <option value="Supplier" {% if request.GET.search_by == 'supplier_name' %}selected{% endif %}>Supplier Name</option>
+                    <option value="Category" {% if request.GET.search_by == 'category_name' %}selected{% endif %}>Category Name</option>
+                </select>
+                
+                
+                <input type="text" class="form-control" name="search_term" placeholder="Search..." value="{{ request.GET.search_term }}">
+                
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <div class="row">
   <div class="col d-flex justify-content-between mb-5">

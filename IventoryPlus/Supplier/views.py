@@ -19,9 +19,7 @@ def Add_Supplier(request:HttpRequest):
 
     return render(request, 'index.html', {'form': supplier_form})
 
-def views_supplier(request:HttpRequest):
-    view_supplier = Supplier.objects.all()
-    return render(request , 'supplier/views_supplier.html',{'supplier':view_supplier})
+
 
 def Update_Supplier(request: HttpRequest, supplier_id):
     supplier = Supplier.objects.get(pk=supplier_id)  
@@ -32,6 +30,7 @@ def Update_Supplier(request: HttpRequest, supplier_id):
             return redirect('Manger:manger_supplier')
         else:
             print('Error:', supplier_form.errors)
+            return redirect('Manger:manger_supplier')
 def delet_supplier(request:HttpRequest , supplier_id):
     del_supplier = Supplier.objects.get(pk=supplier_id)
     if del_supplier.logo_Supplier:
@@ -39,4 +38,4 @@ def delet_supplier(request:HttpRequest , supplier_id):
             os.remove(del_supplier.logo_Supplier.path)
     del_supplier.delete()
     return redirect('Manger:manger_supplier')
-    
+

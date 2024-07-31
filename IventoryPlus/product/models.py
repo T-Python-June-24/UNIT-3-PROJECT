@@ -16,3 +16,4 @@ class Product(models.Model):
     Description_product = models.TextField(null=True)
     Category_product = models.ForeignKey(Category , on_delete=models.CASCADE , related_name='products')
     Supplier_product = models.ManyToManyField(Supplier)
+    Notifications = models.BooleanField(default=False)

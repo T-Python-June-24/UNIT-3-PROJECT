@@ -12,7 +12,32 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
- 
+    select {
+    word-wrap: normal;
+    width: 10rem;
+}
+    .header-supplier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.text-white-mobile p{
+  color: #fff !important;
+}
+.hr {
+    height: 1rem;
+    border-color: #fff !important;
+    width: 50%;
+}
+.header-supplier h1{
+ color: #fff;
+ margin-top: 1rem;
+}
+.body-supplier {
+    color: #fff;
+    display: flex;
+    justify-content: space-evenly;
+}
   </style>
 </head>
 <body>
@@ -22,12 +47,19 @@
     </span></div>
   
   <div class="sidebar" id="sidebar">
+
+    <a href="{% url 'Manger:Manger' %}">
     <img src="{% static 'images/logo_white.png' %}" class="img-logo">
+  </a>
+  {% url 'Manger:Manger' as Home %}
+  {% url 'Manger:manger_product' as product %}
+  {% url 'Manger:manger_Category' as category %}
+  {% url 'Manger:manger_supplier' as supplier %}
     <div class="nav flex-column">
-      <a class="nav-link active" href="#home">Home</a>
-      <a class="nav-link" href="{% url 'Manger:manger_product' %}">Product</a>
-      <a class="nav-link" href="{% url 'Manger:manger_Category' %}">Category</a>
-      <a class="nav-link" href="{% url 'Manger:manger_supplier' %}">Supplier</a>
+      <a class="nav-link {% if request.path == Home %}active{% endif %}" href="{% url 'Manger:Manger' %}">Home</a>
+      <a class="nav-link {% if request.path == product %}active{% endif %}" href="{% url 'Manger:manger_product' %}">Product</a>
+      <a class="nav-link {% if request.path == category %}active{% endif %}" href="{% url 'Manger:manger_Category' %}">Category</a>
+      <a class="nav-link {% if request.path == supplier %}active{% endif %}" href="{% url 'Manger:manger_supplier' %}">Supplier</a>
     </div>
   </div>
 
