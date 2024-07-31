@@ -1,4 +1,15 @@
-<h2>{{ supplier.name }}</h2>
-<p>Email: {{ supplier.email }}</p>
-<p>Phone: {{ supplier.phone_number }}</p>
-<p>Address: {{ supplier.address }}</p>
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Supplier Detail</h2>
+<p><strong>Name:</strong> {{ supplier.name }}</p>
+<p><strong>Email:</strong> {{ supplier.email }}</p>
+<p><strong>Phone:</strong> {{ supplier.phone }}</p>
+
+<a href="{% url 'supplier_edit' supplier.pk %}" class="btn btn-primary">Edit</a>
+<a href="{% url 'supplier_delete' supplier.pk %}" class="btn btn-danger">Delete</a>
+
+{% endblock %}
+
+
+

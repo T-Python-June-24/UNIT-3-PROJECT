@@ -11,7 +11,7 @@ The project name is `Iventory Plus` . A comprehensive system to manage inventory
 - Delete products
 - View products list
 - View product details.
-- Stock Management (Update stock levels, view stock status)
+- Stock Management (Update stock levels, view stock status)   ------------------------
 - Search products
 
 
@@ -35,7 +35,7 @@ The project name is `Iventory Plus` . A comprehensive system to manage inventory
 - Generate inventory reports
 - Generate supplier reports
 
-### Notifications
+### Notifications  --> when you click contact us in home page   ----------------------
 (using email to send to manager's email)
 - Low stock alerts
 - Expiry date alerts for perishable items

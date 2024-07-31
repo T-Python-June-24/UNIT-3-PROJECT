@@ -5,8 +5,16 @@ from .forms import ProductForm
 
 
 def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'products/product_list.html', {'products': products})
+    query = request.GET.get('q', '')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
+
+    context = {
+        'products': products,
+    }
+    return render(request, 'products/product_list.html', context)
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -17,7 +25,10 @@ def product_add(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
+            print("Product saved successfully")
             return redirect('product_list')
+        else:
+            print(form.errors)
     else:
         form = ProductForm()
     return render(request, 'products/product_form.html', {'form': form})
@@ -40,3 +51,12 @@ def product_delete(request, pk):
         return redirect('product_list')
     return render(request, 'products/product_confirm_delete.html', {'product': product})
 
+def product_create(request): #pic
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm()
+    return render(request, 'products/product_form.html', {'form': form})

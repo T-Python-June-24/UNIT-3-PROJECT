@@ -36,5 +36,5 @@ def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         category.delete()
-        return redirect('category')
+        return redirect('category_list')
     return render(request, 'categories/category_confirm_delete.html', {'category': category})

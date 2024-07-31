@@ -5,7 +5,7 @@
 <p>Are you sure you want to delete {{ supplier.name }}?</p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Delete</button>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'supplier_detail' supplier.pk %}" class="btn btn-secondary">Cancel</a>
 </form>
-<a href="{% url 'supplier_list' %}">Cancel</a>
 {% endblock %}

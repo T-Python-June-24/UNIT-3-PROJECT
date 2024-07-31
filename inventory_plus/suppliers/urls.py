@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import supplier_list
 
 urlpatterns = [
     path('', views.supplier_list, name='supplier_list'),
@@ -7,4 +8,5 @@ urlpatterns = [
     path('add/', views.supplier_add, name='supplier_add'),
     path('<int:pk>/edit/', views.supplier_edit, name='supplier_edit'),
     path('<int:pk>/delete/', views.supplier_delete, name='supplier_delete'),
+    path('suppliers/', supplier_list, name='supplier_list'),
 ]
