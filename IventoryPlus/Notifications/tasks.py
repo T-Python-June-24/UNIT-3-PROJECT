@@ -19,8 +19,8 @@ def check_Quantity_and_date():
             if today >= date  and not product_date.Notifications:
                 product_date.Notifications = True
                 product_date.save()
-                subject = f'The {product_date.Name_Product} product is about to expire'
-                message = "maldfhsfd"
+                subject = f'The {product_date.Name_Product} product is expired'
+                message =  f'The {product_date.Name_Product} product is expired'
                 from_email = settings.EMAIL_HOST_USER
                 to_email = 'naif.n115811@gmail.com'
                 send_mail(subject, message, from_email, [to_email])

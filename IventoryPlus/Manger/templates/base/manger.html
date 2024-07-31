@@ -51,15 +51,15 @@
     <a href="{% url 'Manger:Manger' %}">
     <img src="{% static 'images/logo_white.png' %}" class="img-logo">
   </a>
-  {% url 'Manger:Manger' as Home %}
-  {% url 'Manger:manger_product' as product %}
-  {% url 'Manger:manger_Category' as category %}
-  {% url 'Manger:manger_supplier' as supplier %}
+  {% url 'Manger:Manger' as Home_link %}
+  {% url 'Manger:manger_product' as product_link %}
+  {% url 'Manger:manger_Category' as category_link %}
+  {% url 'Manger:manger_supplier' as supplier_link %}
     <div class="nav flex-column">
-      <a class="nav-link {% if request.path == Home %}active{% endif %}" href="{% url 'Manger:Manger' %}">Home</a>
-      <a class="nav-link {% if request.path == product %}active{% endif %}" href="{% url 'Manger:manger_product' %}">Product</a>
-      <a class="nav-link {% if request.path == category %}active{% endif %}" href="{% url 'Manger:manger_Category' %}">Category</a>
-      <a class="nav-link {% if request.path == supplier %}active{% endif %}" href="{% url 'Manger:manger_supplier' %}">Supplier</a>
+      <a class="nav-link {% if request.path == Home_link %}active{% endif %}" href="{% url 'Manger:Manger' %}">Home</a>
+      <a class="nav-link {% if request.path == product_link %}active{% endif %}" href="{% url 'Manger:manger_product' %}">Product</a>
+      <a class="nav-link {% if request.path == category_link %}active{% endif %}" href="{% url 'Manger:manger_Category' %}">Category</a>
+      <a class="nav-link {% if request.path == supplier_link %}active{% endif %}" href="{% url 'Manger:manger_supplier' %}">Supplier</a>
     </div>
   </div>
 

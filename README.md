@@ -1,3 +1,32 @@
+# Project Iventory Plus
+
+## Description
+
+The Inventory Management Project is a system designed to efficiently manage and oversee your inventory. It allows you to view current stock levels, manage products, and track changes in your inventory.
+
+- **View Inventory:** Easily view the available quantities of each product in your stock.
+- **Manage Products:** Add, edit, and delete products as needed.
+- **Track Changes:** Monitor and analyze changes in inventory to make informed decisions.
+
+## Libraries Used
+
+- **Celery:** An asynchronous task queue/job queue based on distributed message passing, used for handling background tasks.
+- **Openpyxl:**  A library to read/write Excel 2010 xlsx/xlsm/xltx/xltm files.
+- **pandas:** A fast, powerful, flexible, and easy-to-use open-source data analysis and data manipulation library built on top of the Python programming language.
+
+## UML design
+
+- https://drive.google.com/file/d/1jpy6krLwQVx3hV2q4sphKaAcROwD7H8q/view?usp=sharing
+
+
+## Wireframe / Design
+
+![Project Screenshot](design/page-home-project.png)
+
+
+
+
+
 # UNIT-3-PROJECT
 
 ## Using Django create a website for managing corporate inventory !

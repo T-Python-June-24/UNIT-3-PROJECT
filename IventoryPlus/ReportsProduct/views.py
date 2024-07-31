@@ -98,7 +98,6 @@ def download_sample(request):
     return response
 
 def generate_report(request:HttpRequest):
-     # بيانات التقرير
     metrics_data = {
         'Metric': [
             'Total Products', 
@@ -118,7 +117,6 @@ def generate_report(request:HttpRequest):
     
     metrics_df = pd.DataFrame(metrics_data)
     
-    # بيانات المنتجات
     products_data = Product.objects.all().values(
         'Name_Product', 'Status_Product', 'Quantity_Product', 
         'Price_Product', 'Expiration_date', 'Created_at', 
@@ -127,54 +125,46 @@ def generate_report(request:HttpRequest):
     )
     products_df = pd.DataFrame(products_data)
     
-    # بيانات الموردين
     suppliers_data = Supplier.objects.all().values(
         'name_Supplier', 'logo_Supplier', 'email_supplier', 
         'number_phone', 'address_Supplier', 'website_Supplier'
     )
     suppliers_df = pd.DataFrame(suppliers_data)
     
-    # بيانات الفئات
     categories_data = Category.objects.all().values(
         'name_Category', 'description_Category'
     )
     categories_df = pd.DataFrame(categories_data)
     
-    # رسم المخطط البياني
     fig, ax = plt.subplots()
     ax.bar(metrics_data['Metric'], metrics_data['Value'], color='skyblue')
     ax.set_xlabel('Metrics')
     ax.set_ylabel('Values')
     ax.set_title('Product Report Metrics')
 
-    # حفظ الصورة في الذاكرة
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
     buf.seek(0)
     image_data = buf.getvalue() 
     buf.close()
 
-    # إعداد استجابة Excel
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=report.xlsx'
     
     with pd.ExcelWriter(response, engine='openpyxl') as writer:
-        # كتابة بيانات الميتريكس
         metrics_df.to_excel(writer, sheet_name='Metrics', index=False)
         
-        # كتابة بيانات المنتجات
+    
         products_df.to_excel(writer, sheet_name='Products', index=False)
         
-        # كتابة بيانات الموردين
+   
         suppliers_df.to_excel(writer, sheet_name='Suppliers', index=False)
         
-        # كتابة بيانات الفئات
         categories_df.to_excel(writer, sheet_name='Categories', index=False)
         
         workbook = writer.book
         worksheet = writer.sheets['Metrics']
         
-        # إضافة الصورة إلى ورقة Metrics
         image_buf = io.BytesIO(image_data)
         image = Image(image_buf)
         worksheet.add_image(image, 'E5')  
