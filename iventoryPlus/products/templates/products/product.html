@@ -5,8 +5,15 @@
     <div id="last-users " class="mt-2">
         <div class="flex flex-row justify-between items-center ">
             <h1 class="font-bold py-4 uppercase">All Products</h1>
-            <a href="{% url 'products:add_product_view' %}"><Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500">Add product</Button></a>
-        </div>
+
+            
+            
+            <div class=" ">
+            <a href="{% url 'products:export_data' %}" class="btn btn-primary"><Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500 text-sm">Export .CSV</Button></a>
+            <a href="{% url 'products:add_product_view' %}"><Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500 text-sm">Add product</Button></a>
+      
+            </div>
+              </div>
         {% include 'products/product_list.html' with products=products %}
     </div>
    

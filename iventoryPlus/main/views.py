@@ -64,8 +64,8 @@ def home_view(request:HttpRequest):
         <html>
         <body>
             <h2 style="color: #d9534f;">Low Stock Alert!</h2>
-            <div style="display:flex flex-direction:column justfiy-content:center align-items:center background-color:#EEE4B1"><p style="font-size: 16px;">The product <strong>{product.name}</strong> is running low on stock.</p>
-            <p style="font-size: 16px;">Current stock level: <strong>{product.stock_level}</strong>.</p>
+            <div style="display:flex; flex-direction:column; justfiy-content:center; align-items:center; background-color:white; color:black;"><p style="font-size: 16px;">The product <strong>{product.name}</strong> is running low on stock.</p>
+            <p style="font-size: 20px;">Current stock level: <strong>{product.stock_level}</strong>.</p>
             <p style="font-size: 14px; color: #999;">Please take appropriate action to restock the product.</p><div/>
             <footer>
                 <p style="font-size: 12px; color: #aaa; bacground-color:#EEEEEE">This is an automated message from InventoryPlus.</p>

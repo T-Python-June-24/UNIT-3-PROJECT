@@ -28,5 +28,7 @@ def update_category(request:HttpRequest,category_id):
         return redirect("categories:all_categories")
     return render(request,"categories/update_category.html",{"category":category})
     
-def related_products(request:HttpRequest)->render:
-    return render (request,"categories/related_products.html")
+def related_products(request:HttpRequest,category_id)->render:
+    category=Category.objects.get(pk=category_id)
+    products=Product.objects.filter(category=category)
+    return render (request,"categories/related_products.html",{"category":category,"products":products})

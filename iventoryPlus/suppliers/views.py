@@ -4,6 +4,8 @@ from .models import Supplier
 from products.models import Product
 import time
 import math
+import pandas as pd
+from django.http import HttpResponse
 # Create your views here.
 def all_suppliers(request:HttpRequest):
     suppliers=Supplier.objects.all()
@@ -50,3 +52,30 @@ def supplier_detailes(request:HttpRequest,supplier_id):
     supplier_percentage=math.floor((supplier.product_set.count()/totalProducts)*100)
     products=Product.objects.filter(supplier=supplier)
     return render (request,"suppliers/supplier_detailes.html",{"supplier":supplier,"supplier_percentage":supplier_percentage,"products":products})
+def export_suppliers(request):
+    # Get all suppliers
+    suppliers = Supplier.objects.all()
+
+    # Create a list of dictionaries from the queryset
+    data = []
+    for supplier in suppliers:
+        data.append({
+            'name': supplier.name,
+            'email': supplier.email,
+            'website': supplier.website,
+            'phone': supplier.phone,
+            'country': supplier.country,
+            'added': supplier.added,
+        })
+
+    # Convert the list of dictionaries to a DataFrame
+    df = pd.DataFrame(data)
+
+    # Convert the DataFrame to a CSV string
+    csv_data = df.to_csv(index=False)
+
+    # Create an HTTP response with the CSV data
+    response = HttpResponse(csv_data, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=suppliers.csv'
+
+    return response

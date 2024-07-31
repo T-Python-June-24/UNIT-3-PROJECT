@@ -7,7 +7,10 @@
 <div id="last-incomes">
     <div class="flex flex-row justify-between items-center mt-2 ">
         <h1 class="font-bold py-4 uppercase">All Suppliers</h1>
-        <a href="{% url 'suppliers:add_supplier' %}"><Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500">Add supplier</Button></a>
+        <div class="flex flex-row items-center ">
+            <a href="{% url 'suppliers:export_suppliers' %}" class=" rounded-md p-1"> <Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500 text-sm ">Export .CSV</Button></a>
+            <a href="{% url 'suppliers:add_supplier' %}"><Button class="text-indigo-400 bg-white/10 rounded-md p-2 hover:scale-105 hover:ease-linear duration-200 hover:text-indigo-500 text-sm ">Add supplier</Button></a>
+               </div>
     </div>
     {% include 'suppliers/supplier_list.html' with suppliers=suppliers %}
 </div>
