@@ -9,3 +9,7 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'suppliers': forms.SelectMultiple(attrs={'class': 'select2'}),
         }
+
+
+class CSVUploadForm(forms.Form):
+    csv_file = forms.FileField()

@@ -2,6 +2,14 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from .forms import ProductForm
 from .models import Category,Supplier,Product
+from django.core.mail import send_mail
+import csv
+from .forms import CSVUploadForm
+from django.contrib import messages
+from django.core.files.storage import default_storage
+
+
+
 
 # Create your views here.
 
@@ -54,7 +62,7 @@ def all_products_view(request:HttpRequest, type, product_param):
 def product_detail_view(request:HttpRequest, product_id:int):
 
     product = Product.objects.get(pk=product_id)
-    # reviews = Review.objects.filter(product=product)
+    
 
     return render(request, 'products/product_detail.html', {"product" : product})
 
@@ -66,6 +74,21 @@ def update_product_view(request:HttpRequest, product_id:int):
     suppliers = Supplier.objects.all()
     categories = Category.objects.all()
     
+
+    low_stock_products = Product.objects.filter(stock_level__lte=10)
+    product.stock_level = 500
+    product.save()
+    flag =True
+    if low_stock_products.exists() :
+        product_names = ', '.join(product.product_name for product in low_stock_products)
+        send_mail(
+            subject='Low Stock Alert',
+            message=f'The following products are low on stock: {product_names}.',
+            from_email='ifonei@hotmail.com',  #a valid sender email
+            recipient_list=['ifonei100@gmail.com'],
+            fail_silently=False,
+        )
+
 
     if request.method == "POST":
         #using ProductForm for updating
@@ -108,3 +131,73 @@ def search_products_view(request:HttpRequest):
 
 
     return render(request, "products/search_products.html", {"products" : products})
+
+
+
+def export_products_csv_view(request):
+    # Create the HttpResponse object with CSV content type
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="products.csv"'
+
+    writer = csv.writer(response)
+    # Write the header row
+    writer.writerow(['product_name', 'description', 'expiry_date', 'stock_level', 'category', 'suppliers', 'image'])
+
+    # Write the product data
+    products = Product.objects.all()
+    for product in products:
+        writer.writerow([
+            product.product_name,
+            product.description,
+            product.expiry_date,
+            product.stock_level,
+            product.category.name if product.category else '',  # Ensure category field is correctly handled
+            ', '.join([supplier.supplier_name for supplier in product.suppliers.all()]),  
+            product.image.url if product.image else ''
+        ])
+
+    return response
+
+
+
+
+
+def import_products_csv_view(request):
+    if request.method == 'POST':
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file']
+            if not csv_file.name.endswith('.csv'):
+                messages.error(request, 'The uploaded file is not a CSV file.')
+                return redirect('products:csv_products.html')
+            
+            try:
+                file_content = csv_file.read().decode('utf-8').splitlines()
+                reader = csv.DictReader(file_content)
+
+                for row in reader:
+                    category = Category.objects.get(id=row['category']) if row['category'] else None
+                    suppliers = Supplier.objects.filter(id__in=row['suppliers'].split(',')) if row['suppliers'] else Supplier.objects.none()
+
+                    product = Product(
+                        product_name=row['product_name'],
+                        description=row['description'],
+                        expiry_date=row['expiry_date'] or None,
+                        stock_level=row['stock_level'],
+                        category=category,
+                        image=row['image']
+                    )
+                    product.save()
+                    product.suppliers.set(suppliers)
+                    product.save()
+                
+                messages.success(request, 'Products imported successfully!')
+            except Exception as e:
+                messages.error(request, f'Error importing products: {e}')
+            
+            return redirect('products:import_products_csv_view')
+    else:
+        form = CSVUploadForm()
+
+    return render(request,'products:csv_products.html', {'form': form})
+

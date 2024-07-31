@@ -9,5 +9,9 @@ urlpatterns = [
     path("search/", views.search_products_view, name="search_products_view"),
     path("products/<type>/<product_param>/", views.all_products_view, name="all_products_view"),
     path('product_detail/<product_id>/', views.product_detail_view, name='product_detail_view'),
+    path("export_products_csv/", views.export_products_csv_view, name="export_products_csv_view"),
+    path("csv_products/", views.import_products_csv_view, name="import_products_csv_view"),
 
 ]
+
+
