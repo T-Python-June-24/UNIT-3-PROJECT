@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <h3>Categories</h3>
+            <h5>Categories</h5>
             <div class="d-flex align-items-center gap-2">
                 {% for category in categories %}
                     <input type="checkbox" class="form-check-input" name="categories" id="check-{{category.id}}" value="{{category.id}}" {% if category in product.categories.all %} checked {% endif %}/>

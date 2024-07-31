@@ -25,7 +25,7 @@ body.dark  {
     color: rgb(220, 220, 220);
 }
 
-body.dark h1, body.dark h2, body.dark h3 {
+body.dark h1, body.dark h2, body.dark h3, body.dark nav {
     color:rgb(210, 255, 220);
 } 
 

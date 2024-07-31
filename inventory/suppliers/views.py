@@ -26,12 +26,12 @@ def add_supplier(request: HttpRequest):
                                 description=request.POST['description'],
                                 logo= request.FILES['logo'])
         new_product.save()#save to database
-        return redirect("suppliers:suppliers_page")
+        return redirect("suppliers:suppliers_page1")
     
     return render(request,"suppliers/add_supplier.html")
 
 
-def suppliers_page(request:HttpRequest):
+def suppliers_page1(request:HttpRequest):
 # Abdullah The beat teacher
 
     suppliers = Supplier.objects.all()[:8]

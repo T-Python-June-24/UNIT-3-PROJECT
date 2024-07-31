@@ -10,24 +10,16 @@ from suppliers.models import Supplier
 def add_product_view(request:HttpRequest):
 
     product_form = ProductForm()
-
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
 
     if request.method == "POST":
-        
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product_form.save()
-            return redirect('main:home_view')
+            return redirect("main:home")
         else:
             print("not valid form", product_form.errors)
-        #supplier = supplier.objects.get(id=request.POST["supplier"])
-        # new_product = product(title=request.POST["title"], description=request.POST["description"], supplier=supplier, rating=request.POST["rating"], production_date=request.POST["production_date"], poster=request.FILES["poster"])
-        # new_product.save()
-        # new_product.categories.set(request.POST.getlist("categories"))
-        # return redirect('main:home_view')
-    
 
     return render(request, "products/add.html", {"product_form":product_form, "categories":categories, "suppliers": suppliers})
 

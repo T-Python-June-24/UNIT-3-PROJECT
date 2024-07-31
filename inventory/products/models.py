@@ -4,7 +4,6 @@ from suppliers.models import Supplier
 # Create your models here.
 
 class Category(models.Model):
-
     name = models.CharField(max_length=128, unique=True)
 
     def __str__(self) -> str:
@@ -26,6 +25,7 @@ class Product(models.Model):
     production_date = models.DateField()
     poster = models.ImageField(upload_to="images/", default="images/default.jpg")
     categories = models.ManyToManyField(Category)
+
 
 
     def __str__(self) -> str:

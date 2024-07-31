@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from products.models import Product
+from suppliers.models import Supplier
 
 
 def home(request:HttpRequest):
 
     #get all products
     products = Product.objects.all().order_by("-production_date")[0:3]
+    suppliers = Supplier.objects.all().order_by("pk")[0:3]
 
     return render(request, 'main/home.html', {"products" : products} )
 

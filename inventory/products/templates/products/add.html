@@ -10,7 +10,7 @@
 
     <div class="col-6">
 
-        <form class="d-flex flex-column gap-2" action="{% url 'products:add_product_view' %}" method="post" enctype="multipart/form-data">
+        <form class="d-flex flex-column gap-2" action="{% url 'products:add_product_view' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="text" placeholder="Title" name="title" class="form-control" required minlength="5" maxlength="512"/>
             <textarea placeholder="Description" name="description" class="form-control" required></textarea>
@@ -32,7 +32,7 @@
             <input type="file" name="poster" class="form-control" required accept="image/*"/>
 
 
-            <h3>Categories</h3>
+            <h5>Categories</h5>
             <div class="d-flex align-items-center gap-2">
                 {% for category in categories %}
                     <input type="checkbox" class="form-check-input" name="categories" id="check-{{category.id}}" value="{{category.id}}" />
