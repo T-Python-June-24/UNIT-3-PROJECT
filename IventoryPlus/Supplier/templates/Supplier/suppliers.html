@@ -36,6 +36,50 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+
+        .circle {
+    width: 50px; 
+    height: 50px; 
+    background-color: #4796BD; 
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;  
+    bottom: 20px; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.circle:hover {
+    transform: scale(1.1); 
+    background-color: #357ABD; 
+}
+
+.circle::before, .circle::after {
+    content: '';
+    position: absolute;
+    background-color: white;
+    transition: background-color 0.3s; 
+}
+
+.circle::before {
+    width: 60%;  
+    height: 10%; 
+    top: 45%;
+    left: 20%;
+}
+
+.circle::after {
+    width: 10%;   
+    height: 60%;  
+    left: 45%; 
+    top: 20%; 
+}
+
+.circle:hover::before, .circle:hover::after {
+    background-color: #FFF; /* Changes the cross color on hover */
+}
 </style>
 <div class="container mt-4">
     <h2>Suppliers Catalog</h2>

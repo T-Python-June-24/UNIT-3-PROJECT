@@ -49,16 +49,20 @@ body{
 h1{
     color: #122E40;
     font-family: "Rubik", sans-serif;
+    animation: fadeIn 1s ease-out forwards;
+
      
 }
 h2{
     color: #122E40;
     font-family: "Rubik", sans-serif;
+    animation: fadeIn 1.7s ease-out forwards;
 
 }
 p{
     color:#2F7583 ;
     font-family: "Rubik", sans-serif;
+    animation: fadeIn 2.3s ease-out forwards;
 
 }
 
@@ -76,5 +80,17 @@ p{
 
 h4{
     font-family: "Rubik", sans-serif;
+    animation: fadeIn 1.7s ease-out forwards;
 
 }
+
+    /*  animations */
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }

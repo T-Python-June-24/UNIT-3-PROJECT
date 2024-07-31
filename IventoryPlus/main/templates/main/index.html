@@ -6,36 +6,101 @@
 {% block content %}
 <style>
     .content-area {
-
         background-color: #F3F9FB;
     }
-    h1 {
+    h1, p {
         position: absolute;
-        top: 30%;
         left: 0;
-        transform: translateY(-30%);
         color: #122E40;
         text-align: left; 
         font-family: "Rubik", sans-serif;
         padding-left: 20px;
         width: 100%; 
     }
+    h1 {
+        top: 30%;
+        transform: translateY(-30%);
+        font-weight: 700;
+        font-size: 5rem; 
+        animation: slideInFromLeft 1s ease-out forwards;
+    }
+    p {
+        top: 40%;
+        color: #2F7583;
+        transform: translateY(-30%);
+        font-weight: 500;
+        font-size: 3rem; 
+        animation: fadeIn 1.2s ease-out forwards;
+    }
     .button-container {
         position: absolute;
-        top: 40%; 
+        top: 50%; 
         left: 0; 
         padding-left: 20px; 
         z-index: 2;
     }
     .analytics-button {
-        padding: 10px 20px;
+        padding: 17px 49px;
         background-color: #122E40; 
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 2rem;
+        font-size: 1.5rem;
         cursor: pointer;
+        animation: fadeIn 1.5s ease-out forwards;
     }
-   
+    .analytics-button:hover {
+        background-color: #2F7583; 
+    }
+    
+    /*  animations */
+    @keyframes slideInFromLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100px) translateY(-30%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) translateY(-30%);
+        }
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 3rem;
+            top: 20%; 
+        }
+        p {
+            font-size: 2rem; 
+            top: 35%; 
+        }
+        .analytics-button {
+            padding: 12px 18px; 
+        }
+    }
+    
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 2rem; 
+            top: 10%; 
+        }
+        p {
+            font-size: 1.5rem;
+            top: 25%; 
+        }
+        .analytics-button {
+            padding: 10px 15px; 
+        }
+    }
 </style>
 
 <div class="container-fluid w-100 content-area">
@@ -43,10 +108,11 @@
     <h1 class="main-text">
         Welcome to Our Inventory System
     </h1>
+    <p>The industry's most most flexable Inventory Managment System</p>
 
     <!-- Analytics Button -->
     <div class="button-container">
-        <a href="{% url 'main:analytics_view' %}"><button class="analytics-button" >View Analytics</button></a>
+        <a href="{% url 'main:analytics_view' %}"><button class="analytics-button" >View Today's Analytics</button></a>
     </div>
 
 </div>
