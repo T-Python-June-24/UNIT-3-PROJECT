@@ -10,7 +10,6 @@
             </div>
   <table class="table table-bordered">
     <tr class="bg-info text-white">
-      <td>NO.</td>
       <td>ID</td>
       <td>Supplier Name</td>
       <td>Supplier Email</td>
@@ -19,7 +18,6 @@
     </tr>
     {%for supplier in suppliers %}
     <tr class="text-center">
-      <td>{{forloop.counter}}</td>
       <td>{{supplier.id}}</td>
       <td>{{supplier.name}}</td>
 

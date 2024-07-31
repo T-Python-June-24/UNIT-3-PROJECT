@@ -16,6 +16,7 @@
             name="name"
             id="categoryName"
             class="form-control"
+            required
           />
           <label class="form-label" for="categoryName">Category name</label>
         </div>
@@ -27,6 +28,7 @@
         name="description"
         id="description"
         rows="4"
+        required
       ></textarea>
       <label class="form-label" for="description">Description</label>
     </div>
@@ -131,151 +133,88 @@
           </div>
         </div>
         <!-- Update modal -->
-          <div
-            class="modal fade"
-            id="updateModal{{ category.id }}"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
-                    Update Category {{category.name}}
-                  </h5>
+        <div
+          class="modal fade"
+          id="updateModal{{ category.id }}"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Update Category {{category.name}}
+                </h5>
 
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-mdb-ripple-init
-                    data-mdb-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form
-                    id="updateForm{{ category.id }}"
-                    action="{% url 'category:update_Category_view' category.id %}"
-                    method="post"
-                  >
-                    {% csrf_token %}
-                    <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label"
-                        >Category name</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="recipient-name"
-                        name="name"
-                        value="{{category.name}}"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="message-text" class="col-form-label"
-                        >Description:</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="message-text"
-                        name="description"
-                      > {{category.description}}  </textarea>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-mdb-ripple-init
-                    data-mdb-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    form="updateForm{{ category.id }}"
-                    data-mdb-ripple-init
-                  >
-                    Update
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  id="updateForm{{ category.id }}"
+                  action="{% url 'category:update_Category_view' category.id %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label"
+                      >Category name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="recipient-name"
+                      name="name"
+                      value="{{category.name}}"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="message-text" class="col-form-label"
+                      >Description:</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="message-text"
+                      name="description"
+                      required
+                    >
+ {{category.description}}  </textarea
+                    >
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  form="updateForm{{ category.id }}"
+                  data-mdb-ripple-init
+                >
+                  Update
+                </button>
               </div>
             </div>
           </div>
+        </div>
       </tr>
 
       {%endfor%}
     </table>
   </div>
 </div>
-
 {% endblock %}
-
-<!-- <div class="col py-3">
-    <h1> Add Category</h1>
-    <form>
-
-  <div class="row mb-4">
-    <div class="col">
-      <div data-mdb-input-init class="form-outline">
-        <input type="text" id="form6Example1" class="form-control" />
-        <label class="form-label" for="form6Example1">First name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div data-mdb-input-init class="form-outline">
-        <input type="text" id="form6Example2" class="form-control" />
-        <label class="form-label" for="form6Example2">Last name</label>
-      </div>
-    </div>
-  </div>
-
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="text" id="form6Example3" class="form-control" />
-    <label class="form-label" for="form6Example3">Company name</label>
-  </div>
-
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="text" id="form6Example4" class="form-control" />
-    <label class="form-label" for="form6Example4">Address</label>
-  </div>
-
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="email" id="form6Example5" class="form-control" />
-    <label class="form-label" for="form6Example5">Email</label>
-  </div>
-
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="number" id="form6Example6" class="form-control" />
-    <label class="form-label" for="form6Example6">Phone</label>
-  </div>
-
-
-  <div data-mdb-input-init class="form-outline mb-4">
-    <textarea class="form-control" id="form6Example7" rows="4"></textarea>
-    <label class="form-label" for="form6Example7">Additional information</label>
-  </div>
-
-
-  <div class="form-check d-flex justify-content-center mb-4">
-    <input
-      class="form-check-input me-2"
-      type="checkbox"
-      value=""
-      id="form6Example8"
-      checked
-    />
-    <label class="form-check-label" for="form6Example8"> Create an account? </label>
-  </div>
-
-
-  <button data-mdb-ripple-init type="button" class="btn btn-primary btn-block mb-4">Place order</button>
-</form>
-</div> -->

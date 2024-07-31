@@ -1,6 +1,7 @@
 from django.db import models
 from category.models import Category
 from supplier.models import Supplier
+from django.db.models import Sum
 
 class Product(models.Model):
     name = models.CharField(max_length=255)

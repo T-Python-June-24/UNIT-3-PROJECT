@@ -10,18 +10,18 @@
     <form action="{% url 'supplier:add_suppliers_view' %}" method="post">
     {% csrf_token %}
       <div data-mdb-input-init class="form-outline mb-4">
-        <input type="text" id="form6Example1" class="form-control" name="name"/>
+        <input type="text" id="form6Example1" class="form-control" name="name" required/>
         <label class="form-label" for="form6Example1">Supplier name</label>
     </div>
 
   <div data-mdb-input-init class="form-outline mb-4">
-    <input type="email" id="form6Example5" class="form-control" name="email"/>
+    <input type="email" id="form6Example5" class="form-control" name="email" required/>
     <label class="form-label" for="form6Example5">Email</label>
   </div>
 
 
   <div data-mdb-input-init class="form-outline mb-4">
-    <input type="number" id="form6Example6" class="form-control" name="phone" />
+    <input type="number" id="form6Example6" class="form-control" name="phone" required/>
     <label class="form-label" for="form6Example6">Phone</label>
 </div>
 

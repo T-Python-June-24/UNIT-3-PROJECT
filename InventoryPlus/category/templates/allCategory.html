@@ -7,7 +7,6 @@
   </div> 
   <table class="table table-bordered">
     <tr class="bg-info text-white">
-      <td>NO.</td>
       <td>ID</td>
       <td>Name</td>
       <td>Description</td>
@@ -15,7 +14,6 @@
     </tr>
     {%for category in categories %}
     <tr class="text-center">
-      <td>{{forloop.counter}}</td>
       <td>{{category.id}}</td>
       <td>{{category.name}}</td>
 
@@ -127,6 +125,7 @@
                     id="recipient-name"
                     name="name"
                     value="{{category.name}}"
+                    required
                   />
                 </div>
                 <div class="mb-3">
@@ -137,6 +136,7 @@
                     class="form-control"
                     id="message-text"
                     name="description"
+                    required
                   >
  {{category.description}}  </textarea
                   >

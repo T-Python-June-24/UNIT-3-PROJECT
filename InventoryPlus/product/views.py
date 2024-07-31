@@ -6,7 +6,9 @@ from .models import Product,Supplier , Category
 
 def all_products_view(request:HttpRequest ):
     products = Product.objects.all()
-    return render(request, "allProducts.html", {"products":products})
+    category = Category.objects.all()
+    allSuppliers = Supplier.objects.all() 
+    return render(request, "allProducts.html", {"products":products,"categories":category,"suppliers": allSuppliers})
 
 def delete_products_view(request:HttpRequest, product_id: int):
     product = Product.objects.get(id=product_id)
@@ -35,13 +37,19 @@ def add_products_view(request: HttpRequest):
 def update_products_view(request:HttpRequest, product_id:int):
     products = Product.objects.get(id=product_id)
     if request.method == "POST":
+        category_id = request.POST['category']
+        category_instance = Category.objects.get(id=category_id)
         products.name = request.POST["name"]
         products.description = request.POST["description"]
         products.price = request.POST["price"]
-        products.image = request.POST["image"]
-        products.category = request.POST["category"]
-        products.suppliers = request.POST["suppliers"]
+        products.image = request.FILES['image']
+        products.category = category_instance
+
+        supplier_ids = request.POST.getlist('suppliers')
+        suppliers = Supplier.objects.filter(id__in=supplier_ids)
+        products.suppliers.set(suppliers)
         products.save()
+
         return redirect('product:all_products_view')
     
     return render(request, "product:add_products_view", {"products":products})

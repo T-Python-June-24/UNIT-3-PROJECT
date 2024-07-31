@@ -10,7 +10,6 @@
             </div>
   <table class="table table-bordered">
     <tr class="bg-info text-white">
-      <td>NO.</td>
       <td>ID</td>
       <td>Product Name</td>
       <td>Product Image</td>
@@ -22,12 +21,11 @@
     </tr>
     {%for product in products %}
     <tr class="text-center">
-      <td>{{forloop.counter}}</td>
       <td>{{product.id}}</td>
       <td>{{product.name}}</td>
-      <td>{% if product.image %}
-        <img
-          src="{{ product.image.url }}"
+      <td>
+        {% if product.image %}
+        <img src="{{ product.image.url }}"
           class="object-fit-contain"
           height="150px"
           width="150px"
@@ -37,14 +35,15 @@
           src="/media/images/defualt.png"
           class="w-20 poster-thumb object-fit-contain"
         />
-        {% endif %}</td></td>
+        {% endif %}
+      </td>
       <td>{{product.description}}</td>
       <td>{{product.price}}</td>
       <td>{{product.category}}</td>
-      <td>{% for supplier in product.suppliers.all %}
-          - {{ supplier.name }} <br>
-          {% endfor %}</td>
-
+      <td>
+        {% for supplier in product.suppliers.all %} - {{ supplier.name }} <br />
+        {% endfor %}
+      </td>
 
       <td>
         <button
@@ -90,8 +89,7 @@
             <div class="modal-body">
               <p>
                 Are you sure you want to delete the
-                <strong>
-                  product: {{product.name}} ID: {{ product.id }}</strong
+                <strong> product: {{product.name}} ID: {{ product.id }}</strong
                 >?
               </p>
             </div>
@@ -143,31 +141,90 @@
               >
                 {% csrf_token %}
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label"
+                  <label for="product-name" class="col-form-label"
                     >product name</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    id="recipient-name"
+                    id="product-name"
                     name="name"
                     value="{{product.name}}"
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="message-text" class="col-form-label">Email:</label
+                  <label for="description-text" class="col-form-label"
+                    >Description:</label
                   >
-                  <input
+                  <textarea
                     class="form-control"
-                    id="message-text"
-                    name="email" value="{{product.email}}"></input>
+                    id="description-text"
+                    rows="2"
+                    name="description"
+                    required
+                  >
+{{product.description}}</textarea
+                  >
                 </div>
                 <div class="mb-3">
-                  <label for="message-text" class="col-form-label">Phone:</label>
+                  <label for="price-num" class="col-form-label">Price:</label>
                   <input
                     class="form-control"
-                    id="message-text"
-                    name="phone" value="{{product.phone}}"></input>
+                    id="price-num"
+                    name="price"
+                    value="{{product.price}}"
+                  />
+                </div>
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <label>Category name</label>
+
+                  <select style="width: 100%" name="category" value={{category.name}} required>
+                    {%for category in categories %}
+                    <option value="{{category.id}}" {% if category.id == product.category.id %}selected{% endif %}>{{category.name}}</option>
+                    {% endfor%}
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="suppliers" class="form-label">Suppliers</label>
+                  {% for supplier in suppliers %}
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="supplier{{ supplier.id }}"
+                      name="suppliers"
+                      value="{{ supplier.id }}"
+                      {% if supplier in product.suppliers.all %}checked{% endif %} />
+                  <label class="form-check-label" for="supplier{{ supplier.id }}">
+                      {{ supplier.name }}
+                  </label>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="mb-4 d-flex bject-fit-contain">
+                  <img
+                    id="selectedImage"
+                    src="{{ product.image }}"
+                    alt="example placeholder"
+                    style="width: 100px;"
+                    name="image"
+                  />
+                </div>
+                <div class="d-flex justify-content-start">
+                  <div data-mdb-ripple-init class="mb-4">
+                    <label class="form-label text-black m-1" for="imageModal"
+                      >Upload Image</label
+                    >
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="imageModal"
+                      name="image"
+                      onchange="displaySelectedImage(event, 'selectedImage')"
+                      accept="image/*"
+                      {% if product.id in product.image%}selected{%endif%}
+                    />
+                  </div>
                 </div>
               </form>
             </div>
@@ -182,7 +239,7 @@
               </button>
               <button
                 type="submit"
-                class="btn btn-primary"
+                class="btn btn-success"
                 form="updateForm{{ product.id }}"
                 data-mdb-ripple-init
               >
