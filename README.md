@@ -1,5 +1,3 @@
-Here's the updated `README.md` for your project with added emojis to enhance the visual appeal and readability:
-
 # 🏢 Inventory Plus
 
 ## 📦 Using Django to create a comprehensive system for managing corporate inventory!
