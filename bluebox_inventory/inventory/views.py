@@ -1,21 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, Supplier
-from .forms import ProductForm, CategoryForm, SupplierForm, SignUpForm
+from .forms import ProductForm, CategoryForm, SupplierForm
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
 import pandas as pd
 import csv
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
-# inventory/views.py
-
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Product, Category, Supplier, ContactMessage
-from .forms import ProductForm, CategoryForm, SupplierForm, ContactForm
+from .models import Product, Category, Supplier
+from .forms import ProductForm, CategoryForm, SupplierForm
 
-# Dashboard view
+
 
 # Product views
 def product_create(request):
@@ -208,25 +204,25 @@ def dashboard(request):
     return render(request, 'inventory/dashboard.html', context)
 
 
-def export_csv(request, data_type):
+def export_csv(request, model_type):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = f'attachment; filename="{data_type}_data.csv"'
+    response['Content-Disposition'] = f'attachment; filename="{model_type}_data.csv"'
 
     writer = csv.writer(response)
 
-    if data_type == 'products':
+    if model_type == 'products':
         writer.writerow(['Product Name', 'Category', 'Supplier', 'Price', 'Stock Quantity'])
         products = Product.objects.all()
         for product in products:
             writer.writerow([product.name, product.category.name, product.supplier.name, product.price, product.stock_quantity])
     
-    elif data_type == 'suppliers':
+    elif model_type == 'suppliers':
         writer.writerow(['Supplier Name', 'Email', 'Phone', 'Address', 'Website'])
         suppliers = Supplier.objects.all()
         for supplier in suppliers:
             writer.writerow([supplier.name, supplier.email, supplier.phone, supplier.address, supplier.website])
     
-    elif data_type == 'categories':
+    elif model_type == 'categories':
         writer.writerow(['Category Name'])
         categories = Category.objects.all()
         for category in categories:

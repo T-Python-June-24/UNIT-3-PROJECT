@@ -5,3 +5,11 @@ body {
 .bg-primary {
     background-color: #21273a !important;
 }
+
+.btn-primary{
+    background-color: #21273a !important;
+}
+
+.text-primary{
+    color: #21273a !important;
+}

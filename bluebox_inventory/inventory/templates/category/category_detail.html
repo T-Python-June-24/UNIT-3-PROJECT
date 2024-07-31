@@ -5,6 +5,6 @@
 {% block content %}
 <h1>{{ object.name }}</h1>
 <p><strong>Description:</strong> {{ object.description }}</p>
-<a href="{% url 'category_edit' object.pk %}" style="color: darkblue;">Edit</a> |
-<a href="{% url 'category_delete' object.pk %}" style="color: darkblue;">Delete</a>
+<a href="{% url 'category_edit' object.pk %}" >Edit</a> |
+<a href="{% url 'category_delete' object.pk %}" >Delete</a>
 {% endblock %}

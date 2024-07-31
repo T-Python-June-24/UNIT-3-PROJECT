@@ -49,7 +49,7 @@
                     <h4 class="my-0 font-weight-normal"><a href="{% url 'product_list' %}" class="text-white">Total Products</a></h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ total_products }}</h1>
+                    <h1 class="card-title pricing-card-title text-dark">{{ total_products }}</h1>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     <h4 class="my-0 font-weight-normal"><a href="{% url 'category_list' %}" class="text-white">Total Categories</a></h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ total_categories }}</h1>
+                    <h1 class="card-title pricing-card-title text-dark">{{ total_categories }}</h1>
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@
                     <h4 class="my-0 font-weight-normal"><a href="{% url 'supplier_list' %}" class="text-white">Total Suppliers</a></h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ total_suppliers }}</h1>
+                    <h1 class="card-title pricing-card-title text-dark">{{ total_suppliers }}</h1>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 <div class="card-body">
                     <ul class="list-group">
                         {% for activity in recent_activities %}
-                            <li class="list-group-item">{{ activity }}</li>
+                            <li class="list-group-item text-dark">{{ activity }}</li>
                         {% endfor %}
                     </ul>
                 </div>

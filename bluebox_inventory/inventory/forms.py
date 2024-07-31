@@ -1,10 +1,6 @@
 
 from django import forms
-from .models import Product, Category, Supplier, ContactMessage
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .models import Product, Category, Supplier
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -42,20 +38,3 @@ class CategoryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
-
-class SignUpForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password1', 'password2']
-
-
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = ContactMessage
-        fields = ['name', 'email', 'message']
-        
-    def __init__(self, *args, **kwargs):
-        super(ContactForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'class': 'form-control'})
-        self.fields['email'].widget.attrs.update({'class': 'form-control'})
-        self.fields['message'].widget.attrs.update({'class': 'form-control'})

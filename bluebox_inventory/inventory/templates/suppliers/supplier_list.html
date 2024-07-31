@@ -5,7 +5,7 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center">
     <h1>Suppliers</h1>
-    <a href="{% url 'supplier_create' %}" class="btn btn-dark">Add New Supplier</a>
+    <a href="{% url 'supplier_create' %}" class="btn btn-primary">Add New Supplier</a>
 </div>
 <table class="table table-striped mt-3">
     <thead>
@@ -19,7 +19,12 @@
     <tbody>
         {% for supplier in suppliers %}
         <tr>
-            <td><a href="{% url 'supplier_detail' supplier.pk %}">{{ supplier.name }}</a></td>
+            <td>
+                {% if supplier.image %}
+                    <img src="{{ supplier.image.url }}" alt="{{ supplier.name }}" width="50" height="50" class="img-thumbnail mr-2">
+                {% endif %}
+                <a href="{% url 'supplier_detail' supplier.pk %}">{{ supplier.name }}</a>
+            </td>
             <td>{{ supplier.email }}</td>
             <td>{{ supplier.phone }}</td>
             <td>
