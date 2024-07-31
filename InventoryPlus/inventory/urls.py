@@ -32,8 +32,8 @@ urlpatterns = [
     path('category/new/', views.category_create, name='category_create'),
     path('category/<int:pk>/edit/', views.category_edit, name='category_edit'),
     path('category/<int:pk>/delete/', views.category_delete, name='category_delete'),
-    path('export/', views.export_products_csv, name='export_products_csv'),
-    path('import/', views.import_products_csv, name='import_products_csv'),
+    path('import-csv/', views.import_csv, name='import_csv'),
+    path('export-csv/', views.export_csv, name='export_csv'),
     path('search/', views.search, name='search'),
 ]
 

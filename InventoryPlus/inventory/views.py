@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from .models import Product, Category, Supplier
 from .forms import ProductForm, CategoryForm, SupplierForm
 from .utils import send_low_stock_alert
+import pandas as pd
 import csv
-from .forms import UploadCSVForm
+from .forms import CSVUploadForm
+from django.contrib import messages
 
 
 
@@ -173,38 +175,64 @@ def inventory_report(request):
 
 
 # CSV
-def export_products_csv(request):
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+def import_csv(request):
+    if request.method == 'POST':
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file']
+            try:
+                data = pd.read_csv(csv_file)
+                logger.debug(f'CSV Data: {data.head()}')
+
+                # Check if required columns are present
+                required_columns = ['name', 'category', 'price', 'stock', 'description', 'image']
+                if not all(column in data.columns for column in required_columns):
+                    messages.error(request, f'CSV file must contain the following columns: {", ".join(required_columns)}')
+                    return redirect('inventory:import_csv')
+
+                for index, row in data.iterrows():
+                    category, _ = Category.objects.get_or_create(name=row['category'])
+                    product, created = Product.objects.get_or_create(
+                        name=row['name'],
+                        defaults={
+                            'category': category,
+                            'price': row['price'],
+                            'stock': row['stock'],
+                            'description': row.get('description', ''),
+                            'image': row.get('image', '')  # Assuming the CSV has URLs or paths to images
+                        }
+                    )
+                    if not created:
+                        product.category = category
+                        product.price = row['price']
+                        product.stock = row['stock']
+                        product.description = row.get('description', '')
+                        product.image = row.get('image', '')  # Update image if provided
+                        product.save()
+                messages.success(request, 'Products imported successfully.')
+                return redirect('inventory:product_list')
+            except Exception as e:
+                logger.error(f'Error processing CSV file: {e}', exc_info=True)
+                messages.error(request, f'Error processing CSV file: {e}')
+                return redirect('inventory:import_csv')
+    else:
+        form = CSVUploadForm()
+    return render(request, 'inventory/import_products.html', {'form': form})
+
+
+
+
+def export_csv(request):
+    products = Product.objects.all()
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="products.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Name', 'Category', 'Price', 'Stock', 'Description', 'Created At', 'Updated At'])
-
-    products = Product.objects.all().values_list('name', 'category__name', 'price', 'stock', 'description', 'created_at', 'updated_at')
-    for product in products:
-        writer.writerow(product)
-
+    writer = pd.DataFrame(list(products.values('name', 'category__name', 'price', 'stock', 'description', 'image')))
+    writer.columns = ['Name', 'Category', 'Price', 'Stock', 'Description', 'Image']
+    writer.to_csv(path_or_buf=response, index=False)
     return response
-
-def import_products_csv(request):
-    if request.method == 'POST':
-        form = UploadCSVForm(request.POST, request.FILES)
-        if form.is_valid():
-            csv_file = request.FILES['file']
-            reader = csv.reader(csv_file)
-            next(reader)  # Skip header row
-            for row in reader:
-                category, _ = Category.objects.get_or_create(name=row[1])
-                Product.objects.create(
-                    name=row[0],
-                    category=category,
-                    price=row[2],
-                    stock=row[3],
-                    description=row[4],
-                    created_at=row[5],
-                    updated_at=row[6]
-                )
-            return redirect('inventory:product_list')
-    else:
-        form = UploadCSVForm()
-    return render(request, 'inventory/import_products.html', {'form': form})

@@ -6,21 +6,23 @@
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>All Categories</h2>
-        <a href="{% url 'inventory:category_create' %}" class="btn btn-primary btn-rounded">Add Category</a>
+        <a href="{% url 'inventory:category_create' %}" class="btn btn-success btn-rounded">Add Category</a>
     </div>
     <div class="d-flex flex-column">
         {% for category in categories %}
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">{{ category.name }}</h5>
+                    <h5 class="card-title mb-5">{{ category.name }}</h5>
                     <div>
-                        <a href="{% url 'inventory:category_edit' category.pk %}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="{% url 'inventory:category_delete' category.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'inventory:category_edit' category.pk %}" class="btn btn-warning btn-sm mb-5">Edit</a>
+                        <a href="{% url 'inventory:category_delete' category.pk %}" class="btn btn-danger btn-sm mb-5">Delete</a>
                     </div>
                 </div>
+                {% if category.description %}
                 <p class="card-text">{{ category.description }}</p>
-                <a href="{% url 'inventory:category_detail' category.pk %}" class="btn btn-primary btn-sm mb-2">View Products</a>
+                {% endif %}
+                <a href="{% url 'inventory:category_detail' category.pk %}" class="btn btn-info btn-sm mb-2">View Products</a>
                 <div class="d-flex flex-row overflow-auto">
                     {% for product in category.product_set.all %}
                     <div class="card mr-2" style="min-width: 200px;">
@@ -30,7 +32,7 @@
                         <div class="card-body">
                             <h6 class="card-title">{{ product.name }}</h6>
                             <p class="card-text">{{ product.price }} SAR</p>
-                            <a href="{% url 'inventory:product_detail' product.pk %}" class="btn btn-primary btn-sm">View</a>
+                            <a href="{% url 'inventory:product_detail' product.pk %}" class="btn btn-outline-info btn-sm">View</a>
                         </div>
                     </div>
                     {% endfor %}

@@ -1,10 +1,21 @@
 {% extends 'main/base.html' %}
 
+{% block title %}Import CSV{% endblock %}
+
 {% block content %}
-    <h2 class="my-4">Import Products from CSV</h2>
+<div class="container my-4">
+    <h2>Import Products from CSV</h2>
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary">Import</button>
     </form>
+</div>
 {% endblock %}

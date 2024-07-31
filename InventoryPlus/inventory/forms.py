@@ -15,7 +15,7 @@ class ProductForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'class': 'form-control', 'required': True, 'min': 0, 'step': '0.01'}),
             'stock': forms.NumberInput(attrs={'class': 'form-control', 'required': True, 'min': 0}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file', 'required': True}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
 
     def clean_name(self):
@@ -133,5 +133,7 @@ class SupplierForm(forms.ModelForm):
 
 
 
-class UploadCSVForm(forms.Form):
-    file = forms.FileField()
+
+
+class CSVUploadForm(forms.Form):
+    csv_file = forms.FileField()
