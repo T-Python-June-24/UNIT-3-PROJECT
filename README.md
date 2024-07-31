@@ -9,7 +9,7 @@ Here's the updated `README.md` for your project with added emojis to enhance the
 ## ✨ Features List
 
 
-## 📊 Dashboard
+### 📊 Dashboard
 - 📋 Overview of critical metrics
 - 📊 Stock levels and low stock products charts
 
@@ -76,3 +76,4 @@ Here's the updated `README.md` for your project with added emojis to enhance the
 - A product belongs to one category.
 - A product can be supplied by multiple suppliers.
 
+![IventoryPlusModels](https://github.com/user-attachments/assets/aab09584-2607-4e81-848a-d504399965b8)
