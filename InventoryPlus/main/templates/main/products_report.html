@@ -59,6 +59,7 @@
             <th>Category</th>
             <th>Stock Level</th>
             <th>Expiry Date</th>
+            <th>Suppliers</th>
             <th>Image</th>
         </tr>
     </thead>
@@ -70,6 +71,9 @@
             <td>{{ product.category }}</td>
             <td>{{ product.stock_level }}</td>
             <td>{{ product.expiry_date }}</td>
+            <td>{% for supplier in product.suppliers.all %}
+            {{ supplier.supplier_name }}
+            {% endfor %}</td>
             <td><img class="supplier-logo-small" src="http://127.0.0.1:8000/{{ product.image.url }}" alt="{{ product.product_name }} logo"/></td>
         </tr>
         {% empty %}

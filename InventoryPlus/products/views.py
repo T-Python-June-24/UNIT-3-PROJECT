@@ -76,7 +76,6 @@ def update_product_view(request:HttpRequest, product_id:int):
     
 
     low_stock_products = Product.objects.filter(stock_level__lte=10)
-    product.stock_level = 500
     product.save()
     flag =True
     if low_stock_products.exists() :
