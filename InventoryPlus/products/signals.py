@@ -8,17 +8,17 @@ from datetime import datetime, timedelta
 def check_inventory(sender, instance, **kwargs):
   # Low stock alert
 
-  stock_quantity = int(instance.stock_quantity)
+  # stock_quantity = int(instance.stock_quantity)
 
-  low_stock = 10
-  if stock_quantity <= low_stock:
-    send_mail(
-      'Low Stock Alert',
-      f'The product {instance.name} is running low on stock (Stock: {instance.stock_quantity}).',
-      'inventoryplus051@hotmail.com',
-      ['boshraalija@gmail.com'],
-      fail_silently=False,
-    )
+  # low_stock = 10
+  # if stock_quantity <= low_stock:
+  #   send_mail(
+  #     'Low Stock Alert',
+  #     f'The product {instance.name} is running low on stock (Stock: {instance.stock_quantity}).',
+  #     'inventoryplus051@hotmail.com',
+  #     ['boshraalija@gmail.com'],
+  #     fail_silently=False,
+  #   )
 
     # # Expiry date alert
     # today = datetime.now().date()
@@ -31,3 +31,4 @@ def check_inventory(sender, instance, **kwargs):
     #         ['boshraalija@gmail.com'],
     #         fail_silently=False,
     #     )
+  pass

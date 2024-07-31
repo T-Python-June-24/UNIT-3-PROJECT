@@ -67,7 +67,7 @@ def edit_product_view(request: HttpRequest, product_id):
     product.expiry_date = request.POST.get('expiry_date')
     product.save()
 
-    return redirect("products:edit_product_view", product_id=product_id)
+    return redirect("products:product_detail_view", product_id=product_id)
   
   context = {
     'product': product,

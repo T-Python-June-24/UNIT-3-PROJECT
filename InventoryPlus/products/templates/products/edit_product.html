@@ -4,9 +4,9 @@
 
 {% block content %}
 <main class="px-20">
-  <div class="w-full max-w-md p-8 bg-white rounded shadow-md">
+  <div class="w-1/2 p-8 bg-white">
     <h1 class="text-2xl font-bold mb-6">Edit Product</h1>
-    <form action="{% url 'products:edit_product_view' product.id %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'products:edit_product_view' product.id %}" method="post" enctype="multipart/form-data" class="mb-32">
         {% csrf_token %}
         <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Product Name:</label>
@@ -49,12 +49,12 @@
 
         <div class="mb-4">
             <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
-            <input type="number" id="price" name="price" step="0.01" value="{{ product.price }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <input type="number" id="price" name="price" step="0.01" min="0" value="{{ product.price }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
         </div>
 
         <div class="mb-4">
             <label for="stock_quantity" class="block text-gray-700 text-sm font-bold mb-2">Stock Quantity:</label>
-            <input type="number" id="stock_quantity" name="stock_quantity" value="{{ product.stock_quantity }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <input type="number" id="stock_quantity" name="stock_quantity" min="0" value="{{ product.stock_quantity }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
         </div>
 
         <div class="mb-4">
@@ -63,7 +63,7 @@
         </div>
 
         <div class="flex items-center justify-between">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Product</button>
+            <button type="submit" class="bg-customPurple hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Product</button>
         </div>
     </form>
   </div>
