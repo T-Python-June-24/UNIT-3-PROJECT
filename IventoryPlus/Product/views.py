@@ -6,6 +6,7 @@ from Category.models import Category
 from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
 from .admin import ProductResource
+from django.core.paginator import Paginator
 
 
 
@@ -55,6 +56,8 @@ def product_update(request, product_id: int):
         'categories': categories,
         'suppliers': suppliers
     })
+    
+    
 
 def delete_product(request:HttpRequest,product_id:int):
     product = Product.objects.get(pk=product_id)
@@ -72,7 +75,11 @@ def product_page(request):
     products = Product.objects.all()
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
-
+    
+    
+    page_number=request.GET.get("page",1)
+    paginator=Paginator(products,4)
+    products_page=paginator.get_page(page_number)
     # Check if a search was made
     searched = request.GET.get('searched', '')
     if searched:
@@ -100,6 +107,6 @@ def product_page(request):
     return render(request, "Product/products.html", {
         "categories": categories,
         "suppliers": suppliers,
-        "products": products,
+        "products": products_page,
         "search_term": searched
     })
