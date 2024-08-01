@@ -5,6 +5,9 @@ from .models import Product, Review, Category
 from .forms import ProductForm
 from suppliers.models import Supplier
 
+from django.core.paginator import Paginator
+from django.contrib import messages
+
 # add your views here.
 
 def add_product_view(request:HttpRequest):
@@ -13,15 +16,28 @@ def add_product_view(request:HttpRequest):
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
 
+    # if request.method == "POST":
+    #     supplier = supplier.objects.get(id=request.POST["supplier"])
+    #     new_product = Product(title=request.POST["title"], description=request.POST["description"], supplier=supplier, production_date=request.POST["production_date"], poster=request.FILES["poster"])
+    #     new_product.save()
+    #     return redirect("main:home")
+    # else:
+    #     print("not valid form", product_form.errors)
+
+    # return render(request, "products/add.html", {"product_form":product_form, "categories":categories, "suppliers": suppliers})
+
     if request.method == "POST":
+        
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product_form.save()
-            return redirect("main:home")
+            messages.success(request, "Added Product Successfuly", "alert-success")
+            return redirect('main:home_view')
         else:
             print("not valid form", product_form.errors)
 
-    return render(request, "products/add.html", {"product_form":product_form, "categories":categories, "suppliers": suppliers})
+    return render(request, "products/create.html", {"product_form":product_form,"RatingChoices": reversed(Game.RatingChoices.choices), "categories":categories, "publishers": publishers, "esrb_ratings" : Game.ESRBRating.choices})
+
 
 
 def product_detail_view(request:HttpRequest, product_id:int):
@@ -61,8 +77,17 @@ def product_update_view(request:HttpRequest, product_id:int):
 
 def product_delete_view(request:HttpRequest, product_id:int):
 
-    product = Product.objects.get(pk=product_id)
-    product.delete()
+    # product = Product.objects.get(pk=product_id)
+    # product.delete()
+
+    try:
+        product = Product.objects.get(pk=product_id)
+        product.delete()
+        messages.success(request, "Deleted product successfully", "alert-success")
+    except Exception as e:
+        print(e)
+        messages.error(request, "Couldn't Delete product", "alert-danger")
+
 
     return redirect("main:home")
 
@@ -84,8 +109,14 @@ def all_products_view(request:HttpRequest, category_name):
     else:
         products = Product.objects.filter(categories__name__in=[category_name]).order_by("-production_date")
 
+    page_number = request.GET.get("page", 1)
+    paginator = Paginator(products, 3)
+    products_page = paginator.get_page(page_number)
 
-    return render(request, "products/all_products.html", {"products":products, "category_name":category_name})
+
+    return render(request, "products/all_products.html", {"products":products_page, "category_name":category_name})
+    # return render(request, "products/all_products.html", {"products":products_page, "category_name":category_name, "esrb_ratings": Game.ESRBRating.choices})
+
 
 
 def search_products_view(request:HttpRequest):
