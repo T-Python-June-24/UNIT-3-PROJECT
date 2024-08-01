@@ -194,6 +194,28 @@
     <a href="{% url 'Supplier:add_supplier' %}"><div class="circle"></div></a> 
 
 </div>
+ <!-- pagination -->
+ <div class="pagination d-flex justify-content-center align-items-center mt-5 gap-4">
+    {% if suppliers.has_previous %}
+        <div class="d-flex gap-1">
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ suppliers.previous_page_number }}">&laquo; previous</a>
+        </div>
+    {% endif %}
+
+    <div class="current">
+        Page {{ suppliers.number }} of {{ suppliers.paginator.num_pages }}
+    </div>
+
+    {% if suppliers.has_next %}
+        <div class="d-flex gap-1">
+            <a href="?page={{ suppliers.next_page_number }}">next &raquo;</a>
+            <a href="?page={{ suppliers.paginator.num_pages }}">last &raquo;</a>
+        </div>
+    {% endif %}
+
+
+</div>
         <!-- Export Form -->
         <form class="mt-5" method="post" action="">
             {% csrf_token %}

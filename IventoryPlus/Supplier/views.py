@@ -6,6 +6,7 @@ from .forms import SupplierForm
 from django.contrib import messages  # Import messages
 from .admin import SupplierResource
 from django.db.models import Count
+from django.core.paginator import Paginator
 def add_supplier(request):
     suppliers = Supplier.objects.all()
     if request.method == "POST":
@@ -26,8 +27,10 @@ def added_success(request):
 
 def supplier_page(request:HttpRequest):
 
-    suppliers = Supplier.objects.all()
-    suppliers=suppliers.annotate(products_count=Count("product"))
+    suppliers = Supplier.objects.all().annotate(products_count=Count("product"))
+    page_number=request.GET.get('page',1)
+    paginator=Paginator(suppliers,2)
+    suppliers=paginator.get_page(page_number)
     if 'searched' in request.GET:
         searched = request.GET['searched']
         if searched:

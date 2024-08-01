@@ -9,7 +9,7 @@ from django.contrib import messages  # Import messages
 from .admin import CategoryResources
 
 from django.db.models import Count
-
+from django.core.paginator import Paginator
 def add_category(request):
     categories = Category.objects.all()
     if request.method == "POST":
@@ -27,8 +27,10 @@ def add_category(request):
 
 def category_page(request:HttpRequest):
 
-    categories = Category.objects.all()
-    categories=categories.annotate(products_count=Count("product"))
+    categories = Category.objects.all().annotate(products_count=Count("product"))   
+    page_number=request.GET.get("page",1)
+    paginator=Paginator(categories,4)
+    categories=paginator.get_page(page_number)
     if 'searched' in request.GET:
         searched=request.GET['searched']
         if searched:
@@ -42,7 +44,7 @@ def category_page(request:HttpRequest):
         response['Content-Disposition'] = 'attachment; filename="categories.csv"'
         return response
     
-    return render(request, "Category/categories.html", {"categories" : categories
+    return render(request, "Category/categories.html", {"categories" : categories 
     , "search_term": searched if 'searched' in request.GET else ""     })
      
 def category_added_success(request):
