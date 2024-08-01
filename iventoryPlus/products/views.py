@@ -7,63 +7,78 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 from django.core.files.base import ContentFile
 import pandas as pd
+from django. contrib import messages
 
 # Create your views here.
 def products_view(request:HttpRequest):
     products=Product.objects.all()
     return render(request,"products/product.html",{"products":products})
 def add_product_view(request:HttpRequest)->render:
-    product=Product.objects.all()
-    suppliers=Supplier.objects.all()
-    categories=Category.objects.all()
-    if request.method=="POST":
-        name=request.POST['name']
-        description=request.POST["description"]
-        stock_level=request.POST['stock_level']
-        if request.POST["expirment_date"]=="":
-            expirment=None
-        else:
-            expirment=request.POST["expirment_date"]
-        
-        price=request.POST["price"]
-        category=Category.objects.get(pk=request.POST["category"]) if request.POST["category"] !="" else None
-        
-        new_product=Product(name=name,description=description,stock_level=stock_level,expirment=expirment,price=price,category=category)
-        new_product.save()
-        if "supplier" in  request.POST:
-            new_product.supplier.set(request.POST.getlist("supplier"))
-        response = redirect('products:products_view')
-        return response
+    try:
+            product=Product.objects.all()
+            suppliers=Supplier.objects.all()
+            categories=Category.objects.all()
+            if request.method=="POST":
+                name=request.POST['name']
+                description=request.POST["description"]
+                stock_level=request.POST['stock_level']
+                if request.POST["expirment_date"]=="":
+                    expirment=None
+                else:
+                    expirment=request.POST["expirment_date"]
+                
+                price=request.POST["price"]
+                category=Category.objects.get(pk=request.POST["category"]) if request.POST["category"] !="" else None
+                
+                new_product=Product(name=name,description=description,stock_level=stock_level,expirment=expirment,price=price,category=category)
+                new_product.save()
+                if "supplier" in  request.POST:
+                    new_product.supplier.set(request.POST.getlist("supplier"))
+                response = redirect('products:products_view')
+                messages.success(request,"The product added successfully","success")
+                return response
+    except Exception as e:
+        messages.error(request,"there's something went wrong colu't remove the product ","error")
+
+
 
     return render(request,"products/add_product.html",{"suppliers":suppliers,"categories":categories,"product":product})
 
 def update_product(request,product_id):
+    try:
+        product=Product.objects.get(pk=product_id)
+        suppliers=Supplier.objects.all()
+        categories=Category.objects.all()
+        if request.method=="POST":
+            product.name=request.POST['name']
+            product.description=request.POST["description"]
+            product.stock_level=request.POST['stock_level']
+            if request.POST["expirment_date"]=="":
+                product.expirment=None
+            else:
+                product.expirment=request.POST["expirment_date"]
+            
+            product.price=request.POST["price"]
+            product.category=Category.objects.get(pk=request.POST["category"]) if "category" in request.POST else None
+            product.save()
+            product.supplier.set(request.POST.getlist("supplier"))
+            response = redirect(request.GET.get("next", "/"))
+            messages.success(request,"Succussfully the product updtaed","success")
+            return response
+    except Exception as e:
+            messages.error("there's something went wrong could't update a product","error")
 
-    product=Product.objects.get(pk=product_id)
-    suppliers=Supplier.objects.all()
-    categories=Category.objects.all()
-    if request.method=="POST":
-        product.name=request.POST['name']
-        product.description=request.POST["description"]
-        product.stock_level=request.POST['stock_level']
-        if request.POST["expirment_date"]=="":
-            product.expirment=None
-        else:
-            product.expirment=request.POST["expirment_date"]
-        
-        product.price=request.POST["price"]
-        product.category=Category.objects.get(pk=request.POST["category"]) if "category" in request.POST else None
-        product.save()
-        product.supplier.set(request.POST.getlist("supplier"))
-        response = redirect(request.GET.get("next", "/"))
-        return response
     return render(request,"products/update_product.html",{"product":product,"suppliers":suppliers,"categories":categories})
     
 def delete_product(request:HttpRequest,product_id):
-    product=Product.objects.get(pk=product_id)
-    product.delete()
-    response = redirect(request.GET.get("next", "/"))
-    return response
+    try:
+        product=Product.objects.get(pk=product_id)
+        product.delete()
+        response = redirect(request.GET.get("next", "/"))
+        messages.success(request,"product delteded succfully")
+        return response
+    except Exception as e:
+        messages.error(request,"something went wrong coldun't delete a product","error")
 
 def import_data(request):
     if request.method == 'POST':

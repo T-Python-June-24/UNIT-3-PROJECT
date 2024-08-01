@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from email.message import EmailMessage
 import ssl
 import smtplib
+from django.db.models import Avg, Count, Min, Sum,F,Q
   
 # Create your views here.
 def home_view(request:HttpRequest):
@@ -23,11 +24,9 @@ def home_view(request:HttpRequest):
     suppliers_count=Supplier.objects.all().count()
     added_today_suppliers=Supplier.objects.filter(added=now().date())   
     added_today_products=products.filter(added__gte=now().date()) 
-    total_values=0
-
-    for product in products:
-        total_values+=product.price*product.stock_level
-    formatted_total_value = humanize.intcomma(total_values) 
+    prod=Product.objects.annotate(total_price=F("price")*F("stock_level"))
+    total_sum=prod.aggregate(total_sum=Sum('total_price'))['total_sum']
+    formatted_total_value = humanize.intcomma(total_sum) 
 
 
     for index, supplier in enumerate(added_today_suppliers):
