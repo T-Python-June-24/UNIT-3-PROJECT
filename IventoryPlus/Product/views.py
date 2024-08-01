@@ -7,7 +7,7 @@ from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
 from .admin import ProductResource
 from django.core.paginator import Paginator
-
+from django.db.models import Q,F,Count,Avg,Sum,Max,Min
 
 
 def add_product(request):
@@ -75,8 +75,7 @@ def product_page(request):
     products = Product.objects.all()
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
-    
-    
+   
     page_number=request.GET.get("page",1)
     paginator=Paginator(products,4)
     products_page=paginator.get_page(page_number)
@@ -103,6 +102,14 @@ def product_page(request):
     supplier_id = request.GET.get('supplier', '')
     if supplier_id:
         products = products.filter(suppliers__id=supplier_id)
+    avg=products.aggregate(Avg("price"))
+    print(f"the avrage price is {avg}")
+    sum=products.aggregate(Sum("price"))
+    print(f"total price for all product{sum}")
+    max=products.aggregate(Max("price"))
+    print(f"highet price of all  products  {max}")
+    min=products.aggregate(Min("price"))
+    print(f"the lowest price is {min}")
     # Render the page normally if not exporting
     return render(request, "Product/products.html", {
         "categories": categories,

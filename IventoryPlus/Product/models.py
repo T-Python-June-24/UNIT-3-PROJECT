@@ -19,7 +19,7 @@ class Product(models.Model):
     stock = models.IntegerField(default=0)  # Current inventory level
     image = models.ImageField(upload_to="images/", default="images/default.jpg")
     minimum_stock = models.IntegerField(default=0)  # Minimum required stock level
-    
+    price=models.FloatField(default=0)
 
     def send_email(self, subject, message, html_content):
         sender_email = "sarahmoniftest@gmail.com"
