@@ -50,13 +50,15 @@ def all_products_view(request:HttpRequest, type, product_param):
 
     if product_param == "all":
         products = Product.objects.all().order_by("-expiry_date")
+        return render(request, "products/all_products.html", {"products":products, "product_param":product_param, 'type':type})
     elif type =="category_name":
         products = Product.objects.filter(category__name = product_param).order_by("-expiry_date")
+        return render(request, "products/all_products.html", {"products":products, "product_param":product_param, 'type':type})
     elif type == "supplier_id":
         products = Product.objects.filter(suppliers__id__in=[product_param]).order_by("-expiry_date")
-        supplier  = Supplier.objects.filter(pk=product_param)
-
-    return render(request, "products/all_products.html", {"products":products, "product_param":product_param, 'type':type})
+        supplier  = Supplier.objects.get(pk=product_param)
+        return render(request, "products/all_products.html", {"products":products, "product_param":product_param, 'type':type, 'supplier':supplier})
+    
 
 
 def product_detail_view(request:HttpRequest, product_id:int):
