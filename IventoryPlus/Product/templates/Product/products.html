@@ -252,6 +252,12 @@
             </tbody>
         </table>
     </div>
+    <!-- Aggregation price Statistics -->
+    <h2>Statistics</h2>
+    <p>Average Price: ${{ avg.price__avg|default:"No data" }}</p>
+    <p>Total Price of All Products: ${{ sum.price__sum|default:"No data" }}</p>
+    <p>Highest Price: ${{ max.price__max|default:"No data" }}</p>
+    <p>Lowest Price: ${{ min.price__min|default:"0" }}</p>
     <!-- pagination -->
     <div class="pagination d-flex justify-content-center align-items-center mt-5 gap-4">
         {% if products.has_previous %}

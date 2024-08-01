@@ -115,5 +115,9 @@ def product_page(request):
         "categories": categories,
         "suppliers": suppliers,
         "products": products_page,
-        "search_term": searched
+        "search_term": searched,
+        "avg":avg,
+        "sum":sum,
+        "max":max,
+        "min":min,
     })
