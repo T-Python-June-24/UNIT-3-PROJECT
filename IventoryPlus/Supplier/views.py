@@ -5,7 +5,7 @@ from Product.models import Product
 from .forms import SupplierForm
 from django.contrib import messages  # Import messages
 from .admin import SupplierResource
-
+from django.db.models import Count
 def add_supplier(request):
     suppliers = Supplier.objects.all()
     if request.method == "POST":
@@ -27,6 +27,7 @@ def added_success(request):
 def supplier_page(request:HttpRequest):
 
     suppliers = Supplier.objects.all()
+    suppliers=suppliers.annotate(products_count=Count("product"))
     if 'searched' in request.GET:
         searched = request.GET['searched']
         if searched:

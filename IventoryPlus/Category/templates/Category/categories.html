@@ -143,7 +143,8 @@
                             </a>
                         </td>                       
                         <td><a href="{% url 'Category:category_detail' category.id %}">{{ category.name }}</a></td>
-                        <td>{{ category.product_set.count }}</td>
+                        <td>{{ category.products_count }}</td>
+
                     </tr>
 
                      <!-- Modal for Update Form -->
