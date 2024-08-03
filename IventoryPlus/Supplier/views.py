@@ -28,9 +28,7 @@ def added_success(request):
 def supplier_page(request:HttpRequest):
 
     suppliers = Supplier.objects.all().annotate(products_count=Count("product"))
-    page_number=request.GET.get('page',1)
-    paginator=Paginator(suppliers,2)
-    suppliers=paginator.get_page(page_number)
+
     if 'searched' in request.GET:
         searched = request.GET['searched']
         if searched:
@@ -45,7 +43,9 @@ def supplier_page(request:HttpRequest):
         response['Content-Disposition'] = 'attachment; filename="suppliers.csv"'
         return response
     
-
+    page_number=request.GET.get('page',1)
+    paginator=Paginator(suppliers,2)
+    suppliers=paginator.get_page(page_number)
 
     return render(request, "Supplier/suppliers.html", {"suppliers" : suppliers,
  "search_term": searched if 'searched' in request.GET else ""

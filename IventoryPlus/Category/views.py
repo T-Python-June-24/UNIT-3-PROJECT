@@ -28,9 +28,7 @@ def add_category(request):
 def category_page(request:HttpRequest):
 
     categories = Category.objects.all().annotate(products_count=Count("product"))   
-    page_number=request.GET.get("page",1)
-    paginator=Paginator(categories,4)
-    categories=paginator.get_page(page_number)
+
     if 'searched' in request.GET:
         searched=request.GET['searched']
         if searched:
@@ -43,6 +41,11 @@ def category_page(request:HttpRequest):
         response = HttpResponse(response_data, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="categories.csv"'
         return response
+    
+    page_number=request.GET.get("page",1)
+    paginator=Paginator(categories,4)
+    categories=paginator.get_page(page_number)
+
     
     return render(request, "Category/categories.html", {"categories" : categories 
     , "search_term": searched if 'searched' in request.GET else ""     })

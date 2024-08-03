@@ -3,18 +3,21 @@ from django.http import HttpRequest, HttpResponse
 from Product.models import Product
 from Supplier.models import Supplier
 import plotly.express as px
+from django.db.models import Avg,Sum,Max,Min
 def home_view(request: HttpRequest):
         return render(request, 'main/index.html')
 def analytics_view(request: HttpRequest):
-
-
+    avg=Product.objects.aggregate(Avg("price"))
+    sum=Product.objects.aggregate(Sum("price"))
+    max=Product.objects.aggregate(Max("price"))
+    min=Product.objects.aggregate(Min("price"))
+    
     ################# Stock chart######################
 
     product_queryset = Product.objects.all()
     names = [product.name for product in product_queryset]
     stocks = [product.stock for product in product_queryset]
     colors = [product.stock_status() for product in product_queryset]  # Get stock status for color coding
-    product_ids = [product.id for product in product_queryset]
 
     color_map = {
         'In Stock': 'lightgreen',
@@ -30,7 +33,6 @@ def analytics_view(request: HttpRequest):
         labels={'x': "Product Name", 'y': "Stock Level"},
         color=bar_colors,
         color_discrete_map="identity",
-        # hovertemplate='<a href="/detail/{product_ids}/"></a>',
     )
      
     product_fig.update_layout(
@@ -70,4 +72,7 @@ def analytics_view(request: HttpRequest):
     supplier_chart = supplier_fig.to_html()
    
  
-    return render(request, 'main/analytics.html', {'product_chart': product_chart,'supplier_chart': supplier_chart,'low_stock_warning': low_stock_warning, })
+    return render(request, 'main/analytics.html', {'product_chart': product_chart,'supplier_chart': supplier_chart,'low_stock_warning': low_stock_warning,        "avg":avg,
+        "sum":sum,
+        "max":max,
+        "min":min, })

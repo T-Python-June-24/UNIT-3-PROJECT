@@ -120,7 +120,11 @@
                     <input type="file" name="image" class="form-control" id="fileInput" accept="image/*" />
                 </div>
                 <hr/>
-
+                <div class="mb-3">
+                    <label for="product-price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="product-price" name="price" step="0.01" value="{{ product.price }}">
+                </div>
+                <hr>
                 <div class="mb-3">
                     <input type="submit" value="Add Product" class="btn btn-primary" />
                 </div>

@@ -216,6 +216,10 @@
                                             <label for="product-minimum-stock" class="form-label">Minimum Stock Required</label>
                                             <input type="number" class="form-control" id="product-minimum-stock" name="minimum_stock" value="{{ product.minimum_stock }}">
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="product-price" class="form-label">Price</label>
+                                            <input type="number" class="form-control" id="product-price" name="price" step="0.01" value="{{ product.price }}">
+                                        </div>
                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </form>
                                 </div>
@@ -252,12 +256,7 @@
             </tbody>
         </table>
     </div>
-    <!-- Aggregation price Statistics -->
-    <h2>Statistics</h2>
-    <p>Average Price: ${{ avg.price__avg|default:"No data" }}</p>
-    <p>Total Price of All Products: ${{ sum.price__sum|default:"No data" }}</p>
-    <p>Highest Price: ${{ max.price__max|default:"No data" }}</p>
-    <p>Lowest Price: ${{ min.price__min|default:"0" }}</p>
+ 
     <!-- pagination -->
     <div class="pagination d-flex justify-content-center align-items-center mt-5 gap-4">
         {% if products.has_previous %}

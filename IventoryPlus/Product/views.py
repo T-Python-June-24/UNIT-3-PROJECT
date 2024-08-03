@@ -7,7 +7,6 @@ from Supplier.models import Supplier
 from django.contrib import messages  # Import messages
 from .admin import ProductResource
 from django.core.paginator import Paginator
-from django.db.models import Q,F,Count,Avg,Sum,Max,Min
 
 
 def add_product(request):
@@ -51,7 +50,7 @@ def product_update(request, product_id: int):
         else:
             print(productForm.errors)
 
-    return render(request, 'Product/product_detail.html', {
+    return render(request, 'Product/products.html', {
         'product': product,
         'categories': categories,
         'suppliers': suppliers
@@ -62,6 +61,7 @@ def product_update(request, product_id: int):
 def delete_product(request:HttpRequest,product_id:int):
     product = Product.objects.get(pk=product_id)
     product.delete()
+
     return redirect('Product:product_page')
 
 
@@ -76,17 +76,18 @@ def product_page(request):
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
    
-    page_number=request.GET.get("page",1)
-    paginator=Paginator(products,4)
-    products_page=paginator.get_page(page_number)
+    filtered_products = products
+
+
+
     # Check if a search was made
     searched = request.GET.get('searched', '')
     if searched:
-        products = products.filter(name__icontains=searched)
+        filtered_products = filtered_products.filter(name__icontains=searched)
 
     # Check for export action
     if 'export' in request.POST:
-        dataset = ProductResource().export(products)
+        dataset = ProductResource().export(filtered_products)
         response_data = dataset.csv
         content_type = 'text/csv'
 
@@ -96,28 +97,24 @@ def product_page(request):
     #filter by category
     category=request.GET.get('category')
     if category:
-        products = products.filter(category=category)
+        filtered_products = filtered_products.filter(category=category)
     #filter by supplier
 
     supplier_id = request.GET.get('supplier', '')
     if supplier_id:
-        products = products.filter(suppliers__id=supplier_id)
-    avg=products.aggregate(Avg("price"))
-    print(f"the avrage price is {avg}")
-    sum=products.aggregate(Sum("price"))
-    print(f"total price for all product{sum}")
-    max=products.aggregate(Max("price"))
-    print(f"highet price of all  products  {max}")
-    min=products.aggregate(Min("price"))
-    print(f"the lowest price is {min}")
+        filtered_products = filtered_products.filter(suppliers__id=supplier_id)
+
+
+    page_number=request.GET.get("page",1)
+    paginator=Paginator(filtered_products,4)
+    products=paginator.get_page(page_number)
+
+
     # Render the page normally if not exporting
     return render(request, "Product/products.html", {
         "categories": categories,
         "suppliers": suppliers,
-        "products": products_page,
+        "products": products,
         "search_term": searched,
-        "avg":avg,
-        "sum":sum,
-        "max":max,
-        "min":min,
+
     })
