@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for product in products %}
+            {% for product in product_page %}
                 <tr>
                     <td>{{ product.productName }}</td>
                     <td>{{ product.productDescription }}</td>
@@ -189,7 +189,21 @@
             </div>
         </div>
     </div>
+
+    <br>
     {% endfor %}
+
+    {% if product_page.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ product_page.previous_page_number }}">&laquo; previous</a>
+{% endif %}
+
+    Page {{ product_page.number }} of {{ product_page.paginator.num_pages }}
+
+{% if product_page.has_next %}
+        <a href="?page={{ product_page.next_page_number }}">next &raquo;</a>
+        <a href="?page={{ product_page.paginator.num_pages }}">last &raquo;</a>
+{% endif %}
 
 </div>
 {% endblock %}

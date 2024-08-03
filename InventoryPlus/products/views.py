@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, Supplier
 from .forms import ProductForm
-
+from django.core.paginator import Paginator
 def all_products(request):
     query = request.GET.get('q')
     if query:
@@ -12,11 +12,15 @@ def all_products(request):
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
     form = ProductForm()
+    p = Paginator(products,1)
+    page = request.GET.get("page")
+    product_page = p.get_page(page)
     return render(request, 'products/all_products.html', {
         'products': products,
         'categories': categories,
         'suppliers': suppliers,
         'form': form,
+        'product_page' :product_page
     })
 
 def product_detail(request, product_id):
