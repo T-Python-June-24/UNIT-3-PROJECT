@@ -1,21 +1,29 @@
-# products/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, Supplier
 from .forms import ProductForm
 from django.core.paginator import Paginator
 from django.contrib import messages
+
+
 def all_products(request):
     query = request.GET.get('q')
     if query:
         products = Product.objects.filter(productName__icontains=query)
     else:
+
         products = Product.objects.all()
+
+        if "category" in request.GET :
+            products = products.filter(productCategory=request.GET.get('category'))
+        if "supplier" in request.GET :
+            products = products.filter(productSupplier=request.GET.get('supplier'))
+    
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
     form = ProductForm()
-    p = Paginator(products,10)
-    page = request.GET.get("page")
-    product_page = p.get_page(page)
+    page_number = request.GET.get("page",1)
+    paginator = Paginator(products,1)
+    product_page = paginator.get_page(page_number)
     return render(request, 'products/all_products.html', {
         'products': products,
         'categories': categories,
