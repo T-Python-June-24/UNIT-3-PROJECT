@@ -64,8 +64,13 @@ def category_update(request, category_id: int):
         categoryForm = CategoryForm(request.POST, request.FILES, instance=category)
         if categoryForm.is_valid():
             categoryForm.save()
+            messages.success(request, 'Category updateed successfully!')
             return redirect('Category:category_page')
-
+        else:
+            for field, errors in categoryForm.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+                    return redirect('Category:category_page')
     return render(request, 'Category/category_detail.html', {'categoryForm': categoryForm, 'category': category})
 
 def delete_category(request: HttpRequest, category_id: int):

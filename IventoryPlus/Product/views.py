@@ -46,9 +46,12 @@ def product_update(request, product_id: int):
         productForm = ProductForm(request.POST, request.FILES, instance=product)
         if productForm.is_valid():
             productForm.save()
+            messages.success(request, 'Product updated successfully!')
             return redirect("Product:product_page")
         else:
-            print(productForm.errors)
+            for field, errors in productForm.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
 
     return render(request, 'Product/products.html', {
         'product': product,
@@ -60,7 +63,13 @@ def product_update(request, product_id: int):
 
 def delete_product(request:HttpRequest,product_id:int):
     product = Product.objects.get(pk=product_id)
-    product.delete()
+    if product.delete():
+            messages.success(request, 'Product deleted successfully!')
+            return redirect("Product:product_page")
+    else:
+        for field, errors in product.errors.items():
+            for error in errors:
+             messages.error(request, f"{field}: {error}")        
 
     return redirect('Product:product_page')
 

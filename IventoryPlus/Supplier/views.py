@@ -66,10 +66,20 @@ def supplier_update(request, supplier_id: int):
         supplierForm = SupplierForm(request.POST, request.FILES, instance=supplier)
         if supplierForm.is_valid():
             supplierForm.save()
+            messages.success(request, 'Supplier updated successfully!')
             return redirect('Supplier:supplier_page')
-
+        else:
+            for field, errors in supplierForm.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     return render(request, 'Supplier/supplier_detail.html', {'supplierForm': supplierForm, 'supplier': supplier})
 def delete_supplier(request:HttpRequest,supplier_id:int):
     supplier = Supplier.objects.get(pk=supplier_id)
-    supplier.delete()
+    if supplier.delete():
+            messages.success(request, 'Supplier deleted successfully!')
+            return redirect('Supplier:supplier_page')
+    else:
+        for field, errors in supplier.errors.items():
+            for error in errors:
+                messages.error(request, f"{field}: {error}")    
     return redirect('Supplier:supplier_page')
