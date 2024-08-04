@@ -1,8 +1,9 @@
 from django.db import models
 from suppliers.models import Supplier
 from categories.models import Category
+from django.core.mail import EmailMessage
+from django.conf import settings
 
-# - As an Inventory Manager, I want to view a list of all inventory supplied by a supplier so that I can track how much business we do with the supplier.
 
 class Product(models.Model):
     productName = models.CharField(max_length=128)
@@ -21,4 +22,4 @@ class Product(models.Model):
     
     def calculateTotalPriceOfunits(self):
        return self.unitPrice * float(self.productStock)
-
+    

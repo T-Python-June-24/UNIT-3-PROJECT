@@ -3,7 +3,11 @@ from .models import Product, Category, Supplier
 from .forms import ProductForm
 from django.core.paginator import Paginator
 from django.contrib import messages
-
+from django.core.mail import EmailMessage
+from django.conf import settings
+import smtplib
+import ssl
+from django.db.models import Avg , Max , Sum
 
 def all_products(request):
     query = request.GET.get('q')
@@ -12,6 +16,14 @@ def all_products(request):
     else:
 
         products = Product.objects.all()
+        
+        # for product in products:
+        #     if product.productStock < 2:
+        #         content_html = f"Stock is low for {product.productName}"
+        #         send_to = "amira799am@gmail.com"
+        #         email_message = EmailMessage("Confirmation", content_html, settings.EMAIL_HOST_USER, [send_to])
+        #         email_message.send()
+        #         messages.success(request, "Your message is received. Thank You.", "alert-success")
 
         if "category" in request.GET :
             products = products.filter(productCategory=request.GET.get('category'))
@@ -22,18 +34,20 @@ def all_products(request):
     suppliers = Supplier.objects.all()
     form = ProductForm()
     page_number = request.GET.get("page",1)
-    paginator = Paginator(products,1)
+    paginator = Paginator(products,4)
     product_page = paginator.get_page(page_number)
     return render(request, 'products/all_products.html', {
         'products': products,
         'categories': categories,
         'suppliers': suppliers,
         'form': form,
-        'product_page' :product_page
+        'product_page' :product_page,
+
     })
 
 def product_detail(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    product = Product.objects.get(pk=product_id)
+
     return render(request, 'products/product_detail.html', {'product': product})
 
 def product_create(request):

@@ -29,9 +29,9 @@
         <thead>
             <tr>
                 <th>Product Name</th>
-                <th>Product Description</th>
                 <th>Product Price</th>
                 <th>Product Stock</th>
+                <th>total Price of Stock</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -39,9 +39,10 @@
             {% for product in product_page %}
             <tr>
                 <td>{{ product.productName }}</td>
-                <td>{{ product.productDescription }}</td>
+
                 <td>{{ product.productPrice }}</td>
                 <td>{{ product.productStock }}</td>
+                <td>{{ product.calculateTotalPriceOfunits }}</td>
                 <td>
                     <a href="{% url 'products:product_detail' product.id %}" class="btn btn-outline-primary">Details</a>
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
@@ -251,6 +252,13 @@
         <a href="?page={{ product_page.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </div>
+
+
+    <div>
+        {{sum}}
+    </div>
     
 </div>
+
+
 {% endblock %}
