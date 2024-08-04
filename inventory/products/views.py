@@ -39,7 +39,7 @@ def add_product_view(request:HttpRequest):
         else:
             print("not valid form", product_form.errors)
 
-    return render(request, "products/create.html", {"product_form":product_form,"RatingChoices": reversed(Game.RatingChoices.choices), "categories":categories, "publishers": publishers, "esrb_ratings" : Game.ESRBRating.choices})
+    return render(request, "products/create.html", {"product_form":product_form,"RatingChoices": reversed(Product.RatingChoices.choices), "categories":categories, "suppliers": suppliers})
 
 
 
@@ -130,7 +130,7 @@ def all_products_view(request:HttpRequest, category_name):
 
 
     return render(request, "products/all_products.html", {"products":products_page, "category_name":category_name})
-    # return render(request, "products/all_products.html", {"products":products_page, "category_name":category_name, "esrb_ratings": Game.ESRBRating.choices})
+    # return render(request, "products/all_products.html", {"products":products_page, "category_name":category_name, "esrb_ratings": Product.ESRBRating.choices})
 
 
 
