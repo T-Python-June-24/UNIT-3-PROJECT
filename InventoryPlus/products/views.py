@@ -3,11 +3,17 @@ from django.http import HttpRequest
 from .models import Product, Category
 from suppliers.models import Supplier
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 def products_view(request: HttpRequest):
-  products = Product.objects.all()
+  product_list = Product.objects.all()
+  paginator = Paginator(product_list, 6)
+
+  page_number = request.GET.get('page')
+  products = paginator.get_page(page_number)
+  
   return render(request, "products/products.html", {'products': products})
 
 
