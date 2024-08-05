@@ -181,10 +181,8 @@ As an Inventory Manager, I want to export inventory data to CSV files so that I 
 
 
 ## Edit the README.md file to include (include the info at the top):
-- UML link.
-- https://lucid.app/lucidchart/d53e971b-a2e0-4f91-8dee-26314bc60ef0/edit?invitationId=inv_ab364e80-9ce8-4fed-a0a1-2effe499a05e
-- wireframe link.
-- https://www.figma.com/design/WVt40eHiycYGR7jsfwVojF/InventoryPlus?node-id=1-2&t=uupdjAoeOpbCCfvc-0
+- [UML Diagram](https://lucid.app/lucidchart/d53e971b-a2e0-4f91-8dee-26314bc60ef0/edit?invitationId=inv_ab364e80-9ce8-4fed-a0a1-2effe499a05e)
+- [Wireframe](https://www.figma.com/design/WVt40eHiycYGR7jsfwVojF/InventoryPlus?node-id=1-2&t=uupdjAoeOpbCCfvc-0)
 
 ## Wireframe / Design tools
 - https://www.figma.com/templates/wireframe-kits/
