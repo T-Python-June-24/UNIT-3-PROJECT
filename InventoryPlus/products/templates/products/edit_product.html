@@ -4,6 +4,17 @@
 
 {% block content %}
 <main class="px-20">
+  <!-- Displaying messages -->
+  {% if messages %}
+  <div class="my-4">
+    {% for message in messages %}
+      <div class="{% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} p-4 mb-4 rounded">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  
   <div class="w-1/2 p-8 bg-white">
     <h1 class="text-2xl font-bold mb-6">Edit Product</h1>
     <form action="{% url 'products:edit_product_view' product.id %}" method="post" enctype="multipart/form-data" class="mb-32">

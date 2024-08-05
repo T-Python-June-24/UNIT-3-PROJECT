@@ -4,6 +4,17 @@
 
 {% block content %}
 <main class="px-32">
+  <!-- Displaying messages -->
+  {% if messages %}
+  <div class="my-4">
+    {% for message in messages %}
+      <div class="{% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} p-4 mb-4 rounded">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  
   <div class="flex flex-row items-stretch gap-16 mt-10 mb-8">
     <div>
       <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mb-4 w-[500px] h-[450px] object-cover rounded-sm">
