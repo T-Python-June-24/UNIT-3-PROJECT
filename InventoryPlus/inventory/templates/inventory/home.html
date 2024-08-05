@@ -6,23 +6,29 @@
 {% block content %}
 
 
-<h2>low stock product </h2>
+<h2 class="mb-3">low stock product ({{low_stock_products|length}})</h2>
+<div class="d-flex gap-2">
+    
+{% for product in low_stock_products %}
+{% for product_id in product%}
 
 <div class="bg-light d-flex flex-column align-items-center gap-3 mb-5 p-4 rounded shadow-sm w-50">
 
-    {% for product in low_stock_products %}
-    {% for product_id in product%}
     <h4>
-        product name
+        {{product_id.productName}}
     </h4>
     <strong>
-        {{product_id.productName}}
+        {{product_id.productStock}}
 
     </strong>
+    <a href="{% url 'inventory:inventory_view' %}" class="btn btn-outline-primary">update stock</a>
+
+
+</div>
+
     
-    <a href="{% url 'products:product_detail' product_id %}" class="btn btn-outline-primary">Details</a>
-    {% endfor%}
-    {% endfor%}
+{% endfor%}
+{% endfor%}
 
 </div>
 

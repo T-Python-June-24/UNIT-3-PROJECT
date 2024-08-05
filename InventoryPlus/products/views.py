@@ -25,11 +25,15 @@ def all_products(request):
         #         email_message.send()
         #         messages.success(request, "Your message is received. Thank You.", "alert-success")
 
-        if "category" in request.GET :
-            products = products.filter(productCategory=request.GET.get('category'))
-        if "supplier" in request.GET :
-            products = products.filter(productSupplier=request.GET.get('supplier'))
-    
+        # if "category" in request.GET :
+        #     products = products.filter(productCategory=request.GET.get('category'))
+        # if "supplier" in request.GET :
+        #     products = products.filter(productSupplier=request.GET.get('supplier'))
+    if "category" in request.GET and request.GET["category"]:
+     products = products.filter(productCategory=request.GET.get('category'))
+    if "supplier" in request.GET and request.GET["supplier"]:
+     products = products.filter(productSupplier=request.GET.get('supplier'))
+
     categories = Category.objects.all()
     suppliers = Supplier.objects.all()
     form = ProductForm()
