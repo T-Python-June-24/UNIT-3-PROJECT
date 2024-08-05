@@ -23,12 +23,8 @@ def all_products(request):
         #         send_to = "amira799am@gmail.com"
         #         email_message = EmailMessage("Confirmation", content_html, settings.EMAIL_HOST_USER, [send_to])
         #         email_message.send()
-        #         messages.success(request, "Your message is received. Thank You.", "alert-success")
+        #         messages.success(request, "Your message is received. Thank You.", "success")
 
-        # if "category" in request.GET :
-        #     products = products.filter(productCategory=request.GET.get('category'))
-        # if "supplier" in request.GET :
-        #     products = products.filter(productSupplier=request.GET.get('supplier'))
     if "category" in request.GET and request.GET["category"]:
      products = products.filter(productCategory=request.GET.get('category'))
     if "supplier" in request.GET and request.GET["supplier"]:
@@ -38,7 +34,7 @@ def all_products(request):
     suppliers = Supplier.objects.all()
     form = ProductForm()
     page_number = request.GET.get("page",1)
-    paginator = Paginator(products,4)
+    paginator = Paginator(products,3)
     product_page = paginator.get_page(page_number)
     return render(request, 'products/all_products.html', {
         'products': products,

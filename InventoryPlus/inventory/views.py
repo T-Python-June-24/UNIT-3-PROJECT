@@ -19,7 +19,8 @@ def plotly_view(request):
         if product.productStock < 200:
 
             low_stock_list.append(product.id)
-       
+                  
+
     for product_id in low_stock_list:
 
         low_stock_products.append(products.filter(pk=product_id))
