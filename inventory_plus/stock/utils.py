@@ -1,6 +1,7 @@
 from django.core.mail import send_mail
 from django.utils import timezone
 from products.models import Product
+import os
 
 def check_stock_and_expiry():
     low_stock_threshold = 10
@@ -23,10 +24,6 @@ def check_stock_and_expiry():
         message += f"{product.name} - Expiry Date: {product.expiry_date}\n"
 
     
-    send_mail(
-        'Inventory Notifications',
-        message,
-        'your-email@gmail.com',  # From email
-        ['manager-email@example.com'],  # To email
-        fail_silently=False,
-    )
+def send_email(subject, message, recipient_list):
+    send_mail(subject, message, os.getenv('EMAIL_HOST_USER'), recipient_list)
+

@@ -23,5 +23,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <form action="{% url 'send_email' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Send Email</button>
+    </form>
 </div>
 {% endblock %}

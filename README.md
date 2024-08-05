@@ -11,7 +11,7 @@ The project name is `Iventory Plus` . A comprehensive system to manage inventory
 - Delete products
 - View products list
 - View product details.
-- Stock Management (Update stock levels, view stock status)   ------------------------
+- Stock Management (Update stock levels, view stock status)
 - Search products
 
 
@@ -35,7 +35,7 @@ The project name is `Iventory Plus` . A comprehensive system to manage inventory
 - Generate inventory reports
 - Generate supplier reports
 
-### Notifications  --> when you click contact us in home page   ----------------------
+### Notifications
 (using email to send to manager's email)
 - Low stock alerts
 - Expiry date alerts for perishable items
@@ -183,6 +183,7 @@ As an Inventory Manager, I want to export inventory data to CSV files so that I 
 ## Edit the README.md file to include (include the info at the top):
 - UML link.
 ------> https://lucid.app/lucidchart/10e3c1e1-df0c-455e-a0a5-0942ca39db8f/edit?viewport_loc=-1924%2C-1497%2C1838%2C1608%2C0_0&invitationId=inv_57ba4708-7c1c-4d07-92a0-092637f72756
+
 - wireframe link.
 ------>
 
