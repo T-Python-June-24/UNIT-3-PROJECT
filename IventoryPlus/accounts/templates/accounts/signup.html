@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Sign Up new user {% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center">
+    <h2>Sign Up</h2>
+    <form class="d-flex flex-column gap-3 w-50" action="{% url 'accounts:sign_up' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-floating">
+          <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" name="email" required>
+          <label for="floatingInputEmail">Email address</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputUsername" placeholder="username" name="username" required>
+            <label for="floatingInputUsername">User name</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputFirstName" placeholder="First name" name="first_name" required>
+            <label for="floatingInputFirstName">First name</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInputLastName" placeholder="Last name" name="last_name" required>
+            <label for="floatingInputLastName">Last name</label>
+        </div>
+
+        <div class="form-floating position-relative">
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+          <label for="floatingPassword">Password</label>
+          <span onclick="togglePasswordVisibility('floatingPassword')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">Show</span>
+        </div>
+
+        <div class="form-floating position-relative">
+          <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password" name="password_confirmation" required>
+          <label for="floatingConfirmPassword">Confirm Password</label>
+          <span onclick="togglePasswordVisibility('floatingConfirmPassword')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">Show</span>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>
+      </form>
+</div>
+
+<script>
+function togglePasswordVisibility(fieldId) {
+    var inputField = document.getElementById(fieldId);
+    var type = inputField.type === 'password' ? 'text' : 'password';
+    inputField.type = type;
+}
+</script>
+
+{% endblock %}

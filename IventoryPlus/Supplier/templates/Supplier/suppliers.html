@@ -105,8 +105,10 @@
     <table class="table table-striped ">
         <thead>
             <tr>
+                {% if request.user.is_staff%}
                 <th style="background-color: #E7EFF3; color: #495D69;"></th>
                 <th style="background-color: #E7EFF3; color: #495D69;"></th>
+                {% endif %}
                 <th style="background-color: #E7EFF3; color: #495D69;">Name</th>
                 <th style="background-color: #E7EFF3; color: #495D69;">email</th>
                 <th style="background-color: #E7EFF3; color: #495D69;">number of products</th>
@@ -116,6 +118,8 @@
             {% if suppliers %}
                 {% for supplier in suppliers %}
                     <tr>
+                        {% if request.user.is_staff%}
+
                         <td>
                             <a data-bs-toggle="modal" data-bs-target="#updateModal-{{ supplier.id }}" href="#">
                             <span class="material-symbols-outlined">edit</span>    
@@ -124,7 +128,8 @@
                             <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ supplier.id }}" href="#">
                                 <span class="material-symbols-outlined">delete</span>
                             </a>
-                        </td>                       
+                        </td> 
+                        {% endif %}                      
                         <td><a href="{% url 'Supplier:supplier_detail' supplier.id %}">{{ supplier.name }}</a></td>
                         <td>{{ supplier.email }}</td>
 
@@ -191,7 +196,10 @@
             {% endif %}
         </tbody>
     </table>
+    {% if request.user.is_staff%}
+
     <a href="{% url 'Supplier:add_supplier' %}"><div class="circle"></div></a> 
+    {% endif %}
 
 </div>
  <!-- pagination -->

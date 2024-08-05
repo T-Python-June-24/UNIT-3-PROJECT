@@ -10,21 +10,25 @@ from django.core.paginator import Paginator
 
 
 def add_product(request):
-    products = Product.objects.all()
-    categories=Category.objects.all()
-    suppliers=Supplier.objects.all()
-    if request.method == "POST":
-        productForm = ProductForm(request.POST, request.FILES)
-        if productForm.is_valid():
-            productForm.save()
-            messages.success(request, 'Product added successfully!')
-            return redirect("Product:Product_added_success")
-        else:
-            for field, errors in productForm.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field}: {error}")
+    if not request.user.is_staff:
+        messages.error(request,'please sign in to add product','alert-danger')
+        return redirect("main:home_view")
+    else:
+     products = Product.objects.all()
+     categories=Category.objects.all()
+     suppliers=Supplier.objects.all()
+     if request.method == "POST":
+         productForm = ProductForm(request.POST, request.FILES)
+         if productForm.is_valid():
+             productForm.save()
+             messages.success(request, 'Product added successfully!','alert-success')
+             return redirect("Product:Product_added_success")
+         else:
+             for field, errors in productForm.errors.items():
+                 for error in errors:
+                     messages.error(request, f"{field}: {error}","alert-danger")
     return render(request, "Product/add_product.html",{"products" : products , "categories":categories,"suppliers":suppliers})
-
+ 
 def Product_added_success(request):
     return render(request, "Product/added_success.html")
 
@@ -38,21 +42,25 @@ def product_detail(request,product_id:int):
 
 
 def product_update(request, product_id: int):
-    product = Product.objects.get(pk=product_id)
-    categories = Category.objects.all()
-    suppliers = Supplier.objects.all()
-
-    if request.method == "POST":
-        productForm = ProductForm(request.POST, request.FILES, instance=product)
-        if productForm.is_valid():
-            productForm.save()
-            messages.success(request, 'Product updated successfully!')
-            return redirect("Product:product_page")
-        else:
-            for field, errors in productForm.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field}: {error}")
-
+    if not request.user.is_staff:
+        messages.error(request,'please sign in to update product','alert-danger')
+        return redirect("main:home_view")
+    else:
+     product = Product.objects.get(pk=product_id)
+     categories = Category.objects.all()
+     suppliers = Supplier.objects.all()
+ 
+     if request.method == "POST":
+         productForm = ProductForm(request.POST, request.FILES, instance=product)
+         if productForm.is_valid():
+             productForm.save()
+             messages.success(request, 'Product updated successfully!','alert-success')
+             return redirect("Product:product_page")
+         else:
+             for field, errors in productForm.errors.items():
+                 for error in errors:
+                     messages.error(request, f"{field}: {error}",'alert-danger')
+ 
     return render(request, 'Product/products.html', {
         'product': product,
         'categories': categories,
@@ -62,14 +70,18 @@ def product_update(request, product_id: int):
     
 
 def delete_product(request:HttpRequest,product_id:int):
-    product = Product.objects.get(pk=product_id)
-    if product.delete():
-            messages.success(request, 'Product deleted successfully!')
-            return redirect("Product:product_page")
-    else:
-        for field, errors in product.errors.items():
-            for error in errors:
-             messages.error(request, f"{field}: {error}")        
+    if not request.user.is_staff:
+        messages.error(request,'please sign in to delete product','alert-danger')
+        return redirect("main:home_view")
+    else:    
+     product = Product.objects.get(pk=product_id)
+     if product.delete():
+             messages.success(request, 'Product deleted successfully!','alert-success')
+             return redirect("Product:product_page")
+     else:
+         for field, errors in product.errors.items():
+             for error in errors:
+              messages.error(request, f"{field}: {error}",'alert-danger')        
 
     return redirect('Product:product_page')
 

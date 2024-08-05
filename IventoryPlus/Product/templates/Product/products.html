@@ -129,8 +129,10 @@
                 <tr > 
                 
                     </style>
+                    {% if request.user.is_staff%}
                     <th style="background-color: #E7EFF3;" ></th>
                     <th style="background-color: #E7EFF3;" ></th>
+                    {% endif %}
                     <th style="background-color: #E7EFF3; color: #495D69;">Name</th>              
                     <th style="background-color: #E7EFF3;color: #495D69;">Category</th>
                     <th style="background-color: #E7EFF3;color: #495D69;">Suppliers</th>
@@ -142,6 +144,8 @@
                 {% if products %}
                     {% for product in products %}
                         <tr>
+                            {% if request.user.is_staff%}
+
                             <td>
                                 <a data-bs-toggle="modal" data-bs-target="#updateModal-{{ product.id }}" href="#">
                                 <span class="material-symbols-outlined">edit</span>    
@@ -150,7 +154,9 @@
                                 <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ product.id }}" href="#">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a>
-                            </td>                       
+                            </td>    
+                            {% endif %}
+                   
                             <td><a href="{% url 'Product:product_detail' product.id %}">{{ product.name }}</a></td>
                             <td><a href="{% url 'Category:category_detail' product.category.id %}">{{ product.category.name }}</a></td>
                             <td>
@@ -284,8 +290,10 @@
         {% csrf_token %}
         <input type="submit" name="export" value="Export to CSV" class="btn btn-primary">
     </form>
-    <a href="{% url 'Product:add_product' %}"><div class="circle"></div></a> 
+    {% if request.user.is_staff%}
 
+    <a href="{% url 'Product:add_product' %}"><div class="circle"></div></a> 
+      {%endif%}
 </div>
 
 {% endblock %}

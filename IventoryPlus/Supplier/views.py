@@ -8,19 +8,23 @@ from .admin import SupplierResource
 from django.db.models import Count
 from django.core.paginator import Paginator
 def add_supplier(request):
-    suppliers = Supplier.objects.all()
-    if request.method == "POST":
-        supplierForm = SupplierForm(request.POST, request.FILES)
-        if supplierForm.is_valid():
-            supplierForm.save()
-            messages.success(request, 'Supplier added successfully!')
-            return redirect("Supplier:added_success")
-        else:
-            for field, errors in supplierForm.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field}: {error}")
-    return render(request, "Supplier/add_supplier.html",{"suppliers" : suppliers })
-
+     if not request.user.is_staff:
+        messages.error(request,'please sign in to add supplier','alert-danger')
+        return redirect("main:home_view")
+     else:
+       suppliers = Supplier.objects.all()
+       if request.method == "POST":
+           supplierForm = SupplierForm(request.POST, request.FILES)
+           if supplierForm.is_valid():
+               supplierForm.save()
+               messages.success(request, 'Supplier added successfully!',"alert-success")
+               return redirect("Supplier:added_success")
+           else:
+               for field, errors in supplierForm.errors.items():
+                   for error in errors:
+                    messages.error(request, f"{field}: {error}","alert-danger")
+     return render(request, "Supplier/add_supplier.html",{"suppliers" : suppliers })
+ 
 def added_success(request):
     return render(request, "Supplier/added_success.html")
 
@@ -61,25 +65,33 @@ def supplier_detail(request,supplier_id:int):
     return render(request, "Supplier/supplier_detail.html",{"supplier":supplier , "products":products})
 
 def supplier_update(request, supplier_id: int):
-    supplier = Supplier.objects.get(pk=supplier_id)
-    if request.method == "POST":
-        supplierForm = SupplierForm(request.POST, request.FILES, instance=supplier)
-        if supplierForm.is_valid():
-            supplierForm.save()
-            messages.success(request, 'Supplier updated successfully!')
-            return redirect('Supplier:supplier_page')
-        else:
-            for field, errors in supplierForm.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field}: {error}")
+    if not request.user.is_staff:
+        messages.error(request,'only staff can update suppliers',"alert-danger")
+        return redirect("main:home_view")
+    else:
+     supplier = Supplier.objects.get(pk=supplier_id)
+     if request.method == "POST":
+         supplierForm = SupplierForm(request.POST, request.FILES, instance=supplier)
+         if supplierForm.is_valid():
+             supplierForm.save()
+             messages.success(request, 'Supplier updated successfully!',"alert-success")
+             return redirect('Supplier:supplier_page')
+         else:
+             for field, errors in supplierForm.errors.items():
+                 for error in errors:
+                     messages.error(request, f"{field}: {error}","alert-danger")
     return render(request, 'Supplier/supplier_detail.html', {'supplierForm': supplierForm, 'supplier': supplier})
 def delete_supplier(request:HttpRequest,supplier_id:int):
-    supplier = Supplier.objects.get(pk=supplier_id)
-    if supplier.delete():
-            messages.success(request, 'Supplier deleted successfully!')
-            return redirect('Supplier:supplier_page')
+    if not request.user.is_staff:
+        messages.error(request,'only staff can delete suppliers',"alert-danger")
+        return redirect("main:home_view")
     else:
-        for field, errors in supplier.errors.items():
-            for error in errors:
-                messages.error(request, f"{field}: {error}")    
+     supplier = Supplier.objects.get(pk=supplier_id)
+     if supplier.delete():
+             messages.success(request, 'Supplier deleted successfully!',"alert-success")
+             return redirect('Supplier:supplier_page')
+     else:
+         for field, errors in supplier.errors.items():
+             for error in errors:
+                 messages.error(request, f"{field}: {error}","alert-danger")    
     return redirect('Supplier:supplier_page')

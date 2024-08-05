@@ -5,7 +5,13 @@ from Supplier.models import Supplier
 import plotly.express as px
 from django.db.models import Avg,Sum,Max,Min
 def home_view(request: HttpRequest):
-        return render(request, 'main/index.html')
+      if request.user.is_authenticated:
+        user_first_name=request.user.first_name
+        return render(request,'main/index.html',{"user_first_name":user_first_name})
+      else:
+         print("User is not logged in")     
+
+      return render(request, 'main/index.html')
 def analytics_view(request: HttpRequest):
     avg=Product.objects.aggregate(Avg("price"))
     sum=Product.objects.aggregate(Sum("price"))

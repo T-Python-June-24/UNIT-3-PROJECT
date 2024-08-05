@@ -7,11 +7,7 @@
 {% block content %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
-    .alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
+
     input[type="submit"] {
         padding: 5px 10px;
         border-radius: 5px;
@@ -115,8 +111,10 @@
     <table class="table table-striped mt-3 ">
         <thead>
             <tr>
+                {% if request.user.is_staff%}
                 <th style="background-color: #E7EFF3; color: #495D69;"></th>
                 <th style="background-color: #E7EFF3; color: #495D69;"></th>
+                {% endif %}
                 <th style="background-color: #E7EFF3; color: #495D69;">Name</th>
                 <th style="background-color: #E7EFF3; color: #495D69;">Number of Products</th>
             </tr>
@@ -125,6 +123,8 @@
             {% if categories %}
                 {% for category in categories %}
                     <tr>
+                        {% if request.user.is_staff%}
+
                         <td>
                             <a data-bs-toggle="modal" data-bs-target="#updateModal-{{ category.id }}" href="#">
                             <span class="material-symbols-outlined">edit</span>    
@@ -133,7 +133,8 @@
                             <a data-bs-toggle="modal" data-bs-target="#deleteModal-{{ category.id }}" href="#">
                                 <span class="material-symbols-outlined">delete</span>
                             </a>
-                        </td>                       
+                        </td> 
+                        {% endif %}                      
                         <td><a href="{% url 'Category:category_detail' category.id %}">{{ category.name }}</a></td>
                         <td>{{ category.products_count }}</td>
 
@@ -190,8 +191,11 @@
             {% endif %}
         </tbody>
     </table>
+    {% if request.user.is_staff%}
 
    <a href="{% url 'Category:add_category' %}"><div class="circle"></div></a> 
+   {% endif %}
+
 </div>
 
      <!-- pagination -->

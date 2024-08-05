@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'Product',
     'Category',
     'Supplier',
+    'accounts',
     'import_export'
+    
 ]
 
 MIDDLEWARE = [
@@ -141,10 +143,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # settings.py
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yourmailserver.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'sarahmoniftest@gmail.com'
-EMAIL_HOST_PASSWORD = 'xsac sahi hjko lkwg'
-DEFAULT_FROM_EMAIL = 'webmaster@yourdomain.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.yourmailserver.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
