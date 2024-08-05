@@ -6,10 +6,34 @@
 {% block content %}
 
 
+<h2>low stock product </h2>
 
-  
+<div class="bg-light d-flex flex-column align-items-center gap-3 mb-5 p-4 rounded shadow-sm w-50">
 
+    {% for product in low_stock_products %}
+    {% for product_id in product%}
+    <h4>
+        product name
+    </h4>
+    <strong>
+        {{product_id.productName}}
+
+    </strong>
+    
+    <a href="{% url 'products:product_detail' product_id %}" class="btn btn-outline-primary">Details</a>
+    {% endfor%}
+    {% endfor%}
+
+</div>
+
+<div class="row-12 m-5">
+
+    <h1 class="mb-4">Product Stock Chart</h1>
+    <div>{{ product_graph_div|safe }}</div>
+
+    <h1 class="mb-4 mt-4">Products per Supplier Chart</h1>
+    <div>{{ supplier_graph_div|safe }}</div>
+
+</div>
 
 {% endblock %}
-
-

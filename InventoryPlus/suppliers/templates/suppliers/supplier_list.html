@@ -28,7 +28,7 @@
                 <td>{{ supplier.supplierName }}</td>
                 <td>{{ supplier.supplierPhoneNumber }}</td>
                 <td>{{ supplier.supplierEmail }}</td>
-                <td>{{ supplier.product_set.count }}</td>
+                <td>{{ supplier.product_count }}</td>
                 <td>
                     <div class="btn-group-vertical" role="group" aria-label="Basic outlined example">
                         <a href="{% url 'suppliers:supplier_detail' supplier.id %}"

@@ -3,10 +3,12 @@ from .models import Supplier
 from .forms import SupplierForm
 from products.models import Product
 from django.contrib import messages
+from django.db.models import Count
 
 def supplier_list(request):
     
     suppliers = Supplier.objects.all()
+    suppliers = Supplier.objects.annotate(product_count=Count('product'))
     if not suppliers :
 
         messages.error(request, "No suppliers to display. Add the first one now!", "info")

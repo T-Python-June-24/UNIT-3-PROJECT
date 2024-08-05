@@ -4,8 +4,97 @@
 {% block title %}Inventory{% endblock %}
 
 {% block content %}
+<h1 class="mb-5 mt-5">Update product stock easily !</h1>
+
+<div class="d-flex gap-3 w-100 ">
+
+    <div class="bg-light d-flex flex-column align-items-center gap-3 mb-5 p-4 rounded shadow-sm w-50">
+        <h4>
+            total cost of products 
+        </h4>
+        <strong>
+            {{total_cost}}$
+            
+        </strong>
+    </div>
+    <div class="bg-light d-flex flex-column align-items-center gap-3 mb-5 p-4 rounded shadow-sm w-50">
+        <h4>
+            average price of products 
+        </h4>
+        <strong>
+
+            {{avrage_prices}}
+        </strong>
+    </div>
+    <div class="bg-light d-flex flex-column align-items-center gap-3 mb-5 p-4 rounded shadow-sm w-50">
+        <h4>
+            numbers of products 
+        </h4>
+        <strong>
+
+            {{numbers_of_products}}
+        </strong>
+    </div>
+
+</div>
 
 
+<table class="table table-responsive table-striped center-text-table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Category name </th>
+            <th>supplier name </th>
+            <th>product stock </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.productCategory.categoryName }}</td>
+            {% for supplier in product.productSupplier.all %}
+            <td>{{ supplier.supplierName }}</td>
+            {%endfor%}
+            <td>{{ product.productStock }}</td>
+            <td>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#updateModal{{ product.id }}">Update</button>
+            </td>
+        </tr>
+                    <!-- Update Modal -->
+                    <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateModalLabel">Update Product</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="{% url 'inventory:stock_update' product.id %}"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
 
+                                    <div class="mb-3">
+                                        <label for="id_productStock{{ product.id }}" class="form-label">Product
+                                            Stock</label>
+                                        <input type="number" name="productStock" class="form-control"
+                                            id="id_productStock{{ product.id }}" value="{{ product.productStock }}"
+                                            required>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
