@@ -76,12 +76,13 @@
             
             <li class="nav-item">
 
-                {% if request.user.is_authenticated %}
-                  <div class="d-flex gap-1 align-items-center">
-                  <h6 class="p-0 m-0 text-white">welcome {{ request.user.username }}, </h6>
-                  <a  class="nav-link" href="{% url 'accounts:log_out' %}?next={{request.path}}">Log out</a>
-                </div>
-                {% else %}
+              {% if request.user.is_authenticated %}
+              <div class="d-flex gap-1 align-items-center">
+                <img src="{{request.user.profile.avatar.url}}" class="rounded-circle avatar" />
+                <a class="nav-link" href="{% url 'accounts:user_profile_view' request.user.username %}">{{ request.user.username }},</a>
+                <a  class="nav-link" href="{% url 'accounts:log_out' %}?next={{request.path}}">Log out</a>
+              </div>
+              {% else %}
                 <div class="dropdown bg-transparent">
                   <a class="btn nav-link dropdown-toggle p-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Sign up/ Sign in

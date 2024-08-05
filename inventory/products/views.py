@@ -39,11 +39,11 @@ def add_product_view(request:HttpRequest):
         if product_form.is_valid():
             product_form.save()
             messages.success(request, "Added Product Successfuly", "alert-success")
-            return redirect('main:home_view')
+            return redirect('main:home')
         else:
             print("not valid form", product_form.errors)
 
-    return render(request, "products/create.html", {"product_form":product_form,"RatingChoices": reversed(Product.RatingChoices.choices), "categories":categories, "suppliers": suppliers})
+    return render(request, "products/add.html", {"product_form":product_form,"RatingChoices": reversed(Product.RatingChoices.choices), "categories":categories, "suppliers": suppliers})
 
 
 

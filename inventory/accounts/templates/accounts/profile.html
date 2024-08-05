@@ -1,0 +1,78 @@
+{% extends 'main/base.html'%}
+
+
+{% block title %} profile for {{user.username}}  {% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+
+    <div class="col-2">
+
+        <img src="{{user.profile.avatar.url}}" class="w-100 rounded-circle"  />
+        <h5>@{{user.username}}</h5>
+        <a href="{{user.profile.twitch_link}}" target="_blank"><i class="bi bi-twitch"></i></a>
+        {% if request.user == user %}
+        <a href="{% url 'accounts:update_user_profile' %}"><i class="bi bi-pencil-square"></i></a>
+        {% endif %}
+    </div>
+
+
+    <div class="col">
+
+        <div class="d-flex flex-column gap-3">
+            <p>{{user.profile.about}}</p>
+
+
+            <hr />
+
+            <h3>{{user.first_name}} Reviews</h3>
+
+            {% for review in user.review_set.all %}
+            <div class="d-flex flex-column p-3 shadow">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>{{review.user.first_name}} {{review.user.last_name}}</h4>
+                    <div class="d-flex align-items-center">
+                        <span class="material-symbols-outlined">star</span>
+                        <h5 class="m-0 p-0">{{review.rating}}</h5>
+                    </div>
+                </div>
+                
+                <p>{{review.comment}}</p>
+                <a href="{% url 'products:product_detail_view' review.product.id %}"><h5>On Product: {{review.product.title }}</h5></a>
+                <p class="text-muted">{{review.created_at}}</p>
+            </div>
+            {% endfor %}
+
+
+            {% if request.user == user %}
+
+            <h3>Bookmarks</h3>
+
+            <div class="row row-cols-3 gap-4">
+
+            {% for bookmark in request.user.bookmark_set.all %}
+
+                <div class="col d-flex flex-column gap-2 align-items-center p-4 shadow">
+                    <img src="{{bookmark.product.poster.url}}" class="w-100" />
+                    <a href="{% url 'products:product_detail_view' bookmark.product.id %}"><h3>{{bookmark.product.title }}</h3></a>
+                </div>
+
+            {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+        
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

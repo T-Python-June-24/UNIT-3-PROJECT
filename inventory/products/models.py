@@ -3,7 +3,7 @@ from suppliers.models import Supplier
 
 from django.contrib.auth.models import User
 
-from django.db.models import F
+# from django.db.models import F
 
 # Create your models here.
 
