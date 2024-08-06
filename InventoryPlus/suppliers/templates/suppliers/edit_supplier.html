@@ -4,6 +4,15 @@
 
 {% block content %}
 <main class="px-32 items-center">
+  {% if messages %}
+  <div class="my-4">
+    {% for message in messages %}
+      <div class="{% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} p-4 mb-4 rounded">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
   <h1 class="pb-8 text-3xl font-medium">Edit Supplier</h1>
   <form method="POST" enctype="multipart/form-data" class="w-1/2 space-y-4 mb-32">
       {% csrf_token %}
